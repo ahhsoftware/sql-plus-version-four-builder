@@ -1,0 +1,246 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{10DD7037-6171-4C9A-8791-D8560B180FE7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SQLPLUS.Builder</RootNamespace>
+    <AssemblyName>SQLPLUS.Builder</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ConfigurationModels\BuildDefinition.cs" />
+    <Compile Include="ConfigurationModels\DatabaseConnection.cs" />
+    <Compile Include="ConfigurationModels\ProjectInformation.cs" />
+    <Compile Include="ConfigurationModels\TableValueParameterTags.cs" />
+    <Compile Include="DataCollectors\DataCollectorBase.cs" />
+    <Compile Include="DataCollectors\IDataCollector.cs" />
+    <Compile Include="DataCollectors\MSSQLDataCollector.cs" />
+    <Compile Include="DataServices\MSSQL\Models\ModelBase.cs" />
+    <Compile Include="DataServices\MSSQL\Models\ResultColumnsForTableInput.cs" />
+    <Compile Include="DataServices\MSSQL\Models\ResultColumnsForTableOutput.cs" />
+    <Compile Include="DataServices\MSSQL\Models\ResultColumnsForTableResult.cs" />
+    <Compile Include="DataServices\MSSQL\Models\ResultColumnsForTextInput.cs" />
+    <Compile Include="DataServices\MSSQL\Models\ResultColumnsForTextOutput.cs" />
+    <Compile Include="DataServices\MSSQL\Models\ResultColumnsForTextResult.cs" />
+    <Compile Include="DataServices\MSSQL\Models\RoutineParametersInput.cs" />
+    <Compile Include="DataServices\MSSQL\Models\RoutineParametersOutput.cs" />
+    <Compile Include="DataServices\MSSQL\Models\RoutineParametersResult.cs" />
+    <Compile Include="DataServices\MSSQL\Models\SQLPlusRoutinesOutput.cs" />
+    <Compile Include="DataServices\MSSQL\Models\SQLPlusRoutinesResult.cs" />
+    <Compile Include="DataServices\MSSQL\Services\ResultColumnsForTable.cs" />
+    <Compile Include="DataServices\MSSQL\Services\ResultColumnsForText.cs" />
+    <Compile Include="DataServices\MSSQL\Services\RoutineParameters.cs" />
+    <Compile Include="DataServices\MSSQL\Services\ServiceBase.cs" />
+    <Compile Include="DataServices\MSSQL\Services\SQLPlusRoutines.cs" />
+    <Compile Include="EventHandlerArgs\DirectoryCreatedEventArgs.cs" />
+    <Compile Include="EventHandlerArgs\DirectoryDeletedEventArgs.cs" />
+    <Compile Include="EventHandlerArgs\FileCreatedEventArgs.cs" />
+    <Compile Include="EventHandlerArgs\FileDeletedEventArgs.cs" />
+    <Compile Include="EventHandlerArgs\FileWriteEventArgs.cs" />
+    <Compile Include="EventHandlerArgs\ProgressStatusArgs.cs" />
+    <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Mappings\DataTypeMappings.cs" />
+    <Compile Include="Mappings\ParameterModeMappings.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Render\IRenderProvider.cs" />
+    <Compile Include="Render\T4Net\Enumerations.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Enumerations.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Render\T4Net\Helpers.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Helpers.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Render\T4Net\InputObject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>InputObject.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Render\T4Net\NetRenderProvider.cs" />
+    <Compile Include="Render\T4Net\OutputObject.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>OutputObject.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Render\T4Net\RuntimeTextTemplate1.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RuntimeTextTemplate1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Render\T4Net\ServiceBase.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceBase.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Render\T4Net\ServiceMethod.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ServiceMethod.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Render\T4Net\StaticData.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StaticData.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Render\T4Net\TransientErrors.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TransientErrors.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Render\T4Net\TransientErrorsExample.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TransientErrorsExample.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Render\T4Net\UserDefinedType.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>UserDefinedType.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Render\T4Net\ValidInput.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ValidInput.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Runner.cs" />
+    <Compile Include="Shared\Enumerations.cs" />
+    <Compile Include="Tags\BaseTag.cs" />
+    <Compile Include="Tags\CacheKey.cs" />
+    <Compile Include="Tags\Comment.cs" />
+    <Compile Include="Tags\CreditCard.cs" />
+    <Compile Include="Tags\Currency.cs" />
+    <Compile Include="Tags\Default.cs" />
+    <Compile Include="Tags\Display.cs" />
+    <Compile Include="Tags\Email.cs" />
+    <Compile Include="Tags\Enum.cs" />
+    <Compile Include="Tags\Explicit.cs" />
+    <Compile Include="Tags\ForceColumnEncryption.cs" />
+    <Compile Include="Tags\Helpers.cs" />
+    <Compile Include="Tags\Html.cs" />
+    <Compile Include="Tags\Ignore.cs" />
+    <Compile Include="Tags\InOut.cs" />
+    <Compile Include="Tags\Input.cs" />
+    <Compile Include="Tags\MaxLength.cs" />
+    <Compile Include="Tags\MinLength.cs" />
+    <Compile Include="Tags\Output.cs" />
+    <Compile Include="Tags\Parameters.cs" />
+    <Compile Include="Tags\Password.cs" />
+    <Compile Include="Tags\Phone.cs" />
+    <Compile Include="Tags\PostalCode.cs" />
+    <Compile Include="Tags\QueryEnd.cs" />
+    <Compile Include="Tags\QueryStart.cs" />
+    <Compile Include="Tags\Range.cs" />
+    <Compile Include="Tags\RegExPattern.cs" />
+    <Compile Include="Tags\Required.cs" />
+    <Compile Include="Tags\Return.cs" />
+    <Compile Include="Tags\SQLPlusRoutine.cs" />
+    <Compile Include="Tags\StringLength.cs" />
+    <Compile Include="Tags\TagFactory.cs" />
+    <Compile Include="Tags\Url.cs" />
+    <Compile Include="TemplateModels\Column.cs" />
+    <Compile Include="TemplateModels\DBField.cs" />
+    <Compile Include="TemplateModels\EnumDefinition.cs" />
+    <Compile Include="TemplateModels\ObsoleteTypesEnum.cs" />
+    <Compile Include="TemplateModels\Parameter.cs" />
+    <Compile Include="TemplateModels\ResultSet.cs" />
+    <Compile Include="TemplateModels\Routine.cs" />
+    <Compile Include="TemplateModels\StaticCollection.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Render\T4Net\Enumerations.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Enumerations.cs</LastGenOutput>
+    </Content>
+    <Content Include="Render\T4Net\Helpers.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>Helpers.cs</LastGenOutput>
+    </Content>
+    <Content Include="Render\T4Net\InputObject.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>InputObject.cs</LastGenOutput>
+    </Content>
+    <Content Include="Render\T4Net\OutputObject.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>OutputObject.cs</LastGenOutput>
+    </Content>
+    <Content Include="Render\T4Net\RuntimeTextTemplate1.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>RuntimeTextTemplate1.cs</LastGenOutput>
+    </Content>
+    <Content Include="Render\T4Net\ServiceBase.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ServiceBase.cs</LastGenOutput>
+    </Content>
+    <Content Include="Render\T4Net\ServiceMethod.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ServiceMethod.cs</LastGenOutput>
+    </Content>
+    <Content Include="Render\T4Net\StaticData.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>StaticData.cs</LastGenOutput>
+    </Content>
+    <Content Include="Render\T4Net\TransientErrors.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TransientErrors.cs</LastGenOutput>
+    </Content>
+    <Content Include="Render\T4Net\TransientErrorsExample.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>TransientErrorsExample.cs</LastGenOutput>
+    </Content>
+    <Content Include="Render\T4Net\UserDefinedType.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>UserDefinedType.cs</LastGenOutput>
+    </Content>
+    <Content Include="Render\T4Net\ValidInput.tt">
+      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <LastGenOutput>ValidInput.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
