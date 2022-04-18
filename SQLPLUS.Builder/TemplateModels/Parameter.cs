@@ -230,6 +230,7 @@
                         }
                     }
                 }
+                tvColumnsUsings.Sort();
                 return tvColumnsUsings;
             }
         }

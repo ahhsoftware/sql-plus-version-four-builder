@@ -11,7 +11,7 @@ namespace SQLPLUS.Builder.Render
     {
         string ValidInput();
 
-        string Helpers(List<string> usings, List<string> types);
+        string Helpers(List<string> usings, List<string> types, List<Parameter> parameters);
 
         string InputObject(Routine routine);
 

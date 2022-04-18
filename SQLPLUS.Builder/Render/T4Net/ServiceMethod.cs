@@ -358,14 +358,7 @@ foreach(Parameter p in routine.InputParameters){
             
             #line default
             #line hidden
-            this.Write("\"].Value = ");
-            
-            #line 88 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(p.UserDefinedTypeName));
-            
-            #line default
-            #line hidden
-            this.Write("Helpers.BuildDataTable(input.");
+            this.Write("\"].Value = Helpers.BuildDataTable(input.");
             
             #line 88 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));

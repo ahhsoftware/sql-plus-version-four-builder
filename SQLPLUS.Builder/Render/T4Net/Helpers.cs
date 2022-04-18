@@ -39,42 +39,55 @@ namespace SQLPLUS.Builder.Render.T4Net
 // --------------------------------------------------------------------------------------------------------
 namespace ");
             
-            #line 18 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 20 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(project.SqlPlusBaseNamespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n");
             
-            #line 20 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 22 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+if (build.BuildOptions.UseNullableReferenceTypes){
+            
+            #line default
+            #line hidden
+            this.Write("    #nullable enable\r\n\r\n");
+            
+            #line 25 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+}
+            
+            #line default
+            #line hidden
+            
+            #line 26 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 if(usings.Count != 0){
             
             #line default
             #line hidden
             this.Write("    #region usings\r\n\r\n");
             
-            #line 23 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 29 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
   foreach(string @using in usings){
             
             #line default
             #line hidden
             this.Write("    using ");
             
-            #line 24 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 30 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(@using));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 25 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 31 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
   }
             
             #line default
             #line hidden
             this.Write("\r\n    #endregion usings\r\n\r\n");
             
-            #line 29 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 35 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
@@ -83,7 +96,7 @@ if(usings.Count != 0){
                     "cludes only helper methods that are required by this particular build.\r\n    /// " +
                     "</summary>\r\n    public partial class Helpers\r\n    {\r\n\r\n");
             
-            #line 38 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 44 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 if(ListContains(types, "byte[]")){
             
             #line default
@@ -119,13 +132,13 @@ if(ListContains(types, "byte[]")){
         }
 ");
             
-            #line 68 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 74 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
             #line hidden
             
-            #line 69 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 75 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 if(ListContains(types, "byte[]?")){
             
             #line default
@@ -146,28 +159,41 @@ if(ListContains(types, "byte[]?")){
             {
                 return true;
             }
-            if (value.Length != compareValue.Length)
-            {
-                return true;
-            }
-            for (int idx = 0; idx != value.Length; idx++)
-            {
-                if (value[idx] != compareValue[idx])
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 ");
             
-            #line 99 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 92 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  if (build.BuildOptions.UseNullableReferenceTypes){
+            
+            #line default
+            #line hidden
+            this.Write("            if (value!.Length != compareValue!.Length)\r\n            {\r\n          " +
+                    "      return true;\r\n            }\r\n");
+            
+            #line 97 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  }else{
+            
+            #line default
+            #line hidden
+            this.Write("            if (value.Length != compareValue.Length)\r\n            {\r\n            " +
+                    "    return true;\r\n            }\r\n");
+            
+            #line 102 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  }
+            
+            #line default
+            #line hidden
+            this.Write("            for (int idx = 0; idx != value.Length; idx++)\r\n            {\r\n       " +
+                    "         if (value[idx] != compareValue[idx])\r\n                {\r\n              " +
+                    "      return true;\r\n                }\r\n            }\r\n            return false;\r" +
+                    "\n        }\r\n");
+            
+            #line 112 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
             #line hidden
             
-            #line 100 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 113 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 if(ListContains(types, "SqlGeometry")){
             
             #line default
@@ -192,13 +218,13 @@ if(ListContains(types, "SqlGeometry")){
         }
 ");
             
-            #line 119 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 132 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
             #line hidden
             
-            #line 120 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 133 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 if(ListContains(types, "SqlGeometry?")){
             
             #line default
@@ -219,17 +245,36 @@ if(ListContains(types, "SqlGeometry?")){
             {
                 return true;
             }
-            return value.ToString() != compareValue.ToString();
-        }
 ");
             
-            #line 139 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 150 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  if (build.BuildOptions.UseNullableReferenceTypes){
+            
+            #line default
+            #line hidden
+            this.Write("            return value!.ToString() != compareValue!.ToString();\r\n");
+            
+            #line 152 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  }else{
+            
+            #line default
+            #line hidden
+            this.Write("            return value.ToString() != compareValue.ToString();\r\n");
+            
+            #line 154 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  }
+            
+            #line default
+            #line hidden
+            this.Write("        }\r\n");
+            
+            #line 156 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
             #line hidden
             
-            #line 140 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 157 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 if(ListContains(types, "SqlGeography")){
             
             #line default
@@ -254,13 +299,13 @@ if(ListContains(types, "SqlGeography")){
         }
 ");
             
-            #line 159 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 176 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
             #line hidden
             
-            #line 160 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 177 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 if(ListContains(types, "SqlGeography?")){
             
             #line default
@@ -273,25 +318,44 @@ if(ListContains(types, "SqlGeography?")){
         /// <returns>True or False depending on the outcome of the comparison.</returns>
         public static bool ValueIsChanged(SqlGeography? value, SqlGeography? compareValue)
         {
-            if (!value.HasValue && !compareValue.HasValue)
+            if (value == null && compareValue == null)
             {
                 return false;
             }
-            if ((value.HasValue && !compareValue.HasValue) || (!value.HasValue && compareValue.HasValue))
+            if ((value == null && compareValue != null) || (value != null && compareValue == null))
             {
                 return true;
             }
-            return value.ToString() != compareValue.ToString();
-        }
 ");
             
-            #line 179 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 194 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  if (build.BuildOptions.UseNullableReferenceTypes){
+            
+            #line default
+            #line hidden
+            this.Write("            return value!.ToString() != compareValue!.ToString();\r\n");
+            
+            #line 196 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  }else{
+            
+            #line default
+            #line hidden
+            this.Write("            return value.ToString() != compareValue.ToString();\r\n");
+            
+            #line 198 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  }
+            
+            #line default
+            #line hidden
+            this.Write("    \r\n        }\r\n");
+            
+            #line 200 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
             #line hidden
             
-            #line 180 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 201 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 if(ListContains(types, "SqlHierarchyId")){
             
             #line default
@@ -316,13 +380,13 @@ if(ListContains(types, "SqlHierarchyId")){
         }
 ");
             
-            #line 199 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 220 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
             #line hidden
             
-            #line 200 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 221 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 if(ListContains(types, "SqlHierarchyId?")){
             
             #line default
@@ -343,17 +407,36 @@ if(ListContains(types, "SqlHierarchyId?")){
             {
                 return true;
             }
-            return value.Value.ToString() != compareValue.Value.ToString();
-        }
 ");
             
-            #line 219 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 238 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  if (build.BuildOptions.UseNullableReferenceTypes){
+            
+            #line default
+            #line hidden
+            this.Write("            return value!.Value.ToString() != compareValue!.Value.ToString();\r\n");
+            
+            #line 240 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  }else{
+            
+            #line default
+            #line hidden
+            this.Write("            return value.Value.ToString() != compareValue.Value.ToString();\r\n");
+            
+            #line 242 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  }
+            
+            #line default
+            #line hidden
+            this.Write("    \r\n        }\r\n");
+            
+            #line 244 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
             #line hidden
             
-            #line 220 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 245 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 if(ListContains(types, "object")){
             
             #line default
@@ -378,7 +461,143 @@ if(ListContains(types, "object")){
         }
 ");
             
-            #line 239 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 264 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 266 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+foreach (Parameter p in parameters){
+            
+            #line default
+            #line hidden
+            this.Write("        /// <summary>\r\n        /// Builds a datatable for that is applied to the " +
+                    "parameter value.\r\n        /// </summary>\r\n        /// <param name=\"input\">List o" +
+                    "f ");
+            
+            #line 270 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
+            
+            #line default
+            #line hidden
+            this.Write("</param>\r\n        /// <returns>DataTable populated with values from input</return" +
+                    "s>\r\n        public static DataTable BuildDataTable(");
+            
+            #line 272 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyType));
+            
+            #line default
+            #line hidden
+            this.Write(" input)\r\n        {\r\n            DataTable dt = new DataTable();\r\n");
+            
+            #line 275 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+foreach(Column c in p.TVColumns){
+            
+            #line default
+            #line hidden
+            this.Write("            dt.Columns.Add(\"");
+            
+            #line 276 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
+            
+            #line default
+            #line hidden
+            this.Write("\", typeof(");
+            
+            #line 276 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyType.Replace("?","")));
+            
+            #line default
+            #line hidden
+            this.Write("));\r\n");
+            
+            #line 277 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("            if(input != null)\r\n\t\t\t{\r\n                foreach(");
+            
+            #line 280 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(p.UserDefinedTypeName));
+            
+            #line default
+            #line hidden
+            this.Write(" item in input)\r\n                {\r\n                    DataRow rw = dt.NewRow();" +
+                    "\r\n");
+            
+            #line 283 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+foreach(Column c in p.TVColumns){
+            
+            #line default
+            #line hidden
+            
+            #line 284 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  if(c.IsNullable){
+            
+            #line default
+            #line hidden
+            this.Write("                    if(item.");
+            
+            #line 285 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
+            
+            #line default
+            #line hidden
+            this.Write(" != null)\r\n                    {\r\n                        rw[");
+            
+            #line 287 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(c.Index));
+            
+            #line default
+            #line hidden
+            this.Write("] = item.");
+            
+            #line 287 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n                    }\r\n");
+            
+            #line 289 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  }else{
+            
+            #line default
+            #line hidden
+            this.Write("                    rw[");
+            
+            #line 290 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(c.Index));
+            
+            #line default
+            #line hidden
+            this.Write("] = item.");
+            
+            #line 290 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
+            
+            #line default
+            #line hidden
+            this.Write(";\r\n");
+            
+            #line 291 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+  }
+            
+            #line default
+            #line hidden
+            
+            #line 292 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("                    dt.Rows.Add(rw);\r\n                }\r\n\t\t\t}\r\n            return" +
+                    " dt;\r\n        }\r\n");
+            
+            #line 298 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
@@ -387,7 +606,7 @@ if(ListContains(types, "object")){
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 242 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+        #line 301 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 
     public bool ListContains(List<string> items, string item)
     {
@@ -410,6 +629,19 @@ private global::SQLPLUS.Builder.ConfigurationModels.ProjectInformation project
     get
     {
         return this._projectField;
+    }
+}
+
+private global::SQLPLUS.Builder.ConfigurationModels.BuildDefinition _buildField;
+
+/// <summary>
+/// Access the build parameter of the template.
+/// </summary>
+private global::SQLPLUS.Builder.ConfigurationModels.BuildDefinition build
+{
+    get
+    {
+        return this._buildField;
     }
 }
 
@@ -439,6 +671,19 @@ private global::System.Collections.Generic.List<string> usings
     }
 }
 
+private global::System.Collections.Generic.List<Parameter> _parametersField;
+
+/// <summary>
+/// Access the parameters parameter of the template.
+/// </summary>
+private global::System.Collections.Generic.List<Parameter> parameters
+{
+    get
+    {
+        return this._parametersField;
+    }
+}
+
 
 /// <summary>
 /// Initialize the template
@@ -459,6 +704,20 @@ if ((projectValueAcquired == false))
     if ((data != null))
     {
         this._projectField = ((global::SQLPLUS.Builder.ConfigurationModels.ProjectInformation)(data));
+    }
+}
+bool buildValueAcquired = false;
+if (this.Session.ContainsKey("build"))
+{
+    this._buildField = ((global::SQLPLUS.Builder.ConfigurationModels.BuildDefinition)(this.Session["build"]));
+    buildValueAcquired = true;
+}
+if ((buildValueAcquired == false))
+{
+    object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("build");
+    if ((data != null))
+    {
+        this._buildField = ((global::SQLPLUS.Builder.ConfigurationModels.BuildDefinition)(data));
     }
 }
 bool typesValueAcquired = false;
@@ -487,6 +746,20 @@ if ((usingsValueAcquired == false))
     if ((data != null))
     {
         this._usingsField = ((global::System.Collections.Generic.List<string>)(data));
+    }
+}
+bool parametersValueAcquired = false;
+if (this.Session.ContainsKey("parameters"))
+{
+    this._parametersField = ((global::System.Collections.Generic.List<Parameter>)(this.Session["parameters"]));
+    parametersValueAcquired = true;
+}
+if ((parametersValueAcquired == false))
+{
+    object data = global::System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("parameters");
+    if ((data != null))
+    {
+        this._parametersField = ((global::System.Collections.Generic.List<Parameter>)(data));
     }
 }
 

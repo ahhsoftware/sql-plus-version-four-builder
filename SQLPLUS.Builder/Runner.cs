@@ -246,19 +246,44 @@
             {
                 WriteValidInput();
 
-                if (build.BuildOptions.ImplementIChangeTracking || build.BuildOptions.ImplementINotifyPropertyChanged || build.BuildOptions.ImplementIRevertibleChangeTracking)
-                {
-                    List<string> usings = UsingsForHelpers(routines);
-                    List<string> types = TypesHelpers(routines);
-                    
-                    //TODO: Create data set helpers
+                List<string> usings = UsingsForHelpers(routines);
+                List<string> types = TypesHelpers(routines);
+                List<Parameter> parameters = ParametersForHelpers(routines);
 
-                    if (types.Count != 0)
+                if (
+                    build.BuildOptions.ImplementIChangeTracking ||
+                    build.BuildOptions.ImplementINotifyPropertyChanged ||
+                    build.BuildOptions.ImplementIRevertibleChangeTracking ||
+                    parameters.Count != 0)
+                {
+                    if (types.Count != 0 || parameters.Count != 0)
                     {
-                        WriteHelpers(usings, types);
+                        WriteHelpers(usings, types, parameters);
                     }
                 }
             }
+        }
+
+        private List<Parameter> ParametersForHelpers(List<Routine> routines)
+        {
+            List<string> allParameters = new List<string>();
+            List<Parameter> result = new List<Parameter>();
+            foreach(var routine in routines)
+            {
+                foreach(var parameter in routine.Parameters)
+                {
+                    if(parameter.IsTableValueParameter)
+                    {
+                        string name = $"{parameter.UserDefinedTypeSchema}.{parameter.UserDefinedTypeName}";
+                        if(!allParameters.Contains(name))
+                        {
+                            allParameters.Add(name);
+                            result.Add(parameter);
+                        }
+                    }
+                }
+            }
+            return result;
         }
 
         private void WriteValidInput()
@@ -266,9 +291,9 @@
             string content = render.ValidInput();
             WriteText(content, project.SqlPlusBaseDirectory, "ValidInput");
         }
-        private void WriteHelpers(List<string> usings, List<string> types)
+        private void WriteHelpers(List<string> usings, List<string> types, List<Parameter> parameters)
         {
-            string content = render.Helpers(usings, types);
+            string content = render.Helpers(usings, types, parameters);
             WriteText(content, project.SqlPlusBaseDirectory, "Helpers");
         }
 
@@ -302,34 +327,21 @@
             {
                 foreach (Parameter parameter in routine.Parameters)
                 {
-                    if (parameter.Using == "System") continue;
                     result.TryAddItem(parameter.Using);
+                    if(parameter.TVColumns.Count != 0)
+                    {
+                        result.TryAddItem("System.Data");
+                        result.TryAddItem(project.UserDefinedTypeNamepace);
+                        result.TryAddItem(project.SqlPlusBaseNamespace);
+                        foreach(Column column in parameter.TVColumns)
+                        {
+                            result.TryAddItem(column.Using);
+                        }
+                    }
                 }
             }
             return result;
         }
-
-        //public static List<Parameter> ParametersForValueCompare(List<Routine> routines)
-        //{
-        //    List<string> list = new List<string>();
-        //    List<Parameter> result = new List<Parameter>();
-        //    foreach (Routine routine in routines)
-        //    {
-        //        foreach (Parameter parameter in routine.Parameters)
-        //        {
-        //            if (parameter.IsTableValueParameter)
-        //            {
-        //                if (!list.Contains(string.Concat(parameter.UserDefinedTypeSchema, ".", parameter.UserDefinedTypeName)))
-        //                {
-
-        //                    list.Add(string.Concat(parameter.UserDefinedTypeSchema, ".", parameter.UserDefinedTypeName));
-        //                    result.Add(parameter);
-        //                }
-        //            }
-        //        }
-        //    }
-        //    return result;
-        //}
 
         private void CreateSchemaDirectoriesIfRequired(List<Routine> routines)
         {

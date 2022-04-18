@@ -85,7 +85,7 @@ namespace <#=routine.ServiceNamespace#>
             if (input.<#=p.PropertyName#> != null)
             {
 <#  if(p.UserDefinedTypeSchema != null){#>
-			    result.Parameters["<#=p.Name#>"].Value = <#=p.UserDefinedTypeName#>Helpers.BuildDataTable(input.<#=p.PropertyName#>);
+			    result.Parameters["<#=p.Name#>"].Value = Helpers.BuildDataTable(input.<#=p.PropertyName#>);
 <#  }else{#>
                 result.Parameters["<#=p.Name#>"].Value = input.<#=p.PropertyName#>;
 <#  }#>

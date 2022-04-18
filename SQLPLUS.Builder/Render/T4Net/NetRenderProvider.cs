@@ -134,15 +134,17 @@ namespace SQLPLUS.Builder.Render.T4Net
             return template.TransformText();
         }
 
-        public string Helpers(List<string> usings, List<string> types)
+        public string Helpers(List<string> usings, List<string> types, List<Parameter> parameters)
         {
             var template = new T4Net.Helpers()
             {
                 Session = new Dictionary<string, object>
                 {
                     { "project", project },
+                    { "build", build },
                     { "types", types },
-                    { "usings", usings }
+                    { "usings", usings },
+                    { "parameters", parameters }
                 }
             };
             template.Initialize();

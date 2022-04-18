@@ -19,7 +19,6 @@
 // --------------------------------------------------------------------------------------------------------
 namespace <#=project.UserDefinedTypeNamepace#>
 {
-<#if (parameter.TVColumnsUsings.Count != 0){#>
     #region usings
 
 <#foreach(string @using in parameter.TVColumnsUsings){#>
@@ -28,11 +27,10 @@ namespace <#=project.UserDefinedTypeNamepace#>
 
     #endregion usings
 
-<#}#>
 	/// <summary>
     /// Input object table value parameter <#=parameter.UserDefinedTypeName#>.
     /// </summary>
-    public partial class <#=parameter.UserDefinedTypeName#>
+    public partial class <#=parameter.UserDefinedTypeName#> : ValidInput
     {
         #region Constructors
 

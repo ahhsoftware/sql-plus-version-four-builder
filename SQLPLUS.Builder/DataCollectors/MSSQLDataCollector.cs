@@ -408,7 +408,7 @@
             return new Parameter(
                 parameter.OrdinalPosition,
                 parameter.Name,
-                parameter.Name.Substring(1),
+                KeywordMappings.SafeName(parameter.Name.Substring(1)),
                 parameter.Name,
                 GetADOPrecision(parameter),
                 parameter.NumericScale,
@@ -525,7 +525,7 @@
             {
                 if(concatColumns.Contains(rs.ConcatColumns))
                 {
-                    throw new Exception("Each result set in a multiset query must be unique. Update the routine so that each result has at least one different columns.");
+                    throw new Exception("Each result set in a multiset query must be unique. Update the routine so that each result has at least one different column.");
                 }
                 concatColumns.Add(rs.ConcatColumns);
             }

@@ -47,18 +47,29 @@
         /// <returns>Formatted annotation string.</returns>
         public override string GetAnnotation()
         {
-
             string allowEmptyStrings = $"AllowEmptyStrings = {AllowEmptyStrings.ToString().ToLower()}";
 
+            if (AllowEmptyStrings)
+            {
+                if (!string.IsNullOrEmpty(ResourceKey))
+                {
+                    return $"[Required(AllowEmptyStrings = true, ErrorMessageResourceName = \"{ResourceKey}\", ErrorMessageResourceType = typeof({ResourceName}))]";
+                }
+                if (!string.IsNullOrEmpty(ErrorMessage))
+                {
+                    return $"[Required(AllowEmptyStrings = true, ErrorMessage = \"{ErrorMessage}\")]";
+                }
+                return $"[Required(AllowEmptyStrings = true)]";
+            }
             if (!string.IsNullOrEmpty(ResourceKey))
             {
-                return $"[Required({allowEmptyStrings}, ErrorMessageResourceName = \"{ResourceKey}\", ErrorMessageResourceType = typeof({ResourceName}))]";
+                return $"[Required(ErrorMessageResourceName = \"{ResourceKey}\", ErrorMessageResourceType = typeof({ResourceName}))]";
             }
             if (!string.IsNullOrEmpty(ErrorMessage))
             {
-                return $"[Required({allowEmptyStrings}, ErrorMessage = \"{ErrorMessage}\")]";
+                return $"[Required(ErrorMessage = \"{ErrorMessage}\")]";
             }
-            return $"[Required({allowEmptyStrings})]";
+            return $"[Required]";
         }
     }
 }

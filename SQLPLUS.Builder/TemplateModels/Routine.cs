@@ -380,10 +380,6 @@
                         {
                             inputUsings.TryAddItem(project.UserDefinedTypeNamepace);
                             inputUsings.TryAddItem("System.Collections.Generic");
-                            foreach (Column column in parameter.TVColumns)
-                            {
-                                inputUsings.TryAddItem(column.Using);
-                            }
                         }
                         else
                         {
@@ -463,6 +459,13 @@
                     foreach (Parameter parameter in NonInputParameters)
                     {
                         serviceUsings.TryAddItem(parameter.Using);
+                    }
+                    foreach(Parameter parameter in InputParameters)
+                    {
+                        if (parameter.IsTableValueParameter)
+                        {
+                            serviceUsings.TryAddItem(project.SqlPlusBaseNamespace);
+                        }
                     }
                     
                     foreach (ResultSet rs in ResultSets)
