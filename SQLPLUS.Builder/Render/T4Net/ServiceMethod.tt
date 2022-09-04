@@ -77,19 +77,29 @@ namespace <#=routine.ServiceNamespace#>
 <#  if(p.AdoUdtTypeName != null){#>
                 UdtTypeName = "<#=p.AdoUdtTypeName#>",
 <#  }#>
+<#  if(p.IsRequired){#>
+<#    if(p.UserDefinedTypeSchema != null){#>
+			    Value = Helpers.BuildDataTable(input.<#=p.PropertyName#>)
+<#    }else{#>
+                Value = input.<#=p.PropertyName#>
+<#    }#>
+<#  }else{#>
                 Value = DBNull.Value
+<#  }#>
             });
 <#}#>
 
 <#foreach(Parameter p in routine.InputParameters){#>
+<#  if (!p.IsRequired){#>
             if (input.<#=p.PropertyName#> != null)
             {
-<#  if(p.UserDefinedTypeSchema != null){#>
+<#    if(p.UserDefinedTypeSchema != null){#>
 			    result.Parameters["<#=p.Name#>"].Value = Helpers.BuildDataTable(input.<#=p.PropertyName#>);
-<#  }else{#>
+<#    }else{#>
                 result.Parameters["<#=p.Name#>"].Value = input.<#=p.PropertyName#>;
-<#  }#>
+<#    }#>
             }
+<#  }#>
 <#}#>
             return result;
         }

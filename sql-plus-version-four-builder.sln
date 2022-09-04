@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLPLUS.Builder", "SQLPLUS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLPLUS.Builder.ConsoleBuilder", "SQLPLUS.Builder.ConsoleBuilder\SQLPLUS.Builder.ConsoleBuilder.csproj", "{194184EB-FA5B-4574-8B46-B19867A25C10}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SQLPLUS.Build.Test.Basic", "..\sql-plus-builder-04\SQLPLUS.Build.Test.Basic\SQLPLUS.Build.Test.Basic.csproj", "{D428C948-4675-4E99-84BE-7478CD8662A1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,14 @@ Global
 		{194184EB-FA5B-4574-8B46-B19867A25C10}.Release|Any CPU.Build.0 = Release|Any CPU
 		{194184EB-FA5B-4574-8B46-B19867A25C10}.Release|x86.ActiveCfg = Release|Any CPU
 		{194184EB-FA5B-4574-8B46-B19867A25C10}.Release|x86.Build.0 = Release|Any CPU
+		{D428C948-4675-4E99-84BE-7478CD8662A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D428C948-4675-4E99-84BE-7478CD8662A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D428C948-4675-4E99-84BE-7478CD8662A1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D428C948-4675-4E99-84BE-7478CD8662A1}.Debug|x86.Build.0 = Debug|Any CPU
+		{D428C948-4675-4E99-84BE-7478CD8662A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D428C948-4675-4E99-84BE-7478CD8662A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D428C948-4675-4E99-84BE-7478CD8662A1}.Release|x86.ActiveCfg = Release|Any CPU
+		{D428C948-4675-4E99-84BE-7478CD8662A1}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -217,7 +217,7 @@
                 if (tvColumnsUsings is null)
                 {
                     tvColumnsUsings = new List<string>();
-                    tvColumnsUsings.TryAddItem(project.SqlPlusBaseNamespace);
+                    tvColumnsUsings.TryAddItem(project.SQLPLUSBaseNamespace);
                     foreach (Column c in TVColumns)
                     {
                         if (c.Using != null)

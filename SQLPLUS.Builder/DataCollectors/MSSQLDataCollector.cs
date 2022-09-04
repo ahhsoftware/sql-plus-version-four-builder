@@ -51,31 +51,7 @@
         {
 
             List<Routine> routines = CollectDBRoutines();
-
-            //if (routines != null)
-            //{
-            //    foreach (Routine routine in routines)
-            //    {
-            //        //HydrateDBRoutine(routine);
-
-            //        //try
-            //        //{
-            //        //    HydrateDBRoutine(routine);
-            //        //}
-            //        //catch(Exception ex)
-            //        //{
-            //        //    throw new Exception(ex.Message) { Source = $"Routine: [{routine.Schema}].[{routine.Name}]" };
-            //        //}
-            //    }
-            //}
-
-            List<Routine> queries = CollectQueries();
-
-#if DEBUG
-            //File.WriteAllText(@"C:\Users\Alan\source\repos\sql-plus-builder-04\Routines.json", JsonConvert.SerializeObject(routines));
-            //File.WriteAllText(@"C:\Users\Alan\source\repos\sql-plus-builder-04\Queries.json", JsonConvert.SerializeObject(queries));
-#endif
-            routines.AddRange(queries);
+            routines.AddRange(CollectQueries());
             return routines;
 
         }
@@ -552,12 +528,12 @@
         private List<Routine> CollectQueries()
         {
             List<Routine> result = new List<Routine>();
-            if (!Directory.Exists(project.SQLPLUSQueryFolder))
+            if (!Directory.Exists(project.SQLPLUSQueriesFolder))
             {
                 return result;
             }
             
-            string[] directories = Directory.GetDirectories(project.SQLPLUSQueryFolder);
+            string[] directories = Directory.GetDirectories(project.SQLPLUSQueriesFolder);
             foreach (string directory in directories)
             {
                 string[] files = Directory.GetFiles(directory, "*.sql");
@@ -622,7 +598,7 @@
             int parametersEnd = IndexOf(lines, tagFactory.ParametersTag, IndexOfTypes.Exact, parametersStart + 1);
             if (parametersEnd == -1)
             {
-                throw new Exception("The --+Parameter tag requires an open and close, only a single --+Parameter tag was found");
+                throw new Exception($"The {tagFactory.ParametersTag} tag requires an open and close tag, only a single {tagFactory.ParametersTag} tag was found");
             }
 
             List<BaseTag> tags = new List<BaseTag>();

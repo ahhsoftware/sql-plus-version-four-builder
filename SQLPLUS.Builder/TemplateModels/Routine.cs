@@ -359,7 +359,7 @@
                 {
                     inputUsings = new List<string>();
 
-                    inputUsings.TryAddItem(project.SqlPlusBaseNamespace);
+                    inputUsings.TryAddItem(project.SQLPLUSBaseNamespace);
                    
                     //System Component Model for the intergaces
                     if (build.BuildOptions.ImplementIChangeTracking || build.BuildOptions.ImplementIRevertibleChangeTracking || build.BuildOptions.ImplementINotifyPropertyChanged)
@@ -464,7 +464,7 @@
                     {
                         if (parameter.IsTableValueParameter)
                         {
-                            serviceUsings.TryAddItem(project.SqlPlusBaseNamespace);
+                            serviceUsings.TryAddItem(project.SQLPLUSBaseNamespace);
                         }
                     }
                     

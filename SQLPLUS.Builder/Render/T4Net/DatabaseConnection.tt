@@ -1,0 +1,19 @@
+﻿/*
+  MSSQL:
+    Set the data base type to MSSQL as follows: "DatabaseType" : "MSSQL"
+    
+  SQL Server example connections strings:
+    Integrated Security = "ConnectionString": "Server = (local); Database = <Database Name>; Integrated Security = true;"
+    SQL Server Authentication = "ConnectionString": "Server = <Server Name>; Database = <Database Name>; User ID = <User Name>; Password = <Password>;"
+    
+  See more options for MSSQL at https://www.connectionstrings.com/sql-server/
+
+  *Note that this connection must have full access*
+ 
+*/
+
+{
+  "DatabaseType": "MSSQL"
+  //"ConnectionString": "Server = (local); Database = <Your Database Name Here>; Integrated Security = true;"
+  //"ConnectionString": "Server = <server name>; Database = <database name>; User ID = <user name>; Password = <password>;"
+}

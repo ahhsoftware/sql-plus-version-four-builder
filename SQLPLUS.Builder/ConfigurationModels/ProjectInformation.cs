@@ -7,37 +7,44 @@
         {
             RootNamespace = rootNamespace;
             RootDirectory = rootDirectory;
-            ConstantsDirectory = Path.Combine(rootDirectory, "Constants");
-            ConstantsNamespace = $"{rootNamespace}.Constants";
+            //ConstantsDirectory = Path.Combine(rootDirectory, "Constants");
+            //ConstantsNamespace = $"{rootNamespace}.Constants";
             EnumerationsDirectory = Path.Combine(rootDirectory, "Enumerations");
             EnumerationsNamespace = $"{rootNamespace}.Enumerations";
             StaticDataDirectory = Path.Combine(rootDirectory, "Statics");
             StaticDataNamespace = $"{rootNamespace}.Statics";
-            SqlPlusBaseDirectory = Path.Combine(rootDirectory, "SqlPlusBase");
-            SqlPlusBaseNamespace = "SqlPlusBase";
-            SQLPLUSValidInputPath = Path.Combine(SqlPlusBaseDirectory, "ValidInput.cs");
-            SQLPLUSValueComparisonsPath = Path.Combine(SqlPlusBaseDirectory, "ValueComparisons.cs");
-            SQLPlusTransientErrorsPath = Path.Combine(SqlPlusBaseDirectory, "TransientErrors.cs");
-            SQLPLUSQueryFolder = Path.Combine(rootDirectory, "SQL+", "Queries");
+            SQLPLUSBaseDirectory = Path.Combine(rootDirectory, "SqlPlusBase");
+            SQLPLUSBaseNamespace = "SqlPlusBase";
+            SQLPLUSValidInputPath = Path.Combine(SQLPLUSBaseDirectory, "ValidInput.cs");
+            SQLPLUSValueComparisonsPath = Path.Combine(SQLPLUSBaseDirectory, "ValueComparisons.cs");
+            SQLPlusTransientErrorsPath = Path.Combine(SQLPLUSBaseDirectory, "TransientErrors.cs");
+            SQLPLUSFolder = Path.Combine(rootDirectory, "SQL+");
+            SQLPLUSQueriesFolder = Path.Combine(SQLPLUSFolder, "Queries");
+            SQLPLUSDatabaseConnectionPath = Path.Combine(SQLPLUSFolder, "DatabaseConnection.json");
+            SQLPLUSBuildDefinitionPath = Path.Combine(SQLPLUSFolder, "BuildDefinition.json");
             UserDefinedTypeDirectory = Path.Combine(rootDirectory, "UserDefinedTypes");
             UserDefinedTypeNamepace = $"{rootNamespace}.UserDefinedTypes";
         }
 
-        public string ConstantsDirectory { get; }
-        public string ConstantsNamespace { get; }
+        //public string ConstantsDirectory { get; }
+        //public string ConstantsNamespace { get; }
         public string EnumerationsDirectory { get; }
         public string EnumerationsNamespace { get; }
         public string RootNamespace { get; }
         public string RootDirectory { get; }
         public string StaticDataDirectory { get; }
         public string StaticDataNamespace { get; }
-        public string SqlPlusBaseDirectory { get; }
-        public string SqlPlusBaseNamespace { get; }
+        public string SQLPLUSBaseDirectory { get; }
+        public string SQLPLUSBaseNamespace { get; }
         public string SQLPLUSValidInputPath { get; }
         public string SQLPLUSValueComparisonsPath { get; }
         public string SQLPlusTransientErrorsPath { get; }
-        public string SQLPLUSQueryFolder { get; }
+        public string SQLPLUSQueriesFolder { get; }
         public string UserDefinedTypeNamepace { get; }
         public string UserDefinedTypeDirectory { get; }
+
+        public string SQLPLUSFolder { get; }
+        public string SQLPLUSBuildDefinitionPath { get; }
+        public string SQLPLUSDatabaseConnectionPath { set; get; }
     }
 }

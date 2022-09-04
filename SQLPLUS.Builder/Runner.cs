@@ -172,7 +172,7 @@
         public void WriteTransientErrors()
         {
             string content = render.TransientErrors();
-            string directory = project.SqlPlusBaseDirectory;
+            string directory = project.SQLPLUSBaseDirectory;
             string fileName = "TransientErrors";
             WriteText(content, directory, fileName);
         }
@@ -180,7 +180,7 @@
         public void WriteTransientErrorsExample()
         {
             string content = render.TransientErrorsExample();
-            string directory = project.SqlPlusBaseDirectory;
+            string directory = project.SQLPLUSBaseDirectory;
             string fileName = "TransientErrorsExample";
             WriteText(content, directory, fileName);
         }
@@ -289,12 +289,12 @@
         private void WriteValidInput()
         {
             string content = render.ValidInput();
-            WriteText(content, project.SqlPlusBaseDirectory, "ValidInput");
+            WriteText(content, project.SQLPLUSBaseDirectory, "ValidInput");
         }
         private void WriteHelpers(List<string> usings, List<string> types, List<Parameter> parameters)
         {
             string content = render.Helpers(usings, types, parameters);
-            WriteText(content, project.SqlPlusBaseDirectory, "Helpers");
+            WriteText(content, project.SQLPLUSBaseDirectory, "Helpers");
         }
 
         private static List<string> TypesHelpers(List<Routine> routines)
@@ -332,7 +332,7 @@
                     {
                         result.TryAddItem("System.Data");
                         result.TryAddItem(project.UserDefinedTypeNamepace);
-                        result.TryAddItem(project.SqlPlusBaseNamespace);
+                        result.TryAddItem(project.SQLPLUSBaseNamespace);
                         foreach(Column column in parameter.TVColumns)
                         {
                             result.TryAddItem(column.Using);

@@ -36,7 +36,7 @@ namespace SQLPLUS.Builder.Render.T4Net
 namespace ");
             
             #line 11 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ValidInput.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(project.SqlPlusBaseNamespace));
+            this.Write(this.ToStringHelper.ToStringWithCulture(project.SQLPLUSBaseNamespace));
             
             #line default
             #line hidden

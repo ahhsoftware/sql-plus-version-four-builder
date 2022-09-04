@@ -20,24 +20,24 @@
         /// <summary>
         /// Creates an instance of DataCollectorBase populated with required objects. Objects are available in derived classes by the names of the parameters.
         /// </summary>
-        /// <param name="buildDefinition">BuildDefinition instance.</param>
-        /// <param name="databaseConnection">DatabaseConnection instance.</param>
-        /// <param name="projectInformation">ProjectInformation instance.</param>
-        public DataCollectorBase(BuildDefinition buildDefinition, DatabaseConnection databaseConnection, ProjectInformation projectInformation)
+        /// <param name="build">BuildDefinition instance.</param>
+        /// <param name="connection">DatabaseConnection instance.</param>
+        /// <param name="project">ProjectInformation instance.</param>
+        public DataCollectorBase(BuildDefinition build, DatabaseConnection connection, ProjectInformation project)
         {
-            this.build = buildDefinition;
-            this.databaseConnection = databaseConnection;
-            this.project = projectInformation;
-            this.tagFactory = new TagFactory(buildDefinition);
+            this.build = build;
+            this.databaseConnection = connection;
+            this.project = project;
+            this.tagFactory = new TagFactory(build);
         }
 
         #region Helper Functions
 
         /// <summary>
-        /// Determines the type of information provided by the line being read.
+        /// Determines the type of line (One of the LineTypes enum).
         /// </summary>
-        /// <param name="line">Line of text from the routine text.</param>
-        /// <returns>One of the LineTypes enumeration.</returns>
+        /// <param name="line">Line of text to evaluate.</param>
+        /// <returns>LineTypes enumeration.</returns>
         protected LineTypes LineType(string line)
         {
             if (string.IsNullOrEmpty(line))

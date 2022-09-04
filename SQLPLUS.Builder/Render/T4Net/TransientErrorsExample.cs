@@ -39,7 +39,7 @@ namespace SQLPLUS.Builder.Render.T4Net
 namespace ");
             
             #line 16 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\TransientErrorsExample.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(project.SqlPlusBaseNamespace));
+            this.Write(this.ToStringHelper.ToStringWithCulture(project.SQLPLUSBaseNamespace));
             
             #line default
             #line hidden

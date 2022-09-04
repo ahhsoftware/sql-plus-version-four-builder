@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using SQLPLUS.Builder;
 using SQLPLUS.Builder.ConfigurationModels;
 using SQLPLUS.Builder.DataCollectors;
@@ -10,10 +12,53 @@ using SQLPLUS.Builder.Render;
 
 namespace SQLPLUS.Builder.ConsoleBuilder
 {
+    [Flags]
+    public enum Vals
+    {
+        None = 0,
+        Two = 2,
+        Four = 4,
+        Eight = 8
+    }
+
+    public static class ValsHelper
+    {
+        public static void AddValue(this ref Vals source, Vals valueToAdd)
+        {
+            source |= valueToAdd;
+        }
+
+        public static void RemoveValue(this ref Vals source, Vals valueToRemove)
+        {
+            source &= ~valueToRemove;
+        }
+    }
+
     internal class Program
     {
+
+        private static T AddtValue<T> (T source, T value) where T: System.Enum
+        {
+            return source;
+        }
+
+
         static void Main(string[] args)
         {
+
+            Vals val = Vals.None;
+
+            val.AddValue(Vals.Two);
+            val.AddValue(Vals.Two);
+            val.AddValue (Vals.Four);
+            val.AddValue(Vals.Four);
+            val.AddValue(Vals.Eight);
+            val.RemoveValue(Vals.Two);
+            val.RemoveValue(Vals.Two);
+            val.RemoveValue(Vals.Four);
+
+
+
             for (int idx = 0; idx != 5; idx++)
             {
                 BuildDefinition build = GetBuildDefinition(idx);
@@ -25,6 +70,14 @@ namespace SQLPLUS.Builder.ConsoleBuilder
                 AttachEvents(runner);
                 runner.Run();
                 DetachEvents(runner);
+
+                if(!Directory.Exists(project.SQLPLUSFolder))
+                {
+                    Directory.CreateDirectory(project.SQLPLUSFolder);
+                }
+
+                File.WriteAllText(project.SQLPLUSBuildDefinitionPath, JsonConvert.SerializeObject(build));
+                File.WriteAllText(project.SQLPLUSDatabaseConnectionPath, JsonConvert.SerializeObject(database));
             }
 
             Console.Read();
@@ -106,8 +159,6 @@ namespace SQLPLUS.Builder.ConsoleBuilder
         }
         static BuildDefinition GetBuildDefinition(int idx)
         {
-            
-
             return new BuildDefinition
             {
                 StaticQueries = new List<BuildQuery>

@@ -196,7 +196,7 @@ if(build.LicenseType != "Community"){
         List<string> result = new List<string>();
         result.Add("System");
         result.Add("System.Collections.Generic");
-        result.Add(project.SqlPlusBaseNamespace);
+        result.Add(project.SQLPLUSBaseNamespace);
         result.Add(build.SQLClientNamespace);
         result.Add(build.SQLExceptionNamespace);
         return result;
