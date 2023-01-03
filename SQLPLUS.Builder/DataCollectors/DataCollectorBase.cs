@@ -34,6 +34,11 @@
         #region Helper Functions
 
         /// <summary>
+        /// Specifies how to collect data, for configuration vs for build;
+        /// </summary>
+        public DataCollectorModes DataCollectorMode { set; get; } = DataCollectorModes.Build;
+
+        /// <summary>
         /// Determines the type of line (One of the LineTypes enum).
         /// </summary>
         /// <param name="line">Line of text to evaluate.</param>
@@ -233,6 +238,9 @@
             }
         }
 
+
+
+
         /// <summary>
         /// Comments out the query text between the start and end index identified by the query.
         /// Changes the query start and query end lines to print statements to avoid and errors.
@@ -241,13 +249,25 @@
         /// <param name="query"></param>
         protected void CommentOutQueryLines(string[] lines, QueryStart query)
         {
-            lines[query.StartIndex] = $"PRINT '{lines[query.StartIndex]}'";
+            lines[query.StartIndex] = query.QueryStartAsPrintLine();
+
             for (int idx = query.StartIndex + 1; idx != query.EndIndex; idx++)
             {
                 lines[idx] = $"--{lines[idx]}";
             }
-            lines[query.EndIndex] = $"PRINT '{lines[query.EndIndex]}'";
+            lines[query.EndIndex] = query.QueryEndAsPrintLine();
         }
+
+        protected void ReverseCommentOutQueryLines(string[] lines, QueryStart query)
+        {
+            lines[query.StartIndex] = query.QueryStartTag();
+            for (int idx = query.StartIndex + 1; idx != query.EndIndex; idx++)
+            {
+                lines[idx] = lines[idx].Substring(2);
+            }
+            lines[query.EndIndex] = query.QueryEndTag();
+        }
+
 
         protected string[] CleansedRoutineLines(string[] lines)
         {
@@ -296,6 +316,7 @@
             }
             return temp.ToArray();
         }
+        
         #endregion
 
         #region Extract Methods

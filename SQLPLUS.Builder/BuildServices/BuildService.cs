@@ -1,5 +1,6 @@
 ﻿namespace SQLPLUS.Builder
 {
+    using SQLPLUS.Builder.BuildServices;
     using SQLPLUS.Builder.ConfigurationModels;
     using SQLPLUS.Builder.DataCollectors;
     using SQLPLUS.Builder.Helpers;
@@ -10,7 +11,7 @@
     using System.IO;
     using System.Linq;
 
-    public class Runner
+    public class BuildService
     {
         private readonly IDataCollector data;
         private readonly IRenderProvider render;
@@ -18,7 +19,17 @@
         private readonly ProjectInformation project;
         private List<string> directories = new List<string>();
 
-        public Runner(BuildDefinition build, ProjectInformation project, IDataCollector data, IRenderProvider render)
+        public event EventHandler<FileCreatedEventArgs> OnFileCreated;
+        public event EventHandler<DirectoryCreatedEventArgs> OnDirectoryCreated;
+        public event EventHandler<FileWriteEventArgs> OnFileWrite;
+        public event EventHandler<ProgressStatusArgs> OnProgressChanged;
+
+        public void UpdateProgress(string message)
+        {
+            OnProgressChanged?.Invoke(this, new ProgressStatusArgs(Progress(), message));
+        }
+
+        public BuildService(BuildDefinition build, ProjectInformation project, IDataCollector data, IRenderProvider render)
         {
             this.data = data;
             this.render = render;
@@ -26,21 +37,32 @@
             this.project = project;
         }
 
-        public event EventHandler<FileCreatedEventArgs> OnFileCreated;
-        public event EventHandler<DirectoryCreatedEventArgs> OnDirectoryCreated;
-        public event EventHandler<FileWriteEventArgs> OnFileWrite;
-        public event EventHandler<ProgressStatusArgs> OnProgressChanged;
-
         public int renderCount = 0;
         private decimal progress = 0;
         private decimal progressMax = 20;
 
         public void Run()
         {
-            UpdateProgress("Staring build...");
+            UpdateProgress("Starting build...");
 
             UpdateProgress($"Starting collect routines.");
             List<Routine> routines = data.CollectRoutines().OrderBy(r => r.ServiceNamespace).ThenBy(r => r.ServiceName).ToList();
+            bool errorFound = false;
+            foreach (Routine routine in routines)
+            {
+                if(routine.HasError)
+                {
+                    if(!errorFound)
+                    {
+                        UpdateProgress($"Build failed: Errors found in SQL Routine {routine.Name}");
+                        errorFound = true;
+                    }
+                    UpdateProgress($"Error: {routine.Name} - {routine.ErrorMessage}");
+                }
+            }
+
+            if (errorFound) return;
+
             UpdateProgress($"Complete collect routines with count: {routines.Count}.");
 
             UpdateProgress($"Starting collect Enum Queries.");
@@ -77,17 +99,24 @@
             WriteOutputObjects(routines);
             UpdateProgress("Write Output objects complete.");
 
-            UpdateProgress("Starting write UserDefinedTypes objects.");
+            UpdateProgress("Starting write UserDefinedType objects.");
             WriteUserDefinedTypes(routines);
-            UpdateProgress("Write UserDefinedTypes complete.");
+            UpdateProgress("Write UserDefinedTypes objects complete.");
 
-            UpdateProgress("Starting write Services objects.");
+            UpdateProgress("Starting write Service objects.");
             WriteServices(routines);
-            UpdateProgress("Write Services complete.");
+            UpdateProgress("Write Service objects complete.");
 
-            UpdateProgress("Starting write Services objects.");
+            UpdateProgress("Starting write Enum objects.");
             WriteEnums(enums);
+            UpdateProgress("Write Enum objects complete.");
+
+            UpdateProgress("Starting write Static objects.");
             WriteStatics(statics);
+            UpdateProgress("Write Static objects complete.");
+
+            UpdateProgress("Build complete with no errors");
+            
         }
 
         private void WriteStatics(List<StaticCollection> statics)
@@ -185,10 +214,7 @@
             WriteText(content, directory, fileName);
         }
 
-        private void UpdateProgress(string message)
-        {
-            OnProgressChanged?.Invoke(this, new ProgressStatusArgs(Progress(), message));
-        }
+        
 
         private int Progress()
         {

@@ -1,93 +1,82 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using SQLPLUS.Builder;
+﻿using SQLPLUS.Builder.BuildServices;
 using SQLPLUS.Builder.ConfigurationModels;
 using SQLPLUS.Builder.DataCollectors;
 using SQLPLUS.Builder.Render;
+using System;
+using System.Collections.Generic;
 
 namespace SQLPLUS.Builder.ConsoleBuilder
 {
-    [Flags]
-    public enum Vals
-    {
-        None = 0,
-        Two = 2,
-        Four = 4,
-        Eight = 8
-    }
-
-    public static class ValsHelper
-    {
-        public static void AddValue(this ref Vals source, Vals valueToAdd)
-        {
-            source |= valueToAdd;
-        }
-
-        public static void RemoveValue(this ref Vals source, Vals valueToRemove)
-        {
-            source &= ~valueToRemove;
-        }
-    }
-
     internal class Program
     {
-
-        private static T AddtValue<T> (T source, T value) where T: System.Enum
+        public enum Test
         {
-            return source;
+            /// <summary>
+            /// Comment
+            /// </summary>
+            Name = 1
         }
-
 
         static void Main(string[] args)
         {
+            ProjectInformation projectInformation = new ProjectInformation("SQLPLUS.Build.Test.Basic",
+                "C:\\Users\\Alan\\source\\repos\\sql-plus-version-four-tests\\SQLPLUS.Build.Test.Basic");
 
-            Vals val = Vals.None;
-
-            val.AddValue(Vals.Two);
-            val.AddValue(Vals.Two);
-            val.AddValue (Vals.Four);
-            val.AddValue(Vals.Four);
-            val.AddValue(Vals.Eight);
-            val.RemoveValue(Vals.Two);
-            val.RemoveValue(Vals.Two);
-            val.RemoveValue(Vals.Four);
-
-
-
-            for (int idx = 0; idx != 5; idx++)
+            ConfigurationService configurationService = new ConfigurationService(projectInformation);
+                
+            if (!configurationService.SQLPLusFolderExists())
             {
-                BuildDefinition build = GetBuildDefinition(idx);
-                DatabaseConnection database = GetDatabaseConnection();
-                ProjectInformation project = GetProjectInformation(idx);
-                IDataCollector dataCollector = new MSSQLDataCollector(build, database, project);
-                IRenderProvider render = new Builder.Render.T4Net.NetRenderProvider(project, build);
-                Runner runner = new Runner(build, project, dataCollector, render);
-                AttachEvents(runner);
-                runner.Run();
-                DetachEvents(runner);
-
-                if(!Directory.Exists(project.SQLPLUSFolder))
-                {
-                    Directory.CreateDirectory(project.SQLPLUSFolder);
-                }
-
-                File.WriteAllText(project.SQLPLUSBuildDefinitionPath, JsonConvert.SerializeObject(build));
-                File.WriteAllText(project.SQLPLUSDatabaseConnectionPath, JsonConvert.SerializeObject(database));
+                Console.WriteLine("No configuration");
+                return;
             }
 
+            var buildDefintion = configurationService.GetBuildDefinition();
+            var databaseConnection = configurationService.GetDatabaseConnection();
+            IDataCollector dataCollector = new MSSQLDataCollector(buildDefintion, databaseConnection, projectInformation);
+            IRenderProvider render = new Builder.Render.T4Net.NetRenderProvider(projectInformation, buildDefintion);
+            BuildService builder = new BuildService(buildDefintion, projectInformation, dataCollector, render);
+            AttachEvents(builder);
+            builder.Run();
+            DetachEvents(builder);
+            
             Console.Read();
         }
+
+        private static void ConfigurationService_OnProgressChanged(object sender, ProgressStatusArgs e)
+        {
+            Console.WriteLine(e.Progress);
+        }
+
+        private static void ConfigurationService_OnFileWrite(object sender, FileWriteEventArgs e)
+        {
+            Console.WriteLine(e.FileName);
+        }
+
+        private static void ConfigurationService_OnFileCreated(object sender, FileCreatedEventArgs e)
+        {
+            Console.WriteLine(e.NewFileName);
+        }
+
+        private static void ConfigurationService_OnDirectoryCreated(object sender, DirectoryCreatedEventArgs e)
+        {
+            Console.WriteLine(e.NewDirectoryPath);
+        }
+
+        private static void WriteErrors(BuildDefinition build)
+        {
+            
+            foreach(string error in build.GetErrors())
+            {
+                Console.WriteLine(error);
+            }
+        }
+
         static void Input_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             Console.Write(e.PropertyName);
         }
 
-        static void AttachEvents(Runner runner)
+        static void AttachEvents(BuildService runner)
         {
             runner.OnDirectoryCreated += Runner_OnDirectoryCreated;
             runner.OnFileCreated += Runner_OnFileCreated;
@@ -95,7 +84,7 @@ namespace SQLPLUS.Builder.ConsoleBuilder
             runner.OnProgressChanged += Runner_OnProgressChanged;
         }
 
-        static void DetachEvents(Runner runner)
+        static void DetachEvents(BuildService runner)
         {
             runner.OnDirectoryCreated -= Runner_OnDirectoryCreated;
             runner.OnFileCreated -= Runner_OnFileCreated;
@@ -161,15 +150,19 @@ namespace SQLPLUS.Builder.ConsoleBuilder
         {
             return new BuildDefinition
             {
+                
+
                 StaticQueries = new List<BuildQuery>
                 {
                     new BuildQuery {Name="StaticOne", Query="SELECT * FROM [dbo].[AllTypesNotNull]"}
                 },
+
                 EnumQueries = new List<BuildQuery>
                 {
-                    new BuildQuery{Name = "TestOne", Query="SELECT [Id] [Value], [DisplayName] [Name], [Comment] [Comment] FROM [dbo].[EnumTest]"},
+                    new BuildQuery{Name = "TestOne", Query="SELECT [DisplayName] [Name], [Id] [Value], [Comment], [Description] FROM [dbo].[EnumTest]"},
                     new BuildQuery{Name = "TestTwo", Query="SELECT [Id] [Value], [DisplayName] [Name] FROM [dbo].[EnumTest]"}
                 },
+
                 BuildOptions = new BuildOptions
                 {
                     ImplementIChangeTracking = idx == 1 ? true : false,
@@ -177,6 +170,8 @@ namespace SQLPLUS.Builder.ConsoleBuilder
                     ImplementINotifyPropertyChanged = idx == 3 ? true : false,
                     UseNullableReferenceTypes = idx == 4 ? true : false,
                 },
+
+
                 //BuildRoutines = new System.Collections.Generic.List<BuildRoutine>()
                 //{
                 //    new BuildRoutine
@@ -220,3 +215,37 @@ namespace SQLPLUS.Builder.ConsoleBuilder
         }
     }
 }
+//for (int idx = 0; idx != 5; idx++)
+//{
+//    BuildDefinition build = GetBuildDefinition(idx);
+
+//    if(!build.IsValid())
+//    {
+//        WriteErrors(build);
+//        break;
+//    }
+//    DatabaseConnection database = GetDatabaseConnection();
+//    ProjectInformation project = GetProjectInformation(idx);
+//    IDataCollector dataCollector = new MSSQLDataCollector(build, database, project);
+//    IRenderProvider render = new Builder.Render.T4Net.NetRenderProvider(project, build);
+//    BuildService runner = new BuildService(build, project, dataCollector, render);
+//    AttachEvents(runner);
+//    try
+//    {
+//        runner.Run();
+//    }
+//    catch(Exception ex)
+//    {
+//        Console.WriteLine(ex.Message);
+//    }
+
+//    DetachEvents(runner);
+
+//    if(!Directory.Exists(project.SQLPLUSFolder))
+//    {
+//        Directory.CreateDirectory(project.SQLPLUSFolder);
+//    }
+
+//    //File.WriteAllText(project.SQLPLUSBuildDefinitionPath, JsonConvert.SerializeObject(build));
+//    //File.WriteAllText(project.SQLPLUSDatabaseConnectionPath, JsonConvert.SerializeObject(database));
+//}

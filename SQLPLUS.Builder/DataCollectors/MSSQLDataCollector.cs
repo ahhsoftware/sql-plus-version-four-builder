@@ -1,5 +1,7 @@
 ﻿namespace SQLPLUS.Builder.DataCollectors
 {
+    #region Usings
+
     using SQLPLUS.Builder.ConfigurationModels;
     using SQLPLUS.Builder.DataServices.MSSQL;
     using SQLPLUS.Builder.DataServices.MSSQL.Models;
@@ -8,18 +10,24 @@
     using SQLPLUS.Builder.TemplateModels;
     using System;
     using System.Collections.Generic;
+    using System.Data;
     using System.Data.SqlClient;
     using System.IO;
     using System.Linq;
+    using System.Runtime.InteropServices;
+    using System.Runtime.InteropServices.ComTypes;
+    using System.Security.Cryptography;
     using System.Text;
     using System.Text.RegularExpressions;
 
+    #endregion Usings
+
     public class MSSQLDataCollector : DataCollectorBase
     {
-        private const string ROUTINE_TYPE_PROCEDURE = "PROCEDURE";
-        private const string ROUTINE_TYPE_FUNCTION = "FUNCTION";
-        private const string ROUTINE_TYPE_QUERY = "QUERY";
-        private const string DATA_TYPE_TABLE = "TABLE";
+        public const string ROUTINE_TYPE_PROCEDURE = "PROCEDURE";
+        public const string ROUTINE_TYPE_FUNCTION = "FUNCTION";
+        public const string ROUTINE_TYPE_QUERY = "QUERY";
+        public const string DATA_TYPE_TABLE = "TABLE";
 
         private readonly Service dataService;
 
@@ -44,19 +52,133 @@
             {
                 return false;
             }
-            
         }
-        
+
+        public List<BuildRoutine> RoutinesMeta()
+        {
+            var output = dataService.SQLPlusRoutines();
+            if (output.ReturnValue == SQLPlusRoutinesOutput.Returns.Ok)
+            {
+                List<BuildRoutine> result = new List<BuildRoutine>();
+
+                foreach (var item in output.ResultData)
+                {
+                    result.Add(new BuildRoutine
+                    {
+                        Name = item.Name,
+                        Schema = item.Schema,
+                        Namespace = item.Schema
+                    });
+                }
+
+                return result;
+            }
+
+            return null;
+        }
+
+        public List<BuildRoutine> QueriesMeta()
+        {
+            List<Routine> routines = CollectQueries();
+            if (routines.Count == 0)
+            {
+                return null;
+            }
+            List<BuildRoutine> result = new List<BuildRoutine>();
+            foreach (var item in routines)
+            {
+                result.Add(new BuildRoutine()
+                {
+                    Name = item.Name,
+                    Schema = item.Schema,
+                    Namespace = item.Namespace
+                });
+            }
+
+            return result.OrderBy(s => s.Schema).ThenBy(s => s.Name).ToList();
+
+        }
+
         public override List<Routine> CollectRoutines()
         {
-
             List<Routine> routines = CollectDBRoutines();
             routines.AddRange(CollectQueries());
             return routines;
-
         }
 
         #region DBRoutines
+
+        private void FilterDBRoutinesByBuildDefinition(SQLPlusRoutinesOutput output)
+        {
+            List<SQLPlusRoutinesResult> result = new List<SQLPlusRoutinesResult>();
+
+            foreach (SQLPlusRoutinesResult routine in output.ResultData)
+            {
+                bool foundInBuildSchema = false;
+                bool foundInBuildRoutine = false;
+
+                if (build.BuildSchemas != null)
+                {
+                    foreach (BuildSchema schema in build.BuildSchemas)
+                    {
+                        if (schema.Schema == routine.Schema)
+                        {
+                            foundInBuildSchema = true;
+                            break;
+                        }
+                    }
+                }
+
+                if (!foundInBuildSchema)
+                {
+                    if (build.BuildRoutines != null)
+                    {
+                        foreach (BuildRoutine buildRoutine in build.BuildRoutines)
+                        {
+                            if (routine.Schema == buildRoutine.Schema && routine.Name == buildRoutine.Name)
+                            {
+                                foundInBuildRoutine = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+
+                if (foundInBuildSchema || foundInBuildRoutine)
+                {
+                    result.Add(routine);
+                }
+            }
+
+            output.ResultData = result;
+        }
+
+        private string GetDBBuildDefinitionNamespaceOrDefault(SQLPlusRoutinesResult routine)
+        {
+            string result = routine.Schema;
+
+            var includedBuildSchema = build.BuildSchemas?.FirstOrDefault(s => s.Schema.Equals(routine.Schema, StringComparison.OrdinalIgnoreCase));
+            if (includedBuildSchema != null)
+            {
+                result = includedBuildSchema.Namespace;
+            }
+            else
+            {
+                var includedBuildRoutine = build.BuildRoutines?.FirstOrDefault(r => r.Schema.Equals(routine.Schema, StringComparison.OrdinalIgnoreCase) && r.Name.Equals(routine.Name, StringComparison.OrdinalIgnoreCase));
+                if (includedBuildRoutine != null)
+                {
+                    result = includedBuildRoutine.Namespace;
+                }
+            }
+            
+            if(result == "+")
+            {
+                result = project.RootNamespace;
+            }
+
+            return result;
+        }
+
 
         /// <summary>
         /// Routine collects all the routines form the DB that have a --+SQLPlusRoutine tag.
@@ -77,23 +199,15 @@
                 return result;
             }
 
-            BuildSchema includedBuildSchema;
-            BuildRoutine includedBuildRoutine;
+            if (DataCollectorMode == DataCollectorModes.Build)
+            {
+                //TODO: Reduce the set of schemas and routines by the configuration
+                FilterDBRoutinesByBuildDefinition(output);
+            }
 
             foreach (SQLPlusRoutinesResult sqlRoutine in output.ResultData)
             {
-                includedBuildSchema = null;
-                includedBuildRoutine = null;
-                string @namespace = null;
-
-                includedBuildSchema = build.BuildSchemas?.FirstOrDefault(s => s.Schema.Equals(sqlRoutine.Schema, StringComparison.OrdinalIgnoreCase));
-                @namespace = includedBuildSchema?.Namespace;
-                if (@namespace == null)
-                {
-                    includedBuildRoutine = build.BuildRoutines?.FirstOrDefault(r => r.Schema.Equals(sqlRoutine.Schema, StringComparison.OrdinalIgnoreCase) && r.Name.Equals(sqlRoutine.Name, StringComparison.OrdinalIgnoreCase));
-                    @namespace = includedBuildRoutine?.Namespace;
-                }
-                if (@namespace != null)
+                try
                 {
                     string[] routineLines = GetDBRoutineLines(sqlRoutine.Schema, sqlRoutine.Name);
                     SQLPlusRoutine routineTag = ExtractSQLPlusRoutineTag(routineLines);
@@ -103,7 +217,7 @@
                     List<Parameter> parameters = GetDBRoutineParameters(sqlRoutine.Schema, sqlRoutine.Name, sqlRoutine.RoutineType, routineLines, returnValueEnums.Count == 0);
                     Routine routine = new Routine(
                         sqlRoutine.Name,
-                        @namespace,
+                        GetDBBuildDefinitionNamespaceOrDefault(sqlRoutine),
                         sqlRoutine.Schema,
                         sqlRoutine.RoutineType,
                         sqlRoutine.DataType,
@@ -121,39 +235,25 @@
                     SetDBResultColumns(routine);
                     result.Add(routine);
                 }
-            }
-            // Validating that the database returned at least one routine for each schema in the build definition.
-            if (build.BuildSchemas != null)
-            {
-                List<string> invalidSchemas = new List<string>();
-
-                foreach (var buildSchema in build.BuildSchemas)
+                catch(Exception ex)
                 {
-                    if (!result.Exists(s => s.Schema.Equals(buildSchema.Schema, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        invalidSchemas.Add(buildSchema.Schema);
-                    }
-                }
-                if (invalidSchemas.Count != 0)
-                {
-                    throw new Exception($"The schema(s): [{string.Join(", ", invalidSchemas)}] were included in the BuildDefintion.json file, but cannot be built. This indicates that the schema is not present in the database, or the schema does not contain any semantically tagged procedures. Correct the BuildDefinition.json file.");
-                }
-            }
-
-            // Validating that the database returned at a routine for each routine in the build definition
-            if (build.BuildRoutines != null)
-            {
-                List<string> invalidRoutines = new List<string>();
-                foreach (var buildRoutine in build.BuildRoutines)
-                {
-                    if (!result.Exists(r => r.Schema.Equals(buildRoutine.Schema, StringComparison.OrdinalIgnoreCase) && r.Name.Equals(buildRoutine.Name, StringComparison.OrdinalIgnoreCase)))
-                    {
-                        invalidRoutines.Add($"{buildRoutine.Schema}.{buildRoutine.Name}");
-                    }
-                }
-                if (invalidRoutines.Count != 0)
-                {
-                    throw new Exception($"The routine(s): [{string.Join(", ", invalidRoutines)}] were included in the BuildDefintion.json file, but cannot be built. This indicates that the routine is not present in the database, or the routine is not semantically tagged. Correct the BuildDefinition.json file.");
+                    Routine errorRoutine = new Routine(sqlRoutine.Name,
+                        GetDBBuildDefinitionNamespaceOrDefault(sqlRoutine),
+                        sqlRoutine.Schema,
+                        sqlRoutine.RoutineType,
+                        sqlRoutine.DataType,
+                        null,
+                        null,
+                        null,
+                        project,
+                        build,
+                        null,
+                        null,
+                        null,
+                        null,
+                        sqlRoutine.LastModified);
+                    errorRoutine.ErrorMessage = ex.Message;
+                    result.Add(errorRoutine);
                 }
             }
 
@@ -232,13 +332,14 @@
 
         private string AdoCommandType(string routineType, string dataType)
         {
-            if(routineType == ROUTINE_TYPE_PROCEDURE || (routineType == ROUTINE_TYPE_FUNCTION && dataType != DATA_TYPE_TABLE))
+            if (routineType == ROUTINE_TYPE_PROCEDURE || (routineType == ROUTINE_TYPE_FUNCTION && dataType != DATA_TYPE_TABLE))
             {
                 return "CommandType.StoredProcedure";
             }
             return "CommandType.Text";
         }
 
+        //TODO:
         private void ValidateRoutineAndQueryStarts(SQLPlusRoutine routineTag, List<QueryStart> queryStarts)
         {
             if (routineTag.SelectType == SelectTypes.MultiSet)
@@ -256,6 +357,7 @@
                 }
             }
         }
+
         private List<Parameter> GetDBRoutineParameters(string routineSchema, string routineName, string routineType, string[] routineLines, bool isReturnValueEnumerated)
         {
             List<Parameter> result = new List<Parameter>();
@@ -295,6 +397,7 @@
                 firstTagLineIndex--;
                 string testLine = routineLines[firstTagLineIndex];
                 LineTypes lineType = LineType(testLine);
+
                 if (lineType != LineTypes.PrimaryTag && lineType != LineTypes.SupplementalTag)
                 {
                     firstTagLineIndex++;
@@ -336,7 +439,7 @@
         private ParameterModeMapping GetActualParameterModeMappingDB(RoutineParametersResult parameter, BaseTag tag)
         {
             string returnMode = parameter.Mode;
-            
+
             if (tag == null)
             {
                 if (parameter.Mode == "INOUT")
@@ -376,10 +479,7 @@
             }
             return result;
         }
-        private Parameter CreateParameter(
-            RoutineParametersResult parameter,
-            ParameterModeMapping parameterModeMapping,
-            DataTypeMapping dataTypeMapping)
+        private Parameter CreateParameter(RoutineParametersResult parameter, ParameterModeMapping parameterModeMapping, DataTypeMapping dataTypeMapping)
         {
             return new Parameter(
                 parameter.OrdinalPosition,
@@ -423,11 +523,11 @@
             {
                 DataTypeMapping dataTypeMapping = DataTypeMappings.Mappings.FirstOrDefault(m => m.MSSQLDataType == col.SQLType);
                 List<string> annotations = new List<string>();
-                if(!col.IsNullable.Value)
+                if (!col.IsNullable.Value)
                 {
-                    annotations.Add(new Tags.Required(build.PrimaryTagPrefix,build.SupplementalTagPrefix).GetAnnotation());
+                    annotations.Add(new Tags.Required(build.PrimaryTagPrefix, build.SupplementalTagPrefix).GetAnnotation());
                 }
-                if(col.CharacterMaxLength.HasValue && col.CharacterMaxLength != -1)
+                if (col.CharacterMaxLength.HasValue && col.CharacterMaxLength != -1)
                 {
                     Tags.MaxLength maxLengthTag = new MaxLength(build.PrimaryTagPrefix, build.SupplementalTagPrefix);
                     maxLengthTag.Value = col.CharacterMaxLength.Value;
@@ -442,18 +542,18 @@
             // If it is a scalar function the result is a return parameter.
             if (routine.RoutineType.Equals(ROUTINE_TYPE_FUNCTION, StringComparison.OrdinalIgnoreCase))
             {
-                SetResultColumnsForFunction(routine);
+                SetDBResultColumnsForFunction(routine);
             }
             else if (routine.SelectType == SelectTypes.MultiSet)
             {
-                SetResultColumnsForMultiSet(routine);
+                SetDBResultColumnsForMultiSet(routine);
             }
             else
             {
-                SetResultColumnsForProcedure(routine);
+                SetDBResultColumnsForProcedure(routine);
             }
         }
-        private void SetResultColumnsForFunction(Routine routine)
+        private void SetDBResultColumnsForFunction(Routine routine)
         {
             if (routine.DataType.Equals(DATA_TYPE_TABLE, StringComparison.OrdinalIgnoreCase))
             {
@@ -471,12 +571,12 @@
                 routine.ResultSets.Add(new ResultSet("+", routine.SelectType, resultColumns));
             }
         }
-        private void SetResultColumnsForMultiSet(Routine routine)
+        private void SetDBResultColumnsForMultiSet(Routine routine)
         {
             string tempProcedureName = $"[{routine.Schema}].[{routine.Name}_SQLPX]";
             string dropTempProcedureText = $"DROP PROCEDURE {tempProcedureName}";
             string[] copy = GetRoutineLinesSafeCopy(routine.RoutineLines);
-            CommentOutIgnores(copy, routine.Ignores);
+            //CommentOutIgnores(copy, routine.Ignores);
             int declarationLine = IndexOf(copy, "CREATE PROCEDURE", IndexOfTypes.StartsWith, 0);
             copy[declarationLine] = ReplaceFirst(copy[declarationLine], routine.Name, $"{routine.Name}_SQLPX");
             for (int idx = 0; idx != routine.Queries.Count; idx++)
@@ -497,21 +597,21 @@
             ExecuteRawText(dropTempProcedureText, true);
 
             List<string> concatColumns = new List<string>();
-            foreach(ResultSet rs in routine.ResultSets)
+            foreach (ResultSet rs in routine.ResultSets)
             {
-                if(concatColumns.Contains(rs.ConcatColumns))
+                if (concatColumns.Contains(rs.ConcatColumns))
                 {
                     throw new Exception("Each result set in a multiset query must be unique. Update the routine so that each result has at least one different column.");
                 }
                 concatColumns.Add(rs.ConcatColumns);
             }
         }
-        private void SetResultColumnsForProcedure(Routine routine)
+        private void SetDBResultColumnsForProcedure(Routine routine)
         {
             List<Column> resultColumns = GetColumnsForText($"[{routine.Schema}].[{routine.Name}]");
             if (resultColumns.Count == 0)
             {
-                if(routine.SelectType != SelectTypes.NonQuery)
+                if (routine.SelectType != SelectTypes.NonQuery)
                 {
                     throw new Exception("No result columns");
                 }
@@ -521,6 +621,28 @@
 
         #endregion
 
+        #region Collect Queries
+
+        private bool QueryRoutineInConfiguration(string directory, string fileName)
+        {
+            if(build.BuildQuerySchemas != null)
+            {
+                var schema = build.BuildQuerySchemas.FirstOrDefault(s => s.Namespace == directory);
+                if(schema != null)
+                {
+                    return true;
+                }
+            }
+            if(build.BuildQueryRoutines != null)
+            {
+                var routine = build.BuildQueryRoutines.FirstOrDefault(r => r.Name == fileName && r.Namespace == directory);
+                if(routine != null)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
         /// <summary>
         /// Collects the Queries for the build.
         /// </summary>
@@ -532,55 +654,133 @@
             {
                 return result;
             }
-            
-            string[] directories = Directory.GetDirectories(project.SQLPLUSQueriesFolder);
+
+            string[] temp = Directory.GetDirectories(project.SQLPLUSQueriesFolder);
+            List<string> directories = new List<string>();
+            directories.Add(project.SQLPLUSQueriesFolder);
+            directories.AddRange(temp);
+
             foreach (string directory in directories)
             {
+
                 string[] files = Directory.GetFiles(directory, "*.sql");
                 foreach (string file in files)
                 {
-                    string nameSpace = new DirectoryInfo(directory).Name;
-                    string fileName = Path.GetFileNameWithoutExtension(file);
-                    string path = Path.Combine(directory, file);
-                    string text = File.ReadAllText(path);
-                    DateTime lastModified = File.GetLastWriteTime(path);
-
-                    string[] routineLines = GetRoutineLinesFromText(text);
-                    SQLPlusRoutine routineTag = ExtractSQLPlusRoutineTag(routineLines);
-                    List<QueryStart> queryTags = ExtractQueryTags(routineLines);
-                    List<Ignore> ignores = ExtractIgnoreTags(routineLines);
-                    List<EnumDefinition> returnValueEnums = EnumDefinitionsDB(ExtractReturnTags(routineLines));
-                    List<Parameter> parameters = GetQueryParameters(routineLines);
-
-                    if(returnValueEnums.Count != 0)
+                    if (DataCollectorMode == DataCollectorModes.Build)
                     {
-                        Parameter parameter = parameters.Find(p => p.Name == "@ReturnValue");
-                        if (parameter != null)
+                        if(!QueryRoutineInConfiguration(new DirectoryInfo(directory).Name, Path.GetFileNameWithoutExtension(file)))
                         {
-                            parameter.EnumerationName = "Returns";
+                            continue;
                         }
                     }
-                    Routine routine = new Routine(
-                        fileName,
-                        nameSpace,
-                        "dbo",
-                        "QUERY",
-                        null,
-                        AdoCommandType(ROUTINE_TYPE_QUERY, null),
-                        AdoCommandText("dbo", fileName, ROUTINE_TYPE_QUERY, null, parameters, routineLines),
-                        routineLines,
-                        project,
-                        build,
-                        routineTag,
-                        queryTags,
-                        parameters,
-                        returnValueEnums,
-                        lastModified);
-                    result.Add(routine);
+                    try
+                    {
+                        string path = Path.Combine(directory, file);
+                        string text = File.ReadAllText(path);
+                        DateTime lastModified = File.GetLastWriteTime(path);
+                        string[] routineLines = GetRoutineLinesFromText(text);
+                        SQLPlusRoutine routineTag = ExtractSQLPlusRoutineTag(routineLines);
+                        List<QueryStart> queryTags = ExtractQueryTags(routineLines);
+                        List<Ignore> ignores = ExtractIgnoreTags(routineLines);
+                        List<EnumDefinition> returnValueEnums = EnumDefinitionsDB(ExtractReturnTags(routineLines));
+                        List<Parameter> parameters = GetQueryParameters(routineLines);
+
+                        if (returnValueEnums.Count != 0)
+                        {
+                            Parameter parameter = parameters.Find(p => p.Name == "@ReturnValue");
+                            if (parameter != null)
+                            {
+                                parameter.EnumerationName = "Returns";
+                            }
+                        }
+                        Routine routine = new Routine(
+                            Path.GetFileNameWithoutExtension(file),
+                            directory == "Queries" ? "+" : new DirectoryInfo(directory).Name,
+                            "dbo",
+                            "QUERY",
+                            null,
+                            AdoCommandType(ROUTINE_TYPE_QUERY, null),
+                            AdoCommandText("dbo", Path.GetFileNameWithoutExtension(file), ROUTINE_TYPE_QUERY, null, parameters, routineLines),
+                            routineLines,
+                            project,
+                            build,
+                            routineTag,
+                            queryTags,
+                            parameters,
+                            returnValueEnums,
+                            lastModified);
+
+                        SetQueryResultColumns(routine);
+
+                        result.Add(routine);
+                    }
+                    catch(Exception ex)
+                    {
+                        Routine routine = new Routine(
+                            Path.GetFileNameWithoutExtension(file),
+                            directory == "Queries" ? "+" : new DirectoryInfo(directory).Name,
+                            "dbo",
+                            "QUERY",
+                            null,
+                            null,
+                            null,
+                            null,
+                            project,
+                            build,
+                            null,
+                            null,
+                            null,
+                            null,
+                            DateTime.Now);
+                        routine.ErrorMessage = ex.Message;
+                        result.Add(routine);
+                    }
                 }
             }
 
             return result;
+        }
+
+        private void SetQueryResultColumns(Routine routine)
+        {
+
+            if (routine.SelectType != SelectTypes.NonQuery)
+            {
+                if (routine.SelectType == SelectTypes.MultiSet)
+                {
+                    GetQueryMultisetColumns(routine);
+                }
+                else
+                {
+                    List<Column> resultColumns = GetColumnsForText(string.Join(Environment.NewLine, routine.RoutineLines));
+                    if (resultColumns.Count == 0)
+                    {
+                        if (routine.SelectType != SelectTypes.NonQuery)
+                        {
+                            throw new Exception("No result columns");
+                        }
+                    }
+                    routine.ResultSets.Add(new ResultSet("+", routine.SelectType, resultColumns));
+                }
+            }
+        }
+
+        private void GetQueryMultisetColumns(Routine routine)
+        {
+            foreach (QueryStart query in routine.Queries)
+            {
+                CommentOutQueryLines(routine.RoutineLines, query);
+            }
+
+            foreach (QueryStart query in routine.Queries)
+            {
+                ReverseCommentOutQueryLines(routine.RoutineLines, query);
+
+                List<Column> resultColumns = GetColumnsForText(string.Join(Environment.NewLine, routine.RoutineLines));
+                routine.ResultSets.Add(new ResultSet(query.Name, query.SelectType, resultColumns));
+
+                CommentOutQueryLines(routine.RoutineLines, query);
+            }
         }
 
         /// <summary>
@@ -654,6 +854,10 @@
             return result;
         }
 
+        #endregion
+
+
+
         /// <summary>
         /// Uses the parmater mode combined with a more tag to determine the tagged intention for the parmater.
         /// </summary>
@@ -681,7 +885,7 @@
                 }
                 else if (tag.TagType == TagTypes.Output)
                 {
-                    if(parameter.Name == "@ReturnValue")
+                    if (parameter.Name == "@ReturnValue")
                     {
                         returnMode = "OUTPUTASRETURN";
                     }
@@ -922,7 +1126,12 @@
         public override List<StaticCollection> CollectStaticCollections()
         {
             List<StaticCollection> result = new List<StaticCollection>();
-            foreach(BuildQuery query in build.StaticQueries)
+            if (build.StaticQueries == null)
+            {
+                return result;
+            }
+
+            foreach (BuildQuery query in build.StaticQueries)
             {
                 result.Add(new StaticCollection
                 {
@@ -967,66 +1176,116 @@
         {
             List<EnumCollection> result = new List<EnumCollection>();
 
-            foreach(var query in build.EnumQueries)
+            if (build.EnumQueries is null)
             {
+                return result;
+            }
+
+            foreach (var query in build.EnumQueries)
+            {
+                bool hasName = false;
+                bool hasValue = false;
+                bool hasComment = false;
+                bool hasDescription = false;
+                int rowNumber = 1;
+
                 EnumCollection enumCollection = new EnumCollection { Name = query.Name, Enums = new List<EnumDefinition>() };
                 result.Add(enumCollection);
-                using(SqlConnection cnn = new SqlConnection(databaseConnection.ConnectionString))
+                try
                 {
-                    using (SqlCommand cmd = new SqlCommand())
+                    using (SqlConnection cnn = new SqlConnection(databaseConnection.ConnectionString))
                     {
-                        cmd.Connection = cnn;
-                        cmd.CommandType = System.Data.CommandType.Text;
-                        cmd.CommandText = query.Query;
-                        cnn.Open();
-                        SqlDataReader rdr = cmd.ExecuteReader();
-                        bool hasName = false;
-                        bool hasValue = false;
-                        bool hasComment = false;
-                        bool first = true;
-
-                        while(rdr.Read())
+                        using (SqlCommand cmd = new SqlCommand())
                         {
-                            if(first)
+                            cmd.Connection = cnn;
+                            cmd.CommandType = System.Data.CommandType.Text;
+                            cmd.CommandText = query.Query;
+                            cnn.Open();
+                            SqlDataReader rdr = cmd.ExecuteReader();
+
+                            while (rdr.Read())
                             {
-                                for(int idx = 0; idx != rdr.FieldCount; idx++)
+                                if (rowNumber == 1)
                                 {
-                                    switch(rdr.GetName(idx))
+                                    for (int idx = 0; idx != rdr.FieldCount; idx++)
                                     {
-                                        case "Name":
-                                            hasName = true;
-                                            break;
-                                        case "Value":
-                                            hasValue = true;
-                                            enumCollection.DataType = rdr[idx].GetType().ToString();
-                                            break;
-                                        case "Comment":
-                                            hasComment = true;
-                                            break;
+                                        string column = rdr.GetName(idx);
+                                        switch (column)
+                                        {
+                                            case "Name":
+                                                hasName = true;
+                                                break;
+                                            case "Value":
+                                                hasValue = true;
+                                                enumCollection.DataType = rdr[idx].GetType().ToString();
+                                                break;
+                                            case "Comment":
+                                                hasComment = true;
+                                                break;
+                                            case "Description":
+                                                hasDescription = true;
+                                                break;
+                                            default:
+                                                throw new ArgumentException($"Unexpected column \"{column}\" in query.");
+
+                                        }
+                                    }
+                                    if (!hasName)
+                                    {
+                                        throw new ArgumentException($"Required column \"Name\" is missing from query.");
+                                    }
+                                    if (!hasValue)
+                                    {
+                                        throw new ArgumentException($"Required column \"Value\" is missing from query.");
                                     }
                                 }
-                                if(!hasName)
-                                {
-                                    throw new ArgumentException($"Name is missing form Enum Query {query.Name}");
-                                }
-                                if (!hasValue)
-                                {
-                                    throw new ArgumentException($"Value is missing form Enum Query {query.Name}");
-                                }
-                            }
 
-                            EnumDefinition enumDefinition = new EnumDefinition();
-                            enumDefinition.Name = rdr["Name"].ToString();
-                            enumDefinition.Value = rdr["Value"].ToString();
-                            
-                            if(hasComment)
-                            {
-                                enumDefinition.Comment = rdr["Comment"].ToString();
-                            }   
-                            enumCollection.Enums.Add(enumDefinition);
+
+                                EnumDefinition enumDefinition = new EnumDefinition();
+
+                                if (string.IsNullOrEmpty(rdr["Name"].ToString()))
+                                {
+                                    throw new ArgumentException($"Column \"Name\" does not contain a value at row {rowNumber}.");
+                                }
+                                enumDefinition.Name = rdr["Name"].ToString();
+
+
+
+                                if (string.IsNullOrEmpty(rdr["Value"].ToString()))
+                                {
+                                    throw new ArgumentException($"Column \"Value\" does not contain a value at row {rowNumber}.");
+                                }
+                                enumDefinition.Value = rdr["Value"].ToString();
+
+                                if (hasComment)
+                                {
+                                    if (string.IsNullOrEmpty(rdr["Comment"].ToString()))
+                                    {
+                                        throw new ArgumentException($"Column \"Comment\" does not contain a value at row {rowNumber}.");
+                                    }
+                                    enumDefinition.Comment = rdr["Comment"].ToString();
+                                }
+
+                                if (hasDescription)
+                                {
+                                    if (string.IsNullOrEmpty(rdr["Description"].ToString()))
+                                    {
+                                        throw new ArgumentException($"Column \"Description\" does not contain a value at row {rowNumber}.");
+                                    }
+                                    enumDefinition.Description = rdr["Description"].ToString();
+                                }
+
+                                enumCollection.Enums.Add(enumDefinition);
+
+                                rowNumber++;
+                            }
+                            cnn.Close();
                         }
-                        cnn.Close();
                     }
+                }
+                catch (Exception ex)
+                {
+                    throw new Exception($"Enum Query: {query.Name} - {ex.Message}");
                 }
             }
 
@@ -1034,3 +1293,42 @@
         }
     }
 }
+
+//private void SetResultColumnsForMultiSetNew(Routine routine)
+//{
+//    string tempProcedureName = $"[{routine.Schema}].[{routine.Name}_SQLPX]";
+//    string dropTempProcedureText = $"DROP PROCEDURE {tempProcedureName}";
+//    string[] copy = GetRoutineLinesSafeCopy(routine.RoutineLines);
+//    CommentOutIgnores(copy, routine.Ignores);
+//    int declarationLine = IndexOf(copy, "CREATE PROCEDURE", IndexOfTypes.StartsWith, 0);
+//    copy[declarationLine] = ReplaceFirst(copy[declarationLine], routine.Name, $"{routine.Name}_SQLPX");
+//    for (int idx = 0; idx != routine.Queries.Count; idx++)
+//    {
+//        QueryStart currentQuery = routine.Queries[idx];
+//        ExecuteRawText(dropTempProcedureText, true);
+//        string createTempProcureText = StringArrayToString(copy);
+//        ExecuteRawText(createTempProcureText);
+//        List<Column> columns = GetColumnsForText($"[{routine.Schema}].[{routine.Name}_SQLPX]");
+//        if (columns == null)
+//        {
+//            throw new Exception($"MultiSet query {currentQuery.Name} failed to produce a result set.");
+//        }
+//        routine.ResultSets.Add(new ResultSet(currentQuery.Name, currentQuery.SelectType, columns));
+//        CommentOutQueryLines(copy, currentQuery);
+//    }
+
+//    ExecuteRawText(dropTempProcedureText, true);
+
+//    List<string> concatColumns = new List<string>();
+//    foreach (ResultSet rs in routine.ResultSets)
+//    {
+//        if (concatColumns.Contains(rs.ConcatColumns))
+//        {
+//            throw new Exception("Each result set in a multiset query must be unique. Update the routine so that each result has at least one different column.");
+//        }
+//        concatColumns.Add(rs.ConcatColumns);
+//    }
+//}
+
+
+

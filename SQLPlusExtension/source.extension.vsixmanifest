@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
   <Metadata>
-    <Identity Id="SQLPLUS.Builder.VSIX.aaa9ba8f-954f-46f7-8ded-96b13b290b47" Version="1.0" Language="en-US" Publisher="alan hyneman" />
-    <DisplayName>SQLPLUS.Builder.VSIX</DisplayName>
+    <Identity Id="SQLPlusExtension.b5772d7b-1e5e-4053-91a8-07d02a44ab70" Version="1.0" Language="en-US" Publisher="alan hyneman" />
+    <DisplayName>SQLPlusExtension</DisplayName>
     <Description>Empty VSIX Project.</Description>
     <Icon>Resources\Icon.png</Icon>
     <PreviewImage>Resources\Icon.png</PreviewImage>

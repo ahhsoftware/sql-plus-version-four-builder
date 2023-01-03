@@ -216,7 +216,7 @@ namespace <#=routine.ServiceNamespace#>
                 {
                     output.ResultData = <#=routine.Name#>_ResultData(rdr);
                 }
-<#  }else{#> ServiceName.ResultData
+<#  }else{#>
                 output.ResultData = new List<<#=routine.Name#>Result>();
                 while(rdr.Read())
                 {

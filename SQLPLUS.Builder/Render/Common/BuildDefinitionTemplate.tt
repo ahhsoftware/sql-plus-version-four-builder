@@ -1,0 +1,196 @@
+﻿<#@ template language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+/* This file provides information to the SQL+ Code Generation Utility and determines the build output */
+/* For more detailed information view the documentation at www.SQPlus.net */
+
+// SQLClientNamespace - this defines the SQL Client utilized at runtime.
+// SQLServer options:
+//    1) System.Data.SqlClient - full support (default)
+//    2) Microsoft.Data.SqlClient - full support
+// The selection must match the nuget package utilized by your library project.
+
+
+// SQLExceptionNamespace - defines the exception type utilized in the services.
+// SQLServer options:
+//     1) System.Data
+
+
+// Template - defines the rendering template used for generation
+//     1) DotNet - generates a C# library
+
+
+// BuildRoutines and BuildSchemas determines which database objects to generate code for where:
+//     1) BuildSchemas will build all routines within the specified schema
+//     2) BuildRoutines will build only the routines identified
+//     3) The routines will be build withing the Namespace specified by a string identifier
+//     4) Use the special symbol + to build objects in the root of the project.
+// Example:
+// "BuildRoutines": [
+//  {
+//     This will build only the DB object [dbo].[MyRoutine] into the MyNamespace.
+//     "Schema" : "dbo",
+//     "RoutineName" : "MyRoutine",
+//     "Namespace" : "MyNamespace"
+//   },
+//   {
+//      "Schema" : "Database Schema"
+//      "RoutineName" : "Database Routine Name",
+//      "Namespace" : "Namespace" or "+"
+//  },
+//],
+
+
+// Enum Queries (optional) are utilized to generate enumerations based on a SQL query where:
+//     1) Name - identifies the named of the enumeration.
+//     2) Query - defines the query for the enumeration items where:
+//          A) [Name] column maps to the named constant string representation for the underlying value.
+//          B) [Value] column maps to the underlying numeric value.
+//          C) [Comment] column maps to a comment for the enumerated value.
+// Example:
+// "EnumQueries": [
+//    {
+//      "Name": "MyEnum",
+//      "Query": "SELECT [Column1] AS [Name], [Column1] AS [Value], [Column3] AS [Comment] FROM [TableName] WHERE..."
+//    },...
+//  ]
+// Example Generated Code:
+// public enum MyEnum
+// {
+//
+//     /// <summary>
+       /// row.[Comment]
+       /// </summary>
+//     row.[Name] = row.[Value],
+//     ...
+// }
+
+
+// Static Queries (optional) are utilized to generate lists of data based on a SQL query where:
+//    1) Name - identifies the name for the static data where:
+//        A) Name maps to the class name generated.
+//        B) Data from the query is represented as a list of class name.
+//    2) Query - defines the query for list of data generated where:
+//        A) Each Column maps to a property of the class.
+//        B) Each row of data represents a class instance within the list.
+// Example:
+// "StaticQueries": [
+//  {
+//    "Name": "MyData",
+//    "Query": "SELECT Field1, Field2 FROM [dbo].[MyTableName]"
+//  },...
+// ]
+// Generated code
+// public class MyData
+// {
+//     public MyData(int Field1, string Field2)
+//     {
+//         this.Field1 = Field1,
+//         this.Field2 = Field2
+//     }
+//     public int Field1 { get; }
+//     public string Field2 { get; }
+// }
+// public partial class StaticData
+// {
+//    public static List<MyData> MyDataList = new List<MyData>()
+//    {
+//      new MyData(row[0].Field1, row[0].Field2),
+//      new MyData(row[1].Field1, row[1].Field2),
+//    }
+// }
+
+// Build Options allows turning on/off (true/flase) features where:
+//     1) ImplementIChangeTracking - generated code implements the IChangeTracking interface.
+//     2) ImplementIRevertibleChangeTracking - generated code implements the IRevertibleChangeTracking interface.
+//     3) ImplementINotifyPropertyChanged - generated code implements the INotifyPropertyChanged interface.
+//     4) IncludeAsyncServices - generated code will include asynchronus methods for services.
+//     5) UseNullableReferenceTypes - generated code will utilize nullable references types.
+// Turn features on by setting any of the values to true.
+// Example:
+// "BuildOptions": {
+//  "ImplementIChangeTracking": false,
+//  "ImplementIRevertibleChangeTracking": false,
+//  "ImplementINotifyPropertyChanged": false,
+//  "IncludeAsyncServices": false, (future release)
+//  "UseNullableReferenceTypes": false
+// },
+
+/* Instructions (End) */
+
+/* Configuration (Start) */
+
+{
+  "SQLClientNamespace": choose "System.Data.SqlClient" or "Microsoft.Data.SqlClient",
+  "SQLExceptionNamespace": "System.Data",
+  "Template": "DotNet",
+  "BuildRoutines": [
+    {
+        "Schema" : "Database Schema",
+        "RoutineName" : "Database Routine Name",
+        "Namespace" : enter "Namespace" or "+"
+    },
+    {
+        "Schema" : "Database Schema"
+        "RoutineName" : "Database Routine Name",
+        "Namespace" : enter "Namespace" or "+"
+    },
+  ],
+  "BuildSchemas": [
+    {
+      "Schema": "funcs",
+      "Namespace": "Funcs"
+    },
+    {
+      "Schema": "procs",
+      "Namespace": "Procs"
+    }
+  ],
+  "EnumQueries": [
+    {
+      "Name": "EnumerationName",
+      "Query": "SELECT [ColumnName] AS [Name], [ColumnName] AS [Value], [ColumnName] AS [Comment] FROM [TableName] WHERE..."
+    },
+    {
+      "Name": "EnumerationName",
+      "Query": "SELECT [ColumnName] AS [Name], [ColumnName] AS [Value], [ColumnName] AS [Comment] FROM [TableName] WHERE..."
+    }
+  ],
+  "StaticQueries": [
+    {
+      "Name": "StaticDataName",
+      "Query": "SELECT [Column], [Column], ... FROM [dbo].[Table] WHERE..."
+    },
+    {
+      "Name": "StaticDataName",
+      "Query": "SELECT [Column], [Column], ... FROM [dbo].[Table] WHERE..."
+    }
+  ],
+  "BuildOptions": {
+    "ImplementIChangeTracking": false,
+    "ImplementIRevertibleChangeTracking": false,
+    "ImplementINotifyPropertyChanged": false,
+    "IncludeAsyncServices": false,
+    "UseNullableReferenceTypes": false
+  },
+  "BuildRoutines": [
+    {
+        "Schema": "Database Schema",
+        "RoutineName": "Database Routine Name",
+        "Namespace": "Namespace" or "+"
+    },
+  ],
+  "BuildSchemas": [
+    {
+      "Schema": "funcs",
+      "Namespace": "Funcs"
+    },
+    {
+      "Schema": "procs",
+      "Namespace": "Procs"
+    }
+  ]
+}

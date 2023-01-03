@@ -7,17 +7,20 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-namespace SQLPLUS.Builder.Render.T4Net
+namespace SQLPLUS.Builder.Render.Common
 {
+    using System.Linq;
+    using System.Text;
+    using System.Collections.Generic;
     using System;
     
     /// <summary>
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\DatabaseConnection.tt"
+    #line 1 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\Common\MSSQLSampleQueryTemplate.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
-    public partial class DatabaseConnection : DatabaseConnectionBase
+    public partial class MSSQLSampleQueryTemplate : MSSQLSampleQueryTemplateBase
     {
 #line hidden
         /// <summary>
@@ -25,26 +28,7 @@ namespace SQLPLUS.Builder.Render.T4Net
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write(@"/*
-  MSSQL:
-    Set the data base type to MSSQL as follows: ""DatabaseType"" : ""MSSQL""
-    
-  SQL Server example connections strings:
-    Integrated Security = ""ConnectionString"": ""Server = (local); Database = <Database Name>; Integrated Security = true;""
-    SQL Server Authentication = ""ConnectionString"": ""Server = <Server Name>; Database = <Database Name>; User ID = <User Name>; Password = <Password>;""
-    
-  See more options for MSSQL at https://www.connectionstrings.com/sql-server/
-
-  *Note that this connection must have full access*
- 
-*/
-
-{
-  ""DatabaseType"": ""MSSQL""
-  //""ConnectionString"": ""Server = (local); Database = <Your Database Name Here>; Integrated Security = true;""
-  //""ConnectionString"": ""Server = <server name>; Database = <database name>; User ID = <user name>; Password = <password>;""
-}
-");
+            this.Write("THis is the mssql sample query");
             return this.GenerationEnvironment.ToString();
         }
     }
@@ -56,7 +40,7 @@ namespace SQLPLUS.Builder.Render.T4Net
     /// Base class for this transformation
     /// </summary>
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
-    public class DatabaseConnectionBase
+    public class MSSQLSampleQueryTemplateBase
     {
         #region Fields
         private global::System.Text.StringBuilder generationEnvironmentField;

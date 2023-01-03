@@ -4,9 +4,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SQLPLUS.Builder
 {
@@ -47,8 +44,6 @@ namespace SQLPLUS.Builder
         private DatabaseConnection databaseConnection;
         private BuildDefinition buildDefinition;
         
-
-
         private InitializeStates initializeState = InitializeStates.NoBuild;
 
         private BuildDefinition MSSQLSettings = new BuildDefinition
@@ -116,20 +111,6 @@ namespace SQLPLUS.Builder
                 {
                     initializeState.AddValue(InitializeStates.HasDatabaseConnectionFile);
                     this.databaseConnection = JsonConvert.DeserializeObject<DatabaseConnection>(File.ReadAllText(project.SQLPLUSDatabaseConnectionPath));
-                    if (databaseConnection.IsValid())
-                    {
-                        initializeState.AddValue(InitializeStates.DataBaseConfigurationValid);
-                    }
-                    else
-                    {
-                        foreach (ValidationResult validationResult in databaseConnection.ValidationResults)
-                        {
-                            if (!errors.Contains(validationResult.ErrorMessage))
-                            {
-                                errors.Add(validationResult.ErrorMessage);
-                            }
-                        }
-                    }
                 }
             }
             catch (Exception ex)

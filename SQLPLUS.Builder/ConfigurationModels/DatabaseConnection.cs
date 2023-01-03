@@ -1,12 +1,8 @@
 ﻿namespace SQLPLUS.Builder.ConfigurationModels
 {
-    using System.ComponentModel.DataAnnotations;
-    public class DatabaseConnection : ValidInput
+    public class DatabaseConnection
     {
-        [Required]
-        public string DatabaseType { set; get; }
-
-        [Required]
+        public string DatabaseType { set; get; } = "MSSQLServer";
         public string ConnectionString { set; get; }
 
     }

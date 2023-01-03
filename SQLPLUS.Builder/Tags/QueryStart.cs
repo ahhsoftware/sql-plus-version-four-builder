@@ -56,5 +56,27 @@
         {
             ThrowExceptionSupplementTagInvalidForTag(tagLine);
         }
+
+        //TODO Use prefix from config
+        public String QueryStartAsPrintLine()
+        {
+            return $"PRINT 'QueryStart={Name},{SelectType.ToString()}'";
+        }
+
+        public String QueryEndAsPrintLine()
+        {
+            return $"PRINT 'QueryEnd'";
+        }
+
+
+        public string QueryEndTag()
+        {
+            return $"--+QueryEnd";
+        }
+
+        public string QueryStartTag()
+        {
+            return $"--+QueryStart={Name},{SelectType.ToString()}'";
+        }
     }
 }

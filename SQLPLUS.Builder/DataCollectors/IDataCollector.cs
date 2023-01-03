@@ -3,6 +3,12 @@
     using SQLPLUS.Builder.TemplateModels;
     using System.Collections.Generic;
 
+    public enum DataCollectorModes
+    {
+        Configuration,
+        Build
+    }
+
     public interface IDataCollector
     {
         /// <summary>
@@ -22,5 +28,6 @@
 
         List<StaticCollection> CollectStaticCollections();
 
+        
     }
 }

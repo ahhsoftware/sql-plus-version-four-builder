@@ -62,6 +62,11 @@
         public BuildOptions BuildOptions { set; get; }
         public List<BuildRoutine> BuildRoutines { set; get; }
         public List<BuildSchema> BuildSchemas { set; get; }
+
+        public List<BuildSchema> BuildQuerySchemas { set; get; }
+
+        public List<BuildRoutine> BuildQueryRoutines { set; get; }
+
         public List<BuildQuery> StaticQueries { set; get; }
 
         private List<string> errors = new List<string>();
@@ -87,17 +92,7 @@
                 }
             }
 
-            if (string.IsNullOrEmpty(Template))
-            {
-                AddMissingParameterError(nameof(Template));
-            }
-            else
-            {
-                if (!Template.Equals("NET"))
-                {
-                    AddInvalidValueError(nameof(Template), "NET");
-                }
-            }
+
 
 
             return errors.Count == 0;
@@ -111,7 +106,7 @@
         private void AddInvalidValueError(string parameter, params string[] values)
         {
             string validValues = $"Valid Values: {string.Join(" | ", values)}";
-            errors.Add($"{parameter} is invalide. {validValues}");
+            errors.Add($"{parameter} is invalid. {validValues}");
         }
     }
 

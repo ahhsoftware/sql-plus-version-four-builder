@@ -4,20 +4,26 @@ namespace SQLPLUS.Builder.TemplateModels
 {
     public class EnumDefinition
     {
-        private string description;
         public string Name { set; get; }
 
         public string Value { set; get; }
 
+        public string Description { set; get; }
+
+        private string comment;
         public string Comment
         {
             set
             {
-                description = value;
+                comment = value;
             }
             get
             {
-                return description ?? $"Enumerated value for {Name}";
+                if(string.IsNullOrEmpty(comment))
+                {
+                    return $"Enumerated value for {Name}";
+                }
+                return comment;
             }
         }
     }

@@ -956,7 +956,7 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             
             #line default
             #line hidden
-            this.Write(" ServiceName.ResultData\r\n                output.ResultData = new List<");
+            this.Write("                output.ResultData = new List<");
             
             #line 220 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));

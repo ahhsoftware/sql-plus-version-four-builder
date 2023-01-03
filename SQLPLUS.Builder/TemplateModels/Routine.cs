@@ -11,7 +11,7 @@
 
     #endregion
 
-    public class Routine
+    public class Routine : ErrorBase
     {
         /// <summary>
         /// This is the actual routine name from database or the filename of a query.
@@ -168,25 +168,6 @@
             }
         }
 
-        //public string CommandType
-        //{
-        //    get
-        //    {
-
-        //        switch (RoutineType)
-        //        {
-        //            case "TABLE":
-        //            case "QUERY":
-        //                return "CommandType.Text";
-        //            case "FUNCTION":
-        //            case "PROCEDURE":
-        //                return "CommandType.StoredProcedure";
-        //            default:
-        //                throw new ArgumentOutOfRangeException("RoutineType");
-        //        }
-        //    }
-        //}
-
         public bool? hasTableValueParameters;
         public bool HasTableValueParameters
         {
@@ -319,7 +300,6 @@
             }
         }
       
-
         public List<Parameter> NonInputParameters => Parameters.FindAll(p => p.IsOutput == true || p.IsReturnValue == true);
         
         /// <summary>

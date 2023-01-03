@@ -6,30 +6,30 @@
   <Include href="KnownImageIds.vsct"/>
   <Include href="VSGlobals.vsct"/>
 
-  <Commands package="SQLPLUS.Builder.VSIX">
+  <Commands package="SQLPlusExtension">
     <Groups>
-      <Group guid="SQLPLUS.Builder.VSIX" id="MyMenuGroup" priority="0x0600">
-        <Parent guid="VSMainMenu" id="Tools"/>
+      <Group guid="SQLPlusExtension" id="MyMenuGroup" priority="0x0600">
+        <Parent guid="guidSHLMainMenu" id="IDM_VS_CTXT_PROJNODE"/>
       </Group>
     </Groups>
 
     <!--This section defines the elements the user can interact with, like a menu command or a button
         or combo box in a toolbar. -->
     <Buttons>
-      <Button guid="SQLPLUS.Builder.VSIX" id="MyCommand" priority="0x0100" type="Button">
-        <Parent guid="SQLPLUS.Builder.VSIX" id="MyMenuGroup" />
-        <Icon guid="ImageCatalogGuid" id="StatusInformation" />
+      <Button guid="SQLPlusExtension" id="MyCommand" priority="0x0100" type="Button">
+        <Parent guid="SQLPlusExtension" id="MyMenuGroup" />
+        <Icon guid="ImageCatalogGuid" id="GetDatabaseFormat" />
         <CommandFlag>IconIsMoniker</CommandFlag>
         <Strings>
-          <ButtonText>My Command</ButtonText>
-          <LocCanonicalName>.SQLPLUS.Builder.VSIX.MyCommand</LocCanonicalName>
+          <ButtonText>SQL+ Builder</ButtonText>
+          <LocCanonicalName>.SQLPlusExtension.MyCommand</LocCanonicalName>
         </Strings>
       </Button>
     </Buttons>
   </Commands>
 
   <Symbols>
-    <GuidSymbol name="SQLPLUS.Builder.VSIX" value="{240d2bc0-af30-4982-ad44-12ecafd5529f}">
+    <GuidSymbol name="SQLPlusExtension" value="{9bf53dea-8840-47cd-8931-0806baef14f9}">
       <IDSymbol name="MyMenuGroup" value="0x0001" />
       <IDSymbol name="MyCommand" value="0x0100" />
     </GuidSymbol>

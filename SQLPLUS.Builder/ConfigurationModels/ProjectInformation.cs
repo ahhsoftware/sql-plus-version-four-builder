@@ -20,10 +20,12 @@
             SQLPlusTransientErrorsPath = Path.Combine(SQLPLUSBaseDirectory, "TransientErrors.cs");
             SQLPLUSFolder = Path.Combine(rootDirectory, "SQL+");
             SQLPLUSQueriesFolder = Path.Combine(SQLPLUSFolder, "Queries");
+            SQLPLUSSampleQueryPath = Path.Combine(SQLPLUSQueriesFolder, "SampleQuery.sql");
             SQLPLUSDatabaseConnectionPath = Path.Combine(SQLPLUSFolder, "DatabaseConnection.json");
             SQLPLUSBuildDefinitionPath = Path.Combine(SQLPLUSFolder, "BuildDefinition.json");
             UserDefinedTypeDirectory = Path.Combine(rootDirectory, "UserDefinedTypes");
             UserDefinedTypeNamepace = $"{rootNamespace}.UserDefinedTypes";
+            SQLPLUSBuildErrorPath = Path.Combine(SQLPLUSFolder, "Errors.txt");
         }
 
         //public string ConstantsDirectory { get; }
@@ -40,11 +42,16 @@
         public string SQLPLUSValueComparisonsPath { get; }
         public string SQLPlusTransientErrorsPath { get; }
         public string SQLPLUSQueriesFolder { get; }
+
+        public string SQLPLUSSampleQueryPath { get; }
+
         public string UserDefinedTypeNamepace { get; }
         public string UserDefinedTypeDirectory { get; }
 
         public string SQLPLUSFolder { get; }
         public string SQLPLUSBuildDefinitionPath { get; }
-        public string SQLPLUSDatabaseConnectionPath { set; get; }
+        public string SQLPLUSDatabaseConnectionPath { get; }
+
+        public string SQLPLUSBuildErrorPath { get; }
     }
 }

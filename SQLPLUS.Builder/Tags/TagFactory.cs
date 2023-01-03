@@ -119,7 +119,7 @@ namespace SQLPLUS.Builder.Tags
             {
                 result = new CreditCard(PrimaryTagPrefix, SupplementalTagPrefix);
             }
-            else if (lowered.StartsWith(CommentTag))
+            else if (lowered.StartsWith($"{CommentTag}="))
             {
                 result = new Comment(PrimaryTagPrefix);
                 result.SetPrimary(line);
@@ -128,12 +128,12 @@ namespace SQLPLUS.Builder.Tags
             {
                 result = new Currency(PrimaryTagPrefix, SupplementalTagPrefix);
             }
-            else if (lowered.StartsWith(DefaultTag))
+            else if (lowered.StartsWith($"{DefaultTag}="))
             {
                 result = new Default(PrimaryTagPrefix);
                 result.SetPrimary(line);
             }
-            else if (lowered.StartsWith(DisplayTag))
+            else if (lowered.StartsWith($"{DisplayTag}="))
             {
                 result = new Display(PrimaryTagPrefix, SupplementalTagPrefix);
                 result.SetPrimary(line);
@@ -142,7 +142,7 @@ namespace SQLPLUS.Builder.Tags
             {
                 result = new Email(PrimaryTagPrefix, SupplementalTagPrefix);
             }
-            else if (lowered.StartsWith(EnumTag))
+            else if (lowered.StartsWith($"{EnumTag}="))
             {
                 result = new Enum(PrimaryTagPrefix);
                 result.SetPrimary(line);
@@ -172,12 +172,12 @@ namespace SQLPLUS.Builder.Tags
             {
                 result = new Input(PrimaryTagPrefix);
             }
-            else if (lowered.StartsWith(MaxlengthTag))
+            else if (lowered.StartsWith($"{MaxlengthTag}="))
             {
                 result = new MaxLength(PrimaryTagPrefix, SupplementalTagPrefix);
                 result.SetPrimary(line);
             }
-            else if (lowered.StartsWith(MinLengthTag))
+            else if (lowered.StartsWith($"{MinLengthTag}="))
             {
                 result = new MinLength(PrimaryTagPrefix, SupplementalTagPrefix);
                 result.SetPrimary(line);
@@ -202,22 +202,22 @@ namespace SQLPLUS.Builder.Tags
             {
                 result = new PostalCode(PrimaryTagPrefix, SupplementalTagPrefix);
             }
-            else if(lowered.StartsWith(QueryStartTag))
+            else if(lowered.StartsWith($"{QueryStartTag}="))
             {
                 result = new QueryStart(PrimaryTagPrefix);
                 result.SetPrimary(line);
             }
-            else if (lowered.StartsWith(RangeTag))
+            else if (lowered.StartsWith($"{RangeTag}="))
             {
                 result = new Range(PrimaryTagPrefix, SupplementalTagPrefix);
                 result.SetPrimary(line);
             }
-            else if (lowered.StartsWith(RegExPatternTag))
+            else if (lowered.StartsWith($"{RegExPatternTag}="))
             {
                 result = new RegExPattern(PrimaryTagPrefix, SupplementalTagPrefix);
                 result.SetPrimary(line);
             }
-            else if (lowered.StartsWith(StringLengthTag))
+            else if (lowered.StartsWith($"{StringLengthTag}="))
             {
                 result = new StringLength(PrimaryTagPrefix, SupplementalTagPrefix);
                 result.SetPrimary(line);
@@ -234,12 +234,17 @@ namespace SQLPLUS.Builder.Tags
             {
                 result = new SQLPlusRoutine(PrimaryTagPrefix, SupplementalTagPrefix);
             }
-            else if(lowered.StartsWith(ReturnTag,StringComparison.OrdinalIgnoreCase))
+            else if(lowered.StartsWith($"{ReturnTag}="))
             {
                 result = new Return(PrimaryTagPrefix);
                 result.SetPrimary(line);
             }
-            if(result == null)
+            else if (lowered.StartsWith($"--+returnvalue="))
+            {
+                result = new Return(PrimaryTagPrefix);
+                result.SetPrimary(line);
+            }
+            if (result == null)
             {
                 throw new Exception($"Invalid tag found {line}");
             }

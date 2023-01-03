@@ -1,4 +1,4 @@
-﻿using SQLPLUS.Builder.VSIX;
+﻿using SQLPlusExtension;
 using System.Reflection;
 using System.Runtime.InteropServices;
 
