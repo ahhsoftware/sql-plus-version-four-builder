@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -26,8 +27,7 @@ namespace SQLPlusExtension.Models
 
         private List<SQLPLUS.Builder.TemplateModels.Routine> allBuildRoutines;
         private List<SQLPLUS.Builder.TemplateModels.Routine> allBuildQueries;
-        private List<string> buildFiles;
-
+        private List<string> files;
         public SQLPlusConfigurationWindowViewModel(ConfigurationService configurationService, ProjectInformation projectInformation, BuildDefinition buildDefinition, SQLPLUS.Builder.ConfigurationModels.DatabaseConnection databaseConnection, Project vsProject)
         {
             this.configurationService = configurationService;
@@ -51,6 +51,15 @@ namespace SQLPlusExtension.Models
             get
             {
                 return _BuildOutput;
+            }
+        }
+
+
+        private void AddFileIfNotExists(string file)
+        {
+            if (!files.Contains(file))
+            {
+                files.Add(file);
             }
         }
 
@@ -179,18 +188,11 @@ namespace SQLPlusExtension.Models
             buildDefinition = newBuildDefinition;
         }
 
-        public List<string> BuildFiles
-        {
-            get
-            {
-                return buildFiles;
-            }
-        }
-        public void BuildProject()
+        public async Task BuildProject()
         {
             SaveBuildItems();
 
-            buildFiles = new List<string>();
+            files = new List<string>();
 
             MSSQLDataCollector collector = new MSSQLDataCollector(buildDefinition, databaseConnection, projectInformation);
             IRenderProvider renderProvider = new NetRenderProvider(projectInformation, buildDefinition);
@@ -201,9 +203,10 @@ namespace SQLPlusExtension.Models
             service.OnFileWrite += Service_OnFileWrite;
             service.OnProgressChanged += Service_OnProgressChanged;
             service.Run();
-            if(buildFiles.Count != 0)
+
+            if(files.Count != 0)
             {
-                vsProject.AddExistingFilesAsync(buildFiles.ToArray());
+                await vsProject.AddExistingFilesAsync(files.ToArray());
             }
         }
 
@@ -222,18 +225,17 @@ namespace SQLPlusExtension.Models
 
         private void Service_OnFileWrite(object sender, FileWriteEventArgs e)
         {
-            AppendBuildText($"File Created: {e.FileName}", false);
+            AppendBuildText($"File Written: {e.FileName}", false);
         }
 
         private void Service_OnFileCreated(object sender, FileCreatedEventArgs e)
         {
-            buildFiles.Add(e.NewFileName);
+            files.Add(e.NewFileName);
             AppendBuildText($"File Created: {e.NewFileName}", false);
         }
 
         private void Service_OnDirectoryCreated(object sender, DirectoryCreatedEventArgs e)
         {
-            buildFiles.Add(e.NewDirectoryPath);
             AppendBuildText($"Directory Created: {e.NewDirectoryPath}", false);
         }
 
@@ -1285,12 +1287,12 @@ namespace SQLPlusExtension.Models
                  {
                      return true;
                  },
-                 (o) =>
+                 async (o) =>
                  {
                      BuildOutput = new ObservableCollection<BuildItem>();
                      AppendBuildText("Ready...", false);
                      SaveBuildItems();
-                     BuildProject();
+                     await BuildProject();
                  }
              );
 

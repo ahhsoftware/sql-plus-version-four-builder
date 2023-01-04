@@ -59,6 +59,10 @@ namespace SQLPlusExtension
            
             var result = await window.ShowDialogAsync(WindowStartupLocation.CenterOwner);
 
+            //if(dataContext.BuildFiles != null && dataContext.BuildFiles.Count != 0)
+            //{
+            //    await vsProject.AddExistingFilesAsync(dataContext.BuildFiles.ToArray());
+            //}
         }
 
        
