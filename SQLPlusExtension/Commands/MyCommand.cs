@@ -41,7 +41,6 @@ namespace SQLPlusExtension
             if(createdConfigurationFiles.Count != 0)
             {
                 await vsProject.AddExistingFilesAsync(createdConfigurationFiles.ToArray());
-                await vsProject.SaveAsync();
             }
             
 
@@ -59,13 +58,7 @@ namespace SQLPlusExtension
            
             var result = await window.ShowDialogAsync(WindowStartupLocation.CenterOwner);
 
-            //if(dataContext.BuildFiles != null && dataContext.BuildFiles.Count != 0)
-            //{
-            //    await vsProject.AddExistingFilesAsync(dataContext.BuildFiles.ToArray());
-            //}
         }
-
-       
 
         private void BuildService_OnProgressChanged(object sender, ProgressStatusArgs e)
         {
@@ -87,20 +80,7 @@ namespace SQLPlusExtension
             throw new NotImplementedException();
         }
 
-        private void AttachEvents(BuildService service)
-        {
-            service.OnDirectoryCreated += BuildService_OnDirectoryCreated;
-            service.OnFileCreated += BuildService_OnFileCreated;
-            service.OnFileWrite += BuildService_OnFileWrite;
-            service.OnProgressChanged += BuildService_OnProgressChanged;
-        }
-        private void DetachEvents(BuildService service)
-        {
-            service.OnDirectoryCreated += BuildService_OnDirectoryCreated;
-            service.OnFileCreated += BuildService_OnFileCreated;
-            service.OnFileWrite += BuildService_OnFileWrite;
-            service.OnProgressChanged += BuildService_OnProgressChanged;
-        }
+       
 
     }
 }

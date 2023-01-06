@@ -96,7 +96,7 @@ namespace SQLPlusExtension.Models
                         }
                     }
 
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("IsSelected"));
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(IsSelected)));
                 }
             }
         }

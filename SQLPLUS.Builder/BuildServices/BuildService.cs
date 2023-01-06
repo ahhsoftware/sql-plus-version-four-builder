@@ -115,8 +115,6 @@
             WriteStatics(statics);
             UpdateProgress("Write Static objects complete.");
 
-            UpdateProgress("Build complete with no errors");
-            
         }
 
         private void WriteStatics(List<StaticCollection> statics)

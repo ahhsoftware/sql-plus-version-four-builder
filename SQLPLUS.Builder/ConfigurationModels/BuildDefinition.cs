@@ -1,38 +1,41 @@
 ﻿namespace SQLPLUS.Builder.ConfigurationModels
 {
+    using Newtonsoft.Json;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.Linq;
 
     public class BuildDefinition
     {
+        //TODO: JsonIgnoreProperties shoud be replaced with private readonly variables.
         public BuildDefinition() { }
-        public string SQLClientNamespace { set; get; } = "System.Data.SqlClient";
 
-        [Required]
-        public string SQLExceptionNamespace { set; get; } = "System.Data";
-
-        [Required]
-        public string Template { set; get; } = "NET";
-
-        [Required]
+        [JsonIgnore]
         public string SingleLineComment { set; get; } = "--";
 
-        [Required]
+        [JsonIgnore]
         public string CommentBlockOpen { set; get; } = "/*";
 
-        [Required]
+        [JsonIgnore]
         public string CommentBlockClose { set; get; } = "*/";
 
-        [Required]
+        [JsonIgnore]
         public string PrimaryTagIndicator { set; get; } = "+";
 
-        [Required]
+        [JsonIgnore]
         public string SupplementalTagIndicator { set; get; } = "&";
 
-        [Required]
+        [JsonIgnore]
         public string ExplicitTagIndicator { set; get; } = "#";
+        
+        [JsonIgnore]
+        public string LicenseType { set; get; } = "Professional"; // Community // Professional // Enterprise
 
+        public string SQLClientNamespace { set; get; } = "System.Data.SqlClient";
+        public string SQLExceptionNamespace { set; get; } = "System.Data";
+        public string Template { set; get; } = "NET";
+
+        [JsonIgnore]
         public string PrimaryTagPrefix
         {
             get
@@ -40,6 +43,7 @@
                 return SingleLineComment + PrimaryTagIndicator;
             }
         }
+        [JsonIgnore]
         public string SupplementalTagPrefix
         {
             get
@@ -47,6 +51,7 @@
                 return SingleLineComment + SupplementalTagIndicator;
             }
         }
+        [JsonIgnore]
         public string ExplicitTagPrefix
         {
             get
@@ -54,19 +59,13 @@
                 return SingleLineComment + ExplicitTagIndicator;
             }
         }
-        
-        
-        public string LicenseType { set; get; } = "Professional"; // Community // Professional // Enterprise
 
         public List<BuildQuery> EnumQueries { set; get; }
-        public BuildOptions BuildOptions { set; get; }
+        public BuildOptions BuildOptions { set; get; } = new BuildOptions();
         public List<BuildRoutine> BuildRoutines { set; get; }
         public List<BuildSchema> BuildSchemas { set; get; }
-
         public List<BuildSchema> BuildQuerySchemas { set; get; }
-
         public List<BuildRoutine> BuildQueryRoutines { set; get; }
-
         public List<BuildQuery> StaticQueries { set; get; }
 
         private List<string> errors = new List<string>();

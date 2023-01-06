@@ -15,8 +15,6 @@ using System.Windows.Threading;
 
 namespace SQLPlusExtension.Models
 {
-
-
     public class SQLPlusConfigurationWindowViewModel : INotifyPropertyChanged
     {
         private ConfigurationService configurationService;
@@ -53,8 +51,6 @@ namespace SQLPlusExtension.Models
                 return _BuildOutput;
             }
         }
-
-
         private void AddFileIfNotExists(string file)
         {
             if (!files.Contains(file))
@@ -62,7 +58,6 @@ namespace SQLPlusExtension.Models
                 files.Add(file);
             }
         }
-
         public void SaveBuildItems()
         {
             BuildDefinition newBuildDefinition = new BuildDefinition();
@@ -195,19 +190,34 @@ namespace SQLPlusExtension.Models
             files = new List<string>();
 
             MSSQLDataCollector collector = new MSSQLDataCollector(buildDefinition, databaseConnection, projectInformation);
+            collector.DataCollectorMode = DataCollectorModes.Build;
             IRenderProvider renderProvider = new NetRenderProvider(projectInformation, buildDefinition);
             BuildService service = new BuildService(buildDefinition, projectInformation, collector, renderProvider);
-            collector.DataCollectorMode = DataCollectorModes.Build;
+            AttachEvents(service);
+            service.Run();
+            DetachEvents(service);
+            AppendBuildText("Updating Visual Studio Project...", false);
+            if (files.Count != 0)
+            {
+                await vsProject.AddExistingFilesAsync(files.ToArray());
+            }
+            AppendBuildText("Visual Studio Project Updated", false);
+            AppendBuildText("Build Complete", false);
+        }
+
+        private void AttachEvents(BuildService service)
+        {
             service.OnDirectoryCreated += Service_OnDirectoryCreated;
             service.OnFileCreated += Service_OnFileCreated;
             service.OnFileWrite += Service_OnFileWrite;
             service.OnProgressChanged += Service_OnProgressChanged;
-            service.Run();
-
-            if(files.Count != 0)
-            {
-                await vsProject.AddExistingFilesAsync(files.ToArray());
-            }
+        }
+        private void DetachEvents(BuildService service)
+        {
+            service.OnDirectoryCreated += Service_OnDirectoryCreated;
+            service.OnFileCreated += Service_OnFileCreated;
+            service.OnFileWrite += Service_OnFileWrite;
+            service.OnProgressChanged += Service_OnProgressChanged;
         }
 
         public void AppendBuildText(string text, bool isError)
@@ -258,6 +268,7 @@ namespace SQLPlusExtension.Models
         public void SetupFromBuildItems()
         {
             RefreshBuildRoutines();
+
             SetupEnumQueries();
             SetupStaticQueries();
             SetUpBuildOptions();
@@ -476,6 +487,7 @@ namespace SQLPlusExtension.Models
         private void SetUpBuildOptions()
         {
             SQLClientNamespace = buildDefinition.SQLClientNamespace;
+
             ImplementINotifyPropertyChanged = buildDefinition.BuildOptions.ImplementINotifyPropertyChanged;
             ImplementIChangeTracking = buildDefinition.BuildOptions.ImplementIChangeTracking;
             ImplementIRevertibleChangeTracking = buildDefinition.BuildOptions.ImplementIRevertibleChangeTracking;
