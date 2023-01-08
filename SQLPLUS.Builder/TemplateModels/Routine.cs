@@ -428,7 +428,7 @@
                     serviceUsings.TryAddItem("System");
                     serviceUsings.TryAddItem("System.Threading");
                     serviceUsings.TryAddItem(ModelNamespace);
-                    serviceUsings.TryAddItem(build.SQLClientNamespace);
+                    serviceUsings.TryAddItem(build.SQLClient);
                     serviceUsings.TryAddItem(build.SQLExceptionNamespace);
                     
                     if (SelectType == SelectTypes.Json || SelectType == SelectTypes.Json)

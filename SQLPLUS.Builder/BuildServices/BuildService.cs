@@ -46,7 +46,7 @@
             UpdateProgress("Starting build...");
 
             UpdateProgress($"Starting collect routines.");
-            List<Routine> routines = data.CollectRoutines().OrderBy(r => r.ServiceNamespace).ThenBy(r => r.ServiceName).ToList();
+            List<Routine> routines = data.CollectDBRoutinesAndQueryRoutines().OrderBy(r => r.ServiceNamespace).ThenBy(r => r.ServiceName).ToList();
             bool errorFound = false;
             foreach (Routine routine in routines)
             {

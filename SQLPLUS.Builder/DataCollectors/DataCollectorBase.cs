@@ -538,12 +538,17 @@
         }
         #endregion
 
-        public abstract List<Routine> CollectRoutines();
+        public abstract List<Routine> CollectDBRoutinesAndQueryRoutines();
 
         public abstract bool TestConnection();
 
         public abstract List<EnumCollection> CollectEnumCollections();
 
         public abstract List<StaticCollection> CollectStaticCollections();
+
+        public abstract List<Routine> CollectDBRoutines();
+
+        public abstract List<Routine> CollectQueryRoutines();
+
     }
 }

@@ -93,8 +93,8 @@ foreach (string s in Usings(build)){
         List<string> result = new List<string>();
         result.Add("System");
         result.Add("System.Collections.Generic");
-        result.Add(build.SQLClientNamespace);
-        if(build.SQLClientNamespace != build.SQLExceptionNamespace)
+        result.Add(build.SQLClient);
+        if(build.SQLClient != build.SQLExceptionNamespace)
         {
             result.Add(build.SQLExceptionNamespace);
         }

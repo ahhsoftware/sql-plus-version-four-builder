@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using SQLPLUS.Builder.ConfigurationModels;
 using SQLPLUS.Builder.Render.Common;
-using SQLPLUS.Builder.TemplateModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -28,7 +27,6 @@ namespace SQLPLUS.Builder.BuildServices
             if (!Directory.Exists(projectInformation.SQLPLUSFolder))
             {
                 Directory.CreateDirectory(projectInformation.SQLPLUSFolder);
-                result.Add(projectInformation.SQLPLUSFolder);
             }
             
             if(!File.Exists(projectInformation.SQLPLUSDatabaseConnectionPath))
@@ -46,7 +44,6 @@ namespace SQLPLUS.Builder.BuildServices
             if(!Directory.Exists(projectInformation.SQLPLUSQueriesFolder))
             {
                 Directory.CreateDirectory(projectInformation.SQLPLUSQueriesFolder);
-                result.Add(projectInformation.SQLPLUSQueriesFolder);
             }            
 
             if(!File.Exists(projectInformation.SQLPLUSSampleQueryPath))
@@ -54,6 +51,7 @@ namespace SQLPLUS.Builder.BuildServices
                 MSSQLSampleQueryTemplate template = new MSSQLSampleQueryTemplate();
                 string sampleQueryText = template.TransformText();
                 File.WriteAllText(projectInformation.SQLPLUSSampleQueryPath, sampleQueryText);
+                result.Add(projectInformation.SQLPLUSSampleQueryPath);
             }
 
             return result;

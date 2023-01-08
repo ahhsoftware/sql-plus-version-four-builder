@@ -7,8 +7,12 @@
 
     public class BuildDefinition
     {
-        //TODO: JsonIgnoreProperties shoud be replaced with private readonly variables.
+       
         public BuildDefinition() { }
+
+        #region Ignored Properties
+
+        //TODO: JsonIgnoreProperties shoud be replaced with private readonly variables.
 
         [JsonIgnore]
         public string SingleLineComment { set; get; } = "--";
@@ -30,10 +34,6 @@
         
         [JsonIgnore]
         public string LicenseType { set; get; } = "Professional"; // Community // Professional // Enterprise
-
-        public string SQLClientNamespace { set; get; } = "System.Data.SqlClient";
-        public string SQLExceptionNamespace { set; get; } = "System.Data";
-        public string Template { set; get; } = "NET";
 
         [JsonIgnore]
         public string PrimaryTagPrefix
@@ -60,13 +60,21 @@
             }
         }
 
+        #endregion Ignored Properties
+        
+        public string SQLClient { set; get; } = "System.Data.SqlClient";
+        
+        public string SQLExceptionNamespace { set; get; } = "System.Data";
+        
+        public string Template { set; get; } = "NET";
+
+        public List<BuildRoutine> DBRoutines { set; get; }
+        public List<BuildSchema> DBSchemas { set; get; }
+        public List<BuildSchema> QuerySchemas { set; get; }
+        public List<BuildRoutine> QueryRoutines { set; get; }
         public List<BuildQuery> EnumQueries { set; get; }
-        public BuildOptions BuildOptions { set; get; } = new BuildOptions();
-        public List<BuildRoutine> BuildRoutines { set; get; }
-        public List<BuildSchema> BuildSchemas { set; get; }
-        public List<BuildSchema> BuildQuerySchemas { set; get; }
-        public List<BuildRoutine> BuildQueryRoutines { set; get; }
         public List<BuildQuery> StaticQueries { set; get; }
+        public BuildOptions BuildOptions { set; get; } = new BuildOptions();
 
         private List<string> errors = new List<string>();
         public List<string> GetErrors()
@@ -74,38 +82,32 @@
             return errors;
         }
 
-        public bool IsValid()
+        public void NullOutZeroLengthCollections()
         {
-            errors.Clear();
-            string[] clients = { "System.Data.SqlClient", "Microsoft.Data.SqlClient" };
-
-            if(string.IsNullOrEmpty(SQLClientNamespace))
+            if (DBSchemas?.Count == 0)
             {
-                AddMissingParameterError(nameof(SQLClientNamespace));
+                DBSchemas = null;
             }
-            else
+            if (DBRoutines?.Count == 0)
             {
-                if(!clients.Contains(SQLClientNamespace))
-                {
-                    AddInvalidValueError(nameof(SQLClientNamespace), clients);
-                }
+                DBRoutines = null;
             }
-
-
-
-
-            return errors.Count == 0;
-        }
-
-        private void AddMissingParameterError(string parameter)
-        {
-            errors.Add($"{parameter} is missing.");
-        }
-
-        private void AddInvalidValueError(string parameter, params string[] values)
-        {
-            string validValues = $"Valid Values: {string.Join(" | ", values)}";
-            errors.Add($"{parameter} is invalid. {validValues}");
+            if (QuerySchemas?.Count == 0)
+            {
+                QuerySchemas = null;
+            }
+            if (QueryRoutines?.Count == 0)
+            {
+                QueryRoutines = null;
+            }
+            if (StaticQueries?.Count == 0)
+            {
+                StaticQueries = null;
+            }
+            if (EnumQueries?.Count == 0)
+            {
+                EnumQueries = null;
+            }
         }
     }
 

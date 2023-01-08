@@ -391,16 +391,10 @@
                             </Grid.ColumnDefinitions>
 
                             <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyleSmall}" VerticalAlignment="Bottom" Text="Database Type:"/>
-                            <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ValidatedTextBoxSmall}" Text="{Binding DatabaseConnectionDatabaseType, Mode=TwoWay}" IsReadOnly="True" TabIndex="0"/>
-
+                            <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ValidatedTextBoxSmall}" Text="{Binding DatabaseType, Mode=TwoWay}" IsReadOnly="True" TabIndex="0"/>
                             <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource LabelStyleSmall}" VerticalAlignment="Bottom" Text="Connection String:"/>
-                            <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ValidatedTextBoxSmall}" Height="110" Text="{Binding DatabaseConnectionConnectionString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="1" TextWrapping="Wrap" VerticalContentAlignment="Top"/>
-
+                            <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ValidatedTextBoxSmall}" Height="110" Text="{Binding ConnectionString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="1" TextWrapping="Wrap" VerticalContentAlignment="Top"/>
                             <TextBlock Grid.Row="5" TextWrapping="Wrap" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding ConnectionError}" Style="{StaticResource ErrorStyle}" Margin="0,10,0,10"/>
-
-
-
-                            <Button Grid.Row="8" Width="96" Height="32" HorizontalAlignment="Left" Style="{StaticResource AlternateButtonStyle}" Content="Cancel" KeyboardNavigation.IsTabStop="False"></Button>
                             <Button Grid.Row="8" Width="96" Height="32" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource PrimaryButtonStyle}" Content="Connect" Command="{Binding ConnectPaneConnect}" TabIndex="7" IsDefault="True"></Button>
 
                         </Grid>

@@ -1,11 +1,17 @@
-﻿using System.Collections.ObjectModel;
+﻿#region usings
+
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Text.RegularExpressions;
+
+#endregion
 
 namespace SQLPlusExtension.Models
 {
     public class Schema : INotifyPropertyChanged, IDataErrorInfo
     {
+        #region Properties
+
         private string _Name;
         public string Name
         {
@@ -24,7 +30,6 @@ namespace SQLPlusExtension.Models
         }
 
         private string _Namespace;
-
         public string Namespace
         {
             get
@@ -36,9 +41,9 @@ namespace SQLPlusExtension.Models
                 if (_Namespace != value)
                 {
                     _Namespace = value;
-                    if (IsSelected)
+                    if (_IsSelected)
                     {
-                        foreach (Routine routine in Routines)
+                        foreach (Routine routine in _Routines)
                         {
                             routine.Namespace = _Namespace;
                         }
@@ -118,6 +123,58 @@ namespace SQLPlusExtension.Models
             }
         }
 
+        private bool _HasError = false;
+        public bool HasError
+        {
+            set
+            {
+                if (_HasError != value)
+                {
+                    _HasError = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasError)));
+                }
+            }
+            get
+            {
+                return _HasError;
+            }
+        }
+
+        #endregion Properties
+
+        #region Callbacks
+
+        /// <summary>
+        /// Provides the cummunication from a child object routine to the schema.
+        /// Selects the schema if all routines are selected and routines have the same namespace as the schema.
+        /// </summary>
+        public void RoutineSelectedCallback()
+        {
+            if (_Routines is not null)
+            {
+                bool isSelected = true;
+
+                foreach (var item in Routines)
+                {
+                    if (item.IsSelected == false)
+                    {
+                        isSelected = false;
+                        break;
+                    }
+                    if(item.Namespace != _Namespace)
+                    {
+                        isSelected = false;
+                        break;
+                    }
+                }
+                IsSelected = isSelected;
+            }
+        }
+
+        #endregion Callbacks
+
+        #region IDataErrorInfo
+
         public string Error
         {
             get
@@ -154,39 +211,13 @@ namespace SQLPlusExtension.Models
             }
         }
 
+        #endregion
+
+        #region INotifyPropertyChanged
+
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public void CheckAllSelected()
-        {
-            if(_Routines is not null)
-            {
-                foreach(var item in Routines)
-                {
-                    if(item.IsSelected == false)
-                    {
-                        IsSelected = false;
-                        return;
-                    }
-                }
-                IsSelected = true;
-            }
-        }
-
-        private bool _HasError = false;
-        public bool HasError
-        {
-            set
-            {
-                if (_HasError != value)
-                {
-                    _HasError = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasError)));
-                }
-            }
-            get
-            {
-                return _HasError;
-            }
-        }
+        
+        #endregion INotifyPropertyChanged
+ 
     }
 }

@@ -14,6 +14,7 @@
     using System.Data.SqlClient;
     using System.IO;
     using System.Linq;
+    using System.Runtime.CompilerServices;
     using System.Runtime.InteropServices;
     using System.Runtime.InteropServices.ComTypes;
     using System.Security.Cryptography;
@@ -79,7 +80,7 @@
 
         public List<BuildRoutine> QueriesMeta()
         {
-            List<Routine> routines = CollectQueries();
+            List<Routine> routines = CollectQueryRoutines();
             if (routines.Count == 0)
             {
                 return null;
@@ -99,10 +100,11 @@
 
         }
 
-        public override List<Routine> CollectRoutines()
+        
+        public override List<Routine> CollectDBRoutinesAndQueryRoutines()
         {
             List<Routine> routines = CollectDBRoutines();
-            routines.AddRange(CollectQueries());
+            routines.AddRange(CollectQueryRoutines());
             return routines;
         }
 
@@ -117,9 +119,9 @@
                 bool foundInBuildSchema = false;
                 bool foundInBuildRoutine = false;
 
-                if (build.BuildSchemas != null)
+                if (build.DBSchemas != null)
                 {
-                    foreach (BuildSchema schema in build.BuildSchemas)
+                    foreach (BuildSchema schema in build.DBSchemas)
                     {
                         if (schema.Schema == routine.Schema)
                         {
@@ -131,9 +133,9 @@
 
                 if (!foundInBuildSchema)
                 {
-                    if (build.BuildRoutines != null)
+                    if (build.DBRoutines != null)
                     {
-                        foreach (BuildRoutine buildRoutine in build.BuildRoutines)
+                        foreach (BuildRoutine buildRoutine in build.DBRoutines)
                         {
                             if (routine.Schema == buildRoutine.Schema && routine.Name == buildRoutine.Name)
                             {
@@ -157,14 +159,14 @@
         {
             string result = routine.Schema;
 
-            var includedBuildSchema = build.BuildSchemas?.FirstOrDefault(s => s.Schema.Equals(routine.Schema, StringComparison.OrdinalIgnoreCase));
+            var includedBuildSchema = build.DBSchemas?.FirstOrDefault(s => s.Schema.Equals(routine.Schema, StringComparison.OrdinalIgnoreCase));
             if (includedBuildSchema != null)
             {
                 result = includedBuildSchema.Namespace;
             }
             else
             {
-                var includedBuildRoutine = build.BuildRoutines?.FirstOrDefault(r => r.Schema.Equals(routine.Schema, StringComparison.OrdinalIgnoreCase) && r.Name.Equals(routine.Name, StringComparison.OrdinalIgnoreCase));
+                var includedBuildRoutine = build.DBRoutines?.FirstOrDefault(r => r.Schema.Equals(routine.Schema, StringComparison.OrdinalIgnoreCase) && r.Name.Equals(routine.Name, StringComparison.OrdinalIgnoreCase));
                 if (includedBuildRoutine != null)
                 {
                     result = includedBuildRoutine.Namespace;
@@ -186,7 +188,7 @@
         /// </summary>
         /// <param name="sqlRoutines"></param>
         /// <returns>Full set of database routines for the build or null.</returns>
-        private List<Routine> CollectDBRoutines()
+        public override List<Routine> CollectDBRoutines()
         {
             List<Routine> result = new List<Routine>();
 
@@ -625,17 +627,17 @@
 
         private bool QueryRoutineInConfiguration(string directory, string fileName)
         {
-            if(build.BuildQuerySchemas != null)
+            if(build.QuerySchemas != null)
             {
-                var schema = build.BuildQuerySchemas.FirstOrDefault(s => s.Namespace == directory);
+                var schema = build.QuerySchemas.FirstOrDefault(s => s.Namespace == directory);
                 if(schema != null)
                 {
                     return true;
                 }
             }
-            if(build.BuildQueryRoutines != null)
+            if(build.QueryRoutines != null)
             {
-                var routine = build.BuildQueryRoutines.FirstOrDefault(r => r.Name == fileName && r.Namespace == directory);
+                var routine = build.QueryRoutines.FirstOrDefault(r => r.Name == fileName && r.Namespace == directory);
                 if(routine != null)
                 {
                     return true;
@@ -647,7 +649,7 @@
         /// Collects the Queries for the build.
         /// </summary>
         /// <returns>List of routines.</returns>
-        private List<Routine> CollectQueries()
+        public override List<Routine> CollectQueryRoutines()
         {
             List<Routine> result = new List<Routine>();
             if (!Directory.Exists(project.SQLPLUSQueriesFolder))

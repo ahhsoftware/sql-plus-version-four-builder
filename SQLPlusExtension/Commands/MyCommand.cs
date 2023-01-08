@@ -41,9 +41,9 @@ namespace SQLPlusExtension
             if(createdConfigurationFiles.Count != 0)
             {
                 await vsProject.AddExistingFilesAsync(createdConfigurationFiles.ToArray());
+                await vsProject.SaveAsync();
             }
             
-
             var databaseConnection = configurationService.GetDatabaseConnection();
             var buildDefinition = configurationService.GetBuildDefinition();
 
@@ -59,28 +59,6 @@ namespace SQLPlusExtension
             var result = await window.ShowDialogAsync(WindowStartupLocation.CenterOwner);
 
         }
-
-        private void BuildService_OnProgressChanged(object sender, ProgressStatusArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void BuildService_OnFileWrite(object sender, FileWriteEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void BuildService_OnFileCreated(object sender, FileCreatedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void BuildService_OnDirectoryCreated(object sender, DirectoryCreatedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-       
 
     }
 }

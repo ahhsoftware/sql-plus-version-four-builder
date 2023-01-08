@@ -184,7 +184,7 @@ namespace SQLPLUS.Builder.ConsoleBuilder
                 //    //[generated].[TestBinaryTypesById]
                 //    //[procs].[SQLTypesById]
                 //},
-                BuildSchemas = new System.Collections.Generic.List<BuildSchema>()
+                DBSchemas = new System.Collections.Generic.List<BuildSchema>()
                 {
                     //new BuildSchema
                     //{

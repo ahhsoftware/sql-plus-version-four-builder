@@ -197,7 +197,7 @@ if(build.LicenseType != "Community"){
         result.Add("System");
         result.Add("System.Collections.Generic");
         result.Add(project.SQLPLUSBaseNamespace);
-        result.Add(build.SQLClientNamespace);
+        result.Add(build.SQLClient);
         result.Add(build.SQLExceptionNamespace);
         return result;
     }
