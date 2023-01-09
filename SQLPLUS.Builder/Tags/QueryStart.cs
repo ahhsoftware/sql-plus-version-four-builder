@@ -60,12 +60,12 @@
         //TODO Use prefix from config
         public String QueryStartAsPrintLine()
         {
-            return $"PRINT 'QueryStart={Name},{SelectType.ToString()}'";
+            return $"PRINT 'QueryStart={Name},{SelectType.ToString()};'";
         }
 
         public String QueryEndAsPrintLine()
         {
-            return $"PRINT 'QueryEnd'";
+            return $"PRINT 'QueryEnd';";
         }
 
 

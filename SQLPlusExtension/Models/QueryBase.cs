@@ -97,6 +97,41 @@ namespace SQLPlusExtension.Models
             }
         }
 
+        private string _QueryError;
+        public string QueryError
+        {
+            set
+            {
+                if (_QueryError != value)
+                {
+                    _QueryError = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryError)));
+                }
+                HasError = !string.IsNullOrEmpty(_QueryError);
+            }
+            get
+            {
+                return _QueryError;
+            }
+        }
+
+        private bool _HasError = false;
+        public bool HasError
+        {
+            set
+            {
+                if (_HasError != value)
+                {
+                    _HasError = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(HasError)));
+                }
+            }
+            get
+            {
+                return _HasError;
+            }
+        }
+
         public RelayCommand DeleteCommand { private set; get; }
     }
 }

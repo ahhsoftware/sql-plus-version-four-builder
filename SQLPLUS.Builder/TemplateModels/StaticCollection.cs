@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SQLPLUS.Builder.TemplateModels
 {
-    public class StaticCollection
+    public class StaticCollection : ErrorBase
     {
         public string Name { set; get; }
 

@@ -128,7 +128,45 @@
     public class BuildQuery
     {
         public string Name { set; get; }
-        public string Query { set; get; }
+
+        private string _Query;
+        public string Query
+        {
+            set
+            {
+                if(value != _Query)
+                {
+                    _Query = value;
+                }
+            }
+            get
+            {
+                if(string.IsNullOrEmpty(_Query))
+                {
+                    // TODO: This can be romoved when all customers have migrated to new version.
+                    if(!string.IsNullOrEmpty(Table) && !string.IsNullOrEmpty(NameColumn) && !string.IsNullOrEmpty(ValueColumn))
+                    {
+                        string query = $"SELECT {NameColumn}, {ValueColumn} FROM {Table}";
+                        if(!string.IsNullOrEmpty(Filter))
+                        {
+                            query += $" WHERE {Filter}";
+                        }
+                        _Query = query;
+                    }
+                }
+                return _Query;
+            }
+        }
+
+        public string Table { set; get; }
+
+        public string NameColumn { set; get; }
+
+        public string ValueColumn { set; get; }
+
+        public string Filter { set; get; }
+
+
     }
 
     public class BuildOptions

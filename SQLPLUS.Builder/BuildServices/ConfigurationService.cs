@@ -46,6 +46,11 @@ namespace SQLPLUS.Builder.BuildServices
                 Directory.CreateDirectory(projectInformation.SQLPLUSQueriesFolder);
             }            
 
+            if(!Directory.Exists(projectInformation.SQLPLUSSampleQueriesFolder))
+            {
+                Directory.CreateDirectory(projectInformation.SQLPLUSSampleQueriesFolder);
+            }
+
             if(!File.Exists(projectInformation.SQLPLUSSampleQueryPath))
             {
                 MSSQLSampleQueryTemplate template = new MSSQLSampleQueryTemplate();

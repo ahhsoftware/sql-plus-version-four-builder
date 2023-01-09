@@ -4,6 +4,7 @@ using SQLPLUS.Builder.ConfigurationModels;
 using SQLPLUS.Builder.DataCollectors;
 using SQLPLUS.Builder.Render;
 using SQLPLUS.Builder.Render.T4Net;
+using SQLPLUS.Builder.TemplateModels;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -39,43 +40,47 @@ namespace SQLPlusExtension.Models
 
         }
 
-        private IDataCollector GetDataCollector(DataCollectorModes mode)
+        private IDataCollector GetDataCollector(DataCollectorModes mode, BuildDefinition buildDefinition = null)
         {
-            return new MSSQLDataCollector(_BuildDefinition, _DatabaseConnection, _ProjectInformation) { DataCollectorMode = mode };
+            if(buildDefinition == null)
+            {
+                return new MSSQLDataCollector(_BuildDefinition, _DatabaseConnection, _ProjectInformation) { DataCollectorMode = mode };
+            }
+            return new MSSQLDataCollector(buildDefinition, _DatabaseConnection, _ProjectInformation) { DataCollectorMode = mode };
         }
 
         #region UI Bound BuildDefinition Properties and Methods
 
-        private ObservableCollection<Schema> _SQLRoutines;
-        public ObservableCollection<Schema> SQLRoutines
+        private ObservableCollection<Schema> _DBRoutines;
+        public ObservableCollection<Schema> DBRoutines
         {
             get
             {
-                return _SQLRoutines;
+                return _DBRoutines;
             }
             set
             {
-                if (_SQLRoutines != value)
+                if (_DBRoutines != value)
                 {
-                    _SQLRoutines = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SQLRoutines)));
+                    _DBRoutines = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DBRoutines)));
                 }
             }
         }
 
-        private ObservableCollection<Schema> _SQLQueries;
-        public ObservableCollection<Schema> SQLQueries
+        private ObservableCollection<Schema> _QueryRoutines;
+        public ObservableCollection<Schema> QueryRoutines
         {
             get
             {
-                return _SQLQueries;
+                return _QueryRoutines;
             }
             set
             {
-                if (_SQLQueries != value)
+                if (_QueryRoutines != value)
                 {
-                    _SQLQueries = value;
-                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(SQLQueries)));
+                    _QueryRoutines = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(QueryRoutines)));
                 }
             }
         }
@@ -241,21 +246,29 @@ namespace SQLPlusExtension.Models
             }
         }
 
-        private void RefreshBuildDefinitionFromUi()
+        private void SetBuildDefinitionFromUi_All()
         {
             BuildDefinition buildDefinition = new BuildDefinition();
 
+            SetBuildDefinitionFromUi_DBRoutines(buildDefinition);
+            SetBuildDefintionFromUi_QueryRoutines(buildDefinition);
+            SetBuildDefintionFromUi_EnumQueries(buildDefinition);
+            SetBuildDefintionFromUi_StaticQueries(buildDefinition);
+            SetBuildDefintionFromUi_BuildOptions(buildDefinition);
+
+            _BuildDefinition = buildDefinition;
+        }
+
+        private void SetBuildDefinitionFromUi_DBRoutines(BuildDefinition buildDefinition)
+        {
+            IsBusy = true;
+
             buildDefinition.DBSchemas = new List<BuildSchema>();
             buildDefinition.DBRoutines = new List<BuildRoutine>();
-            buildDefinition.QuerySchemas = new List<BuildSchema>();
-            buildDefinition.QueryRoutines = new List<BuildRoutine>();
-            buildDefinition.StaticQueries = new List<BuildQuery>();
-            buildDefinition.EnumQueries = new List<BuildQuery>();
-            buildDefinition.BuildOptions = new BuildOptions();
 
-            if (_SQLRoutines != null)
+            if (_DBRoutines != null)
             {
-                foreach (var schema in _SQLRoutines)
+                foreach (var schema in _DBRoutines)
                 {
                     if (schema.IsSelected)
                     {
@@ -280,12 +293,29 @@ namespace SQLPlusExtension.Models
                             }
                         }
                     }
-                } 
+                }
             }
 
-            if (_SQLQueries != null)
+            if(buildDefinition.DBSchemas.Count == 0)
             {
-                foreach (var schema in _SQLQueries)
+                buildDefinition.DBSchemas = null;
+            }
+            if(buildDefinition.DBRoutines.Count == 0)
+            {
+                buildDefinition.DBRoutines = null;
+            }
+
+            IsBusy = false;
+        }
+
+        private void SetBuildDefintionFromUi_QueryRoutines(BuildDefinition buildDefinition)
+        {
+            buildDefinition.QuerySchemas = new List<BuildSchema>();
+            buildDefinition.QueryRoutines = new List<BuildRoutine>();
+
+            if (_QueryRoutines != null)
+            {
+                foreach (var schema in _QueryRoutines)
                 {
                     if (schema.IsSelected)
                     {
@@ -310,20 +340,23 @@ namespace SQLPlusExtension.Models
                             }
                         }
                     }
-                } 
+                }
             }
 
-            if (_StaticQueries != null)
+            if(buildDefinition.QuerySchemas.Count == 0)
             {
-                foreach (var query in _StaticQueries)
-                {
-                    buildDefinition.StaticQueries.Add(new BuildQuery()
-                    {
-                        Name = query.Name,
-                        Query = query.Query
-                    });
-                } 
+                buildDefinition.QuerySchemas = null;
             }
+
+            if(buildDefinition.QueryRoutines.Count == 0)
+            {
+                buildDefinition.QueryRoutines = null;
+            }
+        }
+
+        private void SetBuildDefintionFromUi_EnumQueries(BuildDefinition buildDefinition)
+        {
+            buildDefinition.EnumQueries = new List<BuildQuery>();
 
             if (_EnumQueries != null)
             {
@@ -334,11 +367,39 @@ namespace SQLPlusExtension.Models
                         Name = query.Name,
                         Query = query.Query
                     });
-                } 
+                }
             }
 
-            buildDefinition.BuildOptions = new BuildOptions();
+            if(buildDefinition.EnumQueries.Count == 0)
+            {
+                buildDefinition.EnumQueries = null;
+            }
+        }
 
+        private void SetBuildDefintionFromUi_StaticQueries(BuildDefinition buildDefinition)
+        {
+            buildDefinition.StaticQueries = new List<BuildQuery>();
+
+            if (_StaticQueries != null)
+            {
+                foreach (var query in _StaticQueries)
+                {
+                    buildDefinition.StaticQueries.Add(new BuildQuery()
+                    {
+                        Name = query.Name,
+                        Query = query.Query
+                    });
+                }
+            }
+
+            if(buildDefinition.StaticQueries.Count == 0)
+            {
+                buildDefinition.StaticQueries = null;
+            }
+        }
+
+        private void SetBuildDefintionFromUi_BuildOptions(BuildDefinition buildDefinition)
+        {
             buildDefinition.BuildOptions = new BuildOptions()
             {
                 ImplementIChangeTracking = _ImplementIChangeTracking,
@@ -347,20 +408,78 @@ namespace SQLPlusExtension.Models
                 IncludeAsyncServices = IncludeAsynchronousMethods,
                 UseNullableReferenceTypes = UseNullableReferenceTypes
             };
-
-            buildDefinition.NullOutZeroLengthCollections();
-
-            _BuildDefinition = buildDefinition;
         }
-        private void RefreshUiFromBuildDefinition()
+
+        private void ValidateEnumQueries()
         {
-            RefreshDBRoutines();
-            RefreshQueryRoutines();
-            RefreshEnumQueries();
-            RefreshStaticQueries();
-            RefreshBuildOptions();
+            HasAnyEnumErrors = false;
+
+            if(_EnumQueries == null || _EnumQueries.Count == 0)
+            {
+                return;
+            }
+
+            BuildDefinition buildDefinition = new BuildDefinition();
+            SetBuildDefintionFromUi_EnumQueries(buildDefinition);
+            var collector = GetDataCollector(DataCollectorModes.Configuration, buildDefinition);
+            var results = collector.CollectEnumCollections();
+
+            foreach(EnumCollection enumCollection in results)
+            {
+                var query = _EnumQueries.FirstOrDefault(q => q.Name == enumCollection.Name);
+
+                if (enumCollection.HasError)
+                {
+                    HasAnyEnumErrors = true;
+                    query.QueryError = enumCollection.ErrorMessage;
+                }
+                else
+                {
+                    query.QueryError = null;
+                }
+            }
         }
-        private void RefreshDBRoutines()
+
+        private void ValidateStaticQueries()
+        {
+            HasAnyStaticErrors = false;
+
+            if (_StaticQueries == null || _StaticQueries.Count == 0)
+            {
+                return;
+            }
+
+            BuildDefinition buildDefinition = new BuildDefinition();
+            SetBuildDefintionFromUi_StaticQueries(buildDefinition);
+            var collector = GetDataCollector(DataCollectorModes.Configuration, buildDefinition);
+            var results = collector.CollectStaticCollections();
+
+            foreach (StaticCollection staticCollection in results)
+            {
+                var query = _StaticQueries.FirstOrDefault(q => q.Name == staticCollection.Name);
+
+                if (staticCollection.HasError)
+                {
+                    HasAnyStaticErrors = true;
+                    query.QueryError = staticCollection.ErrorMessage;
+                }
+                else
+                {
+                    query.QueryError = null;
+                }
+            }
+        }
+
+        private void SetUiModelsFromBuildDefinition_All()
+        {
+            SetUiModelsFromBuildDefinition_DBRoutines();
+            SetUiModelsFromBuildDefinition_QueryRoutines();
+            SetUiModelsFromBuildDefinition_EnumQueries();
+            SetUiModelsFromBuildDefinition_StaticQueries();
+            SetUiModelsFromBuildDefinition_BuildOptions();
+        }
+
+        private void SetUiModelsFromBuildDefinition_DBRoutines()
         {
             IsBusy = true;
 
@@ -368,15 +487,15 @@ namespace SQLPlusExtension.Models
             
             var routines = GetDataCollector(DataCollectorModes.Configuration).CollectDBRoutines();
 
-            List<Schema> schemas = BuildRoutinesToSchema(routines, _BuildDefinition.DBSchemas, _BuildDefinition.DBRoutines);
+            List<Schema> schemas = BuildRoutinesToSchema(routines, _BuildDefinition.DBSchemas, _BuildDefinition.DBRoutines, false);
 
             HasAnyDBRoutineErrors = SchemaHasAnyError(schemas);
 
-            SQLRoutines = new ObservableCollection<Schema>(schemas);
+            DBRoutines = new ObservableCollection<Schema>(schemas);
 
             IsBusy = false;
         }
-        public void RefreshQueryRoutines()
+        public void SetUiModelsFromBuildDefinition_QueryRoutines()
         {
             IsBusy = true;
 
@@ -384,21 +503,22 @@ namespace SQLPlusExtension.Models
 
             var routines = GetDataCollector(DataCollectorModes.Configuration).CollectQueryRoutines();
 
-            List<Schema> schemas = BuildRoutinesToSchema(routines, _BuildDefinition.QuerySchemas, _BuildDefinition.QueryRoutines);
+            List<Schema> schemas = BuildRoutinesToSchema(routines, _BuildDefinition.QuerySchemas, _BuildDefinition.QueryRoutines, true);
 
             HasAnyQueryRoutineErrors = SchemaHasAnyError(schemas);
 
-            SQLQueries = new ObservableCollection<Schema>(schemas);
+            QueryRoutines = new ObservableCollection<Schema>(schemas);
 
             IsBusy = false;
         }
-        private void RefreshEnumQueries()
+        private void SetUiModelsFromBuildDefinition_EnumQueries()
         {
             if (_BuildDefinition.EnumQueries is not null && _BuildDefinition.EnumQueries.Count != 0)
             {
                 EnumQueries = new ObservableCollection<EnumQuery>();
                 foreach (var item in _BuildDefinition.EnumQueries)
                 {
+                    
                     EnumQueries.Add(new EnumQuery(RemoveItemFromCollection)
                     {
                         Query = item.Query,
@@ -407,7 +527,9 @@ namespace SQLPlusExtension.Models
                 }
             }
         }
-        private void RefreshStaticQueries()
+
+
+        private void SetUiModelsFromBuildDefinition_StaticQueries()
         {
             if (_BuildDefinition.StaticQueries is not null && _BuildDefinition.StaticQueries.Count != 0)
             {
@@ -424,7 +546,7 @@ namespace SQLPlusExtension.Models
                 }
             }
         }
-        private void RefreshBuildOptions()
+        private void SetUiModelsFromBuildDefinition_BuildOptions()
         {
             SQLClientNamespace = _BuildDefinition.SQLClient;
 
@@ -434,7 +556,7 @@ namespace SQLPlusExtension.Models
             IncludeAsynchronousMethods = _BuildDefinition.BuildOptions.IncludeAsyncServices;
             UseNullableReferenceTypes = _BuildDefinition.BuildOptions.UseNullableReferenceTypes;
         }
-        private List<Schema> BuildRoutinesToSchema(List<SQLPLUS.Builder.TemplateModels.Routine> routines, List<BuildSchema> buildSchemas, List<BuildRoutine> buildRoutines)
+        private List<Schema> BuildRoutinesToSchema(List<SQLPLUS.Builder.TemplateModels.Routine> routines, List<BuildSchema> buildSchemas, List<BuildRoutine> buildRoutines, bool isQuery)
         {
             List<Schema> result = new List<Schema>();
 
@@ -450,20 +572,21 @@ namespace SQLPlusExtension.Models
                         {
                             IsSelected = false,
                             Name = routine.Schema,
-                            Namespace = routine.Schema,
+                            Namespace = isQuery? routine.Namespace : routine.Schema,
                             Routines = new ObservableCollection<Routine>()
                         };
                         result.Add(currentSchema);
                     }
 
-                    Routine routineToAdd = new Routine
+                    Routine routineToAdd = new Routine()
                     {
                         IsSelected = false,
                         Name = routine.Name,
                         Schema = currentSchema.Name,
-                        Namespace = currentSchema.Name,
+                        Namespace = isQuery? currentSchema.Name : currentSchema.Name,
                         IsSelectedChangedCallback = currentSchema.RoutineSelectedCallback
                     };
+
                     if (routine.HasError)
                     {
                         routineToAdd.RoutineError = routine.ErrorMessage;
@@ -523,7 +646,7 @@ namespace SQLPlusExtension.Models
         
         private void SaveConfiguration()
         {
-            RefreshBuildDefinitionFromUi();
+            SetBuildDefinitionFromUi_All();
             _ConfigurationService.SaveBuildDefinition(_BuildDefinition);
         }
 
@@ -620,7 +743,7 @@ namespace SQLPlusExtension.Models
 
         public async Task BuildProject()
         {
-            RefreshBuildDefinitionFromUi();
+            SetBuildDefinitionFromUi_All();
 
             filesAdded = new List<string>();
 
@@ -725,7 +848,7 @@ namespace SQLPlusExtension.Models
                     BannerText = "Click Run to Build Your Project.";
                     break;
                 case Panes.RoutinesActive:
-                    BannerImage = imagePrefix + "BuildObjectsIcon.png";
+                    BannerImage = imagePrefix + "DBRoutinesIcon.png";
                     BannerText = "Choose the Database Routines to Include in Build.";
                     break;
                 case Panes.SettingsActive:
@@ -741,7 +864,7 @@ namespace SQLPlusExtension.Models
                     BannerText = "Set the Connection to Your Build Database";
                     break;
                 case Panes.EnumsActive:
-                    BannerImage = imagePrefix + "StaticsIcon.png";
+                    BannerImage = imagePrefix + "EnumsIcon.png";
                     BannerText = "Queries For Enumerations.";
                     break;
                 case Panes.HelpActive:
@@ -769,8 +892,30 @@ namespace SQLPlusExtension.Models
             _PreviousPane = _ActivePane;
             _ActivePane = activePane;
 
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_PreviousPane.ToString()));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_ActivePane.ToString()));
+            switch (_PreviousPane)
+            {
+                case Panes.RoutinesActive:
+                    SetBuildDefinitionFromUi_DBRoutines(_BuildDefinition);
+                    break;
+                case Panes.QueriesActive:
+                    SetBuildDefintionFromUi_QueryRoutines(_BuildDefinition);
+                    break;
+                case Panes.EnumsActive:
+                    SetBuildDefintionFromUi_EnumQueries(_BuildDefinition);
+                    break;
+                case Panes.StaticsActive:
+                    SetBuildDefintionFromUi_StaticQueries(_BuildDefinition);
+                    break;
+                case Panes.SettingsActive:
+                    SetBuildDefintionFromUi_BuildOptions(_BuildDefinition);
+                    break;
+            }
+
+            if (_PreviousPane != _ActivePane)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_PreviousPane.ToString()));
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(_ActivePane.ToString()));
+            }
 
             SetAndNotifyBanner();
             RaiseCanExecuteChanged();
@@ -966,7 +1111,7 @@ namespace SQLPlusExtension.Models
             {
                 if (_HasAnyStaticErrors != value)
                 {
-                    _HasAnyQueryRoutineErrors = value;
+                    _HasAnyStaticErrors = value;
                     RaisePropertyChanged(nameof(HasAnyStaticErrors));
                     RaisePropertyChanged(nameof(HasAnyErrors));
                 }
@@ -1068,7 +1213,7 @@ namespace SQLPlusExtension.Models
                     (o) =>
                     {
                         RoutinesActive = true;
-                        RefreshDBRoutines();
+                        SetUiModelsFromBuildDefinition_DBRoutines();
                     }
                 );
 
@@ -1081,7 +1226,7 @@ namespace SQLPlusExtension.Models
                     (o) =>
                     {
                         QueriesActive = true;
-                        RefreshQueryRoutines();
+                        SetUiModelsFromBuildDefinition_QueryRoutines();
                     }
                 );
 
@@ -1094,7 +1239,7 @@ namespace SQLPlusExtension.Models
                     (o) =>
                     {
                         StaticsActive = true;
-                        RefreshStaticQueries();
+                        ValidateStaticQueries();
                     }
                 );
 
@@ -1107,7 +1252,7 @@ namespace SQLPlusExtension.Models
                     (o) =>
                     {
                         EnumsActive = true;
-                        RefreshEnumQueries();
+                        ValidateEnumQueries();
                     }
                 );
 
@@ -1129,7 +1274,7 @@ namespace SQLPlusExtension.Models
                 (
                     (o) =>
                     {
-                        return true;
+                        return IsConnected;
                     },
                     (o) =>
                     {
@@ -1168,7 +1313,7 @@ namespace SQLPlusExtension.Models
                                 SaveDatabaseConnection();
 
                                 IsConnected = true;
-                                RefreshUiFromBuildDefinition();
+                                SetUiModelsFromBuildDefinition_All();
                                 RoutinesActive = true;
                             }
                         }
@@ -1234,7 +1379,7 @@ namespace SQLPlusExtension.Models
                  {
                      BuildOutput = new ObservableCollection<BuildItem>();
                      AppendBuildText("Ready...", false);
-                     RefreshBuildDefinitionFromUi();
+                     SetBuildDefinitionFromUi_All();
                      await BuildProject();
                  }
              );

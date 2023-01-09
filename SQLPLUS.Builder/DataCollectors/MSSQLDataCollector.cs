@@ -686,7 +686,7 @@
                         List<Ignore> ignores = ExtractIgnoreTags(routineLines);
                         List<EnumDefinition> returnValueEnums = EnumDefinitionsDB(ExtractReturnTags(routineLines));
                         List<Parameter> parameters = GetQueryParameters(routineLines);
-
+                        string nameSpace = directory == project.SQLPLUSQueriesFolder ? "+" : new DirectoryInfo(directory).Name;
                         if (returnValueEnums.Count != 0)
                         {
                             Parameter parameter = parameters.Find(p => p.Name == "@ReturnValue");
@@ -695,9 +695,10 @@
                                 parameter.EnumerationName = "Returns";
                             }
                         }
+
                         Routine routine = new Routine(
                             Path.GetFileNameWithoutExtension(file),
-                            directory == "Queries" ? "+" : new DirectoryInfo(directory).Name,
+                            nameSpace,
                             "dbo",
                             "QUERY",
                             null,
@@ -1135,12 +1136,21 @@
 
             foreach (BuildQuery query in build.StaticQueries)
             {
-                result.Add(new StaticCollection
+                StaticCollection staticCollection = new StaticCollection
                 {
-                    Data = DataForText(query.Query),
-                    Name = query.Name,
-                    Columns = GetColumnsForText(query.Query)
-                });
+                    Name = query.Name
+                };
+                result.Add(staticCollection);
+
+                try
+                {
+                    staticCollection.Data = DataForText(query.Query);
+                    staticCollection.Columns = GetColumnsForText(query.Query);
+                }
+                catch(Exception ex)
+                {
+                    staticCollection.ErrorMessage = ex.Message;
+                }
             }
             return result;
         }
@@ -1287,7 +1297,7 @@
                 }
                 catch (Exception ex)
                 {
-                    throw new Exception($"Enum Query: {query.Name} - {ex.Message}");
+                    enumCollection.ErrorMessage = ex.Message;
                 }
             }
 

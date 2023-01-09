@@ -38,6 +38,7 @@ namespace SQLPlusExtension
             ConfigurationService configurationService = new ConfigurationService(projectInformation);
 
             List<string> createdConfigurationFiles = configurationService.CreateConfigurationDirectoriesAndFiles();
+
             if(createdConfigurationFiles.Count != 0)
             {
                 await vsProject.AddExistingFilesAsync(createdConfigurationFiles.ToArray());

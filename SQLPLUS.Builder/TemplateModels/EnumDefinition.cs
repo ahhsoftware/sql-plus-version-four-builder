@@ -26,9 +26,10 @@ namespace SQLPLUS.Builder.TemplateModels
                 return comment;
             }
         }
+
     }
 
-    public class EnumCollection
+    public class EnumCollection : ErrorBase
     {
         public string Name { set; get; }
 
