@@ -60,12 +60,23 @@
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource PrimaryColorBrush}"/>
+                                <!--<Setter Property="BorderBrush" TargetName="border" Value="{StaticResource PrimaryColorBrush}"/>-->
                                 <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX="1.1" ScaleY="1.1"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                             </Trigger>
                             <Trigger Property="IsPressed" Value="true">
-                                <Setter Property="BorderBrush" TargetName="border" Value="Black" />
                                 <Setter Property="Cursor" Value="Hand"/>
+                                <Setter Property="RenderTransform">
+                                    <Setter.Value>
+                                        <ScaleTransform ScaleX=".9" ScaleY=".9"/>
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
                                 <Setter Property="Opacity" Value=".5"/>
@@ -250,34 +261,35 @@
             <Button Grid.Row="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding ConnectCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Connect">
                 <Grid>
                     <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding ConnectActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
+                    
                     <Image Source="../Resources/ConnectIcon.png" Height="24" Width="24"/>
                 </Grid>
             </Button>
             <Button Grid.Row="3" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding RoutinesCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="SQL Routines">
                 <Grid>
                     <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding RoutinesActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
-                    <Border Background="LightPink" BorderBrush="{StaticResource ErrorColorBrush}" Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding HasAnyDBRoutineErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <Border Background="LightPink" Height="32" Width="32" CornerRadius="2" Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding HasAnyDBRoutineErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     <Image Source="../Resources/DBRoutinesIcon.png" Height="24" Width="24" />
                 </Grid>
             </Button>
             <Button Grid.Row="5" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding QueriesCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Query Routines">
                 <Grid>
                     <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding QueriesActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
-                    <Border Background="LightPink" BorderBrush="{StaticResource ErrorColorBrush}" Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding HasAnyQueryRoutineErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <Border Background="LightPink" Height="32" Width="32" CornerRadius="2" Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding HasAnyQueryRoutineErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     <Image Source="../Resources/QueriesIcon.png" Height="24" Width="24"/>
                 </Grid>
             </Button>
             <Button Grid.Row="7"  Style="{DynamicResource NavigationButtonStyle}" Command="{Binding StaticsCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Static Data">
                 <Grid>
                     <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding StaticsActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
-                    <Border Background="LightPink" BorderBrush="{StaticResource ErrorColorBrush}" Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding HasAnyStaticErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <Border Background="LightPink" Height="32" Width="32" CornerRadius="2" Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding HasAnyStaticErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     <Image Source="../Resources/StaticsIcon.png" Height="24" Width="24" />
                 </Grid>
             </Button>
             <Button Grid.Row="9"  Style="{DynamicResource NavigationButtonStyle}" Command="{Binding EnumsCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Enumerations">
                 <Grid>
                     <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding EnumsActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
-                    <Border Background="LightPink" BorderBrush="{StaticResource ErrorColorBrush}" Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding HasAnyEnumErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <Border Background="LightPink" Height="32" Width="32" CornerRadius="2" Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding HasAnyEnumErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
                     <Image Source="../Resources/EnumsIcon.png" Height="24" Width="24" />
                 </Grid>
             </Button>
