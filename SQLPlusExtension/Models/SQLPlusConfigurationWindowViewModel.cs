@@ -261,8 +261,6 @@ namespace SQLPlusExtension.Models
 
         private void SetBuildDefinitionFromUi_DBRoutines(BuildDefinition buildDefinition)
         {
-            IsBusy = true;
-
             buildDefinition.DBSchemas = new List<BuildSchema>();
             buildDefinition.DBRoutines = new List<BuildRoutine>();
 
@@ -307,7 +305,6 @@ namespace SQLPlusExtension.Models
 
             IsBusy = false;
         }
-
         private void SetBuildDefintionFromUi_QueryRoutines(BuildDefinition buildDefinition)
         {
             buildDefinition.QuerySchemas = new List<BuildSchema>();
@@ -353,7 +350,6 @@ namespace SQLPlusExtension.Models
                 buildDefinition.QueryRoutines = null;
             }
         }
-
         private void SetBuildDefintionFromUi_EnumQueries(BuildDefinition buildDefinition)
         {
             buildDefinition.EnumQueries = new List<BuildQuery>();
@@ -375,7 +371,6 @@ namespace SQLPlusExtension.Models
                 buildDefinition.EnumQueries = null;
             }
         }
-
         private void SetBuildDefintionFromUi_StaticQueries(BuildDefinition buildDefinition)
         {
             buildDefinition.StaticQueries = new List<BuildQuery>();
@@ -397,7 +392,6 @@ namespace SQLPlusExtension.Models
                 buildDefinition.StaticQueries = null;
             }
         }
-
         private void SetBuildDefintionFromUi_BuildOptions(BuildDefinition buildDefinition)
         {
             buildDefinition.BuildOptions = new BuildOptions()
@@ -409,7 +403,6 @@ namespace SQLPlusExtension.Models
                 UseNullableReferenceTypes = UseNullableReferenceTypes
             };
         }
-
         private void ValidateEnumQueries()
         {
             HasAnyEnumErrors = false;
@@ -439,7 +432,6 @@ namespace SQLPlusExtension.Models
                 }
             }
         }
-
         private void ValidateStaticQueries()
         {
             HasAnyStaticErrors = false;
@@ -469,7 +461,6 @@ namespace SQLPlusExtension.Models
                 }
             }
         }
-
         private void SetUiModelsFromBuildDefinition_All()
         {
             SetUiModelsFromBuildDefinition_DBRoutines();
@@ -478,11 +469,8 @@ namespace SQLPlusExtension.Models
             SetUiModelsFromBuildDefinition_StaticQueries();
             SetUiModelsFromBuildDefinition_BuildOptions();
         }
-
         private void SetUiModelsFromBuildDefinition_DBRoutines()
         {
-            IsBusy = true;
-
             HasAnyDBRoutineErrors = false;
             
             var routines = GetDataCollector(DataCollectorModes.Configuration).CollectDBRoutines();
@@ -492,13 +480,9 @@ namespace SQLPlusExtension.Models
             HasAnyDBRoutineErrors = SchemaHasAnyError(schemas);
 
             DBRoutines = new ObservableCollection<Schema>(schemas);
-
-            IsBusy = false;
         }
         public void SetUiModelsFromBuildDefinition_QueryRoutines()
         {
-            IsBusy = true;
-
             HasAnyQueryRoutineErrors = false;
 
             var routines = GetDataCollector(DataCollectorModes.Configuration).CollectQueryRoutines();
@@ -508,8 +492,6 @@ namespace SQLPlusExtension.Models
             HasAnyQueryRoutineErrors = SchemaHasAnyError(schemas);
 
             QueryRoutines = new ObservableCollection<Schema>(schemas);
-
-            IsBusy = false;
         }
         private void SetUiModelsFromBuildDefinition_EnumQueries()
         {
@@ -527,8 +509,6 @@ namespace SQLPlusExtension.Models
                 }
             }
         }
-
-
         private void SetUiModelsFromBuildDefinition_StaticQueries()
         {
             if (_BuildDefinition.StaticQueries is not null && _BuildDefinition.StaticQueries.Count != 0)
@@ -902,9 +882,11 @@ namespace SQLPlusExtension.Models
                     break;
                 case Panes.EnumsActive:
                     SetBuildDefintionFromUi_EnumQueries(_BuildDefinition);
+                    ValidateEnumQueries();
                     break;
                 case Panes.StaticsActive:
                     SetBuildDefintionFromUi_StaticQueries(_BuildDefinition);
+                    ValidateStaticQueries();
                     break;
                 case Panes.SettingsActive:
                     SetBuildDefintionFromUi_BuildOptions(_BuildDefinition);
@@ -963,6 +945,7 @@ namespace SQLPlusExtension.Models
                 {
                     _IsBusy = value;
                     RaisePropertyChanged(nameof(IsBusy));
+                    Application.Current.Dispatcher.Invoke(DispatcherPriority.Background, (Delegate)(() => { }));
                 }
             }
         }
@@ -1213,7 +1196,9 @@ namespace SQLPlusExtension.Models
                     (o) =>
                     {
                         RoutinesActive = true;
+                        IsBusy = true;
                         SetUiModelsFromBuildDefinition_DBRoutines();
+                        IsBusy = false;
                     }
                 );
 
@@ -1226,7 +1211,9 @@ namespace SQLPlusExtension.Models
                     (o) =>
                     {
                         QueriesActive = true;
+                        IsBusy = true;
                         SetUiModelsFromBuildDefinition_QueryRoutines();
+                        IsBusy = false;
                     }
                 );
 
@@ -1267,8 +1254,6 @@ namespace SQLPlusExtension.Models
                         SettingsActive = true;
                     }
                 );
-
-            
 
             BuildCommand = new RelayCommand
                 (
