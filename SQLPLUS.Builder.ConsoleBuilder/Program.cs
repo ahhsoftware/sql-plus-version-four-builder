@@ -4,6 +4,7 @@ using SQLPLUS.Builder.DataCollectors;
 using SQLPLUS.Builder.Render;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SQLPLUS.Builder.ConsoleBuilder
 {
@@ -17,8 +18,12 @@ namespace SQLPLUS.Builder.ConsoleBuilder
             Name = 1
         }
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
+            var service = new procs.Service("initial catalog = v4tests; server=(local); integrated security=true;");
+            var output = await Task.Run(() => service.AllTags(new procs.Models.AllTagsInput("comment", "5555555555554444", "default", "displa", "alan@alan.com", DayOfWeek.Friday, "For", null)));
+
+
             ProjectInformation projectInformation = new ProjectInformation("SQLPLUS.Build.Test.Basic",
                 "C:\\Users\\Alan\\source\\repos\\sql-plus-version-four-tests\\SQLPLUS.Build.Test.Basic");
 

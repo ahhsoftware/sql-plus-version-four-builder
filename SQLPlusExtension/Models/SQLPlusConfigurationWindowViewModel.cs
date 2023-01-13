@@ -1130,6 +1130,42 @@ namespace SQLPlusExtension.Models
             }
         }
 
+        private string _DeleteMessage = null;
+        public string DeleteMessage
+        {
+            set
+            {
+                if(_DeleteMessage != value)
+                {
+                    _DeleteMessage = value;
+                    if(_DeleteMessage == null)
+                    {
+                        ConfirmDeleteCommand = new RelayCommand
+                        (
+                            (o) =>
+                            {
+                                return true;
+                            },
+                            (o) => { }
+                         );
+                        CancelDeleteCommand = new RelayCommand
+                        (
+                            (o) =>
+                            {
+                                return true;
+                            },
+                            (o) => { }
+                        );
+                    }
+                    RaisePropertyChanged(nameof(DeleteMessage));
+                }
+            }
+            get
+            {
+                return _DeleteMessage;
+            }
+        }
+        
         #endregion
 
         #region Relay Commands
@@ -1161,6 +1197,11 @@ namespace SQLPlusExtension.Models
         public RelayCommand ConnectPaneConnect { private set; get; }
         public RelayCommand SaveConfigurationCommand { private set; get; }
         public RelayCommand BuildProjectCommand { private set; get; }
+
+        public RelayCommand ConfirmDeleteCommand { private set; get; }
+
+        public RelayCommand CancelDeleteCommand { private set; get; }
+        
         public void InitCommands()
         {
             HelpCommand = new RelayCommand
@@ -1369,22 +1410,59 @@ namespace SQLPlusExtension.Models
                  }
              );
 
+            ConfirmDeleteCommand = new RelayCommand
+            (
+                (o) =>
+                {
+                    return true;
+                },
+                (o) =>
+                {
+                    if(enumToDelete != null)
+                    {
+                        EnumQueries.Remove(enumToDelete);
+                    }
+                    if(staticToDelete != null)
+                    {
+                        StaticQueries.Remove(staticToDelete);
+                    }
+                    DeleteMessage = null;
+                }
+             );
+
+            CancelDeleteCommand = new RelayCommand
+            (
+                (o) =>
+                {
+                    return true;
+                },
+                (o) =>
+                {
+                    enumToDelete = null;
+                    staticToDelete = null;
+                    DeleteMessage = null;
+                }
+             );
+
             #endregion RelayCommands
 
         }
+
+        private EnumQuery enumToDelete = null;
+        private StaticQuery staticToDelete = null;
 
         private void RemoveItemFromCollection(object obj)
         {
             if (obj is EnumQuery enumQuery)
             {
-                EnumQueries.Remove(enumQuery);
-                return;
+                DeleteMessage = $"Are you sure you want to delete Enum Query: {enumQuery.Name}?";
+                enumToDelete = enumQuery;
             }
 
             if (obj is StaticQuery staticQuery)
             {
-                StaticQueries.Remove(staticQuery);
-                return;
+                staticToDelete = staticQuery;
+                DeleteMessage = $"Are you sure you want to delete List Query {staticQuery.Name}?";
             }
         }
 

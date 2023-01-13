@@ -755,9 +755,24 @@
 
         <Grid x:Name="BusyIndicator" d:Visibility="Collapsed" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="4" Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
             <Border Background="Black" Opacity=".2"/>
-            <TextBlock Text="Processing..." FontSize="36" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+            <TextBlock Text="Loading..." FontSize="36" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Grid>
 
+        <Grid x:Name="ConfirmDelet" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="4" Visibility="{Binding DeleteMessage, Converter={StaticResource NullToVisibilityConverter}}">
+            <Border Background="Black" Opacity=".5"></Border>
+            <Grid Background="White" Margin="225,150">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="24"/>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Border Background="Black"/>
+                <TextBlock Grid.Row="1" Text="{Binding DeleteMessage}" TextWrapping="WrapWithOverflow" Margin="24" FontSize="16" FontWeight="Bold"></TextBlock>
+                <Button Grid.Row="2" Style="{StaticResource PrimaryButtonStyle}" Height="36" Width="100" Content="Delete" HorizontalAlignment="Right" Command="{Binding ConfirmDeleteCommand}" Margin="15"></Button>
+                <Button Grid.Row="2" Style="{StaticResource AlternateButtonStyle}" Height="36" Width="100" Content="Cancel" HorizontalAlignment="Left"  Command="{Binding CancelDeleteCommand}" Margin="15"></Button>
+            </Grid>
+        </Grid>
+        
     </Grid>
 
 </platform:DialogWindow>
