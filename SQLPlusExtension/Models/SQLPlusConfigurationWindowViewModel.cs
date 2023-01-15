@@ -825,27 +825,27 @@ namespace SQLPlusExtension.Models
             {
                 case Panes.BuildActive:
                     BannerImage = imagePrefix + "BuildIcon.png";
-                    BannerText = "Click Run to Build Your Project.";
+                    BannerText = "Build Project.";
                     break;
                 case Panes.RoutinesActive:
                     BannerImage = imagePrefix + "DBRoutinesIcon.png";
-                    BannerText = "Choose the Database Routines to Include in Build.";
+                    BannerText = "Configure Database Routines";
                     break;
                 case Panes.SettingsActive:
                     BannerImage = imagePrefix + "SettingsIcon.png";
-                    BannerText = "Taylor Your Build Options.";
+                    BannerText = "Configure Build Options";
                     break;
                 case Panes.QueriesActive:
                     BannerImage = imagePrefix + "QueriesIcon.png";
-                    BannerText = "Choose the Queries to Include in Build.";
+                    BannerText = "Configure Query Routines.";
                     break;
                 case Panes.ConnectActive:
                     BannerImage = imagePrefix + "ConnectIcon.png";
-                    BannerText = "Set the Connection to Your Build Database";
+                    BannerText = "Configure Database Connection";
                     break;
                 case Panes.EnumsActive:
                     BannerImage = imagePrefix + "EnumsIcon.png";
-                    BannerText = "Queries For Enumerations.";
+                    BannerText = "Configure Enumerations Queries";
                     break;
                 case Panes.HelpActive:
                     BannerImage = imagePrefix + "HelpIcon.png";
@@ -853,7 +853,7 @@ namespace SQLPlusExtension.Models
                     break;
                 case Panes.StaticsActive:
                     BannerImage = imagePrefix + "StaticsIcon.png";
-                    BannerText = "Queries for Static Lists.";
+                    BannerText = "Configure Static List Queries";
                     break;
             }
         }
@@ -875,21 +875,41 @@ namespace SQLPlusExtension.Models
             switch (_PreviousPane)
             {
                 case Panes.RoutinesActive:
+                    RoutinesTooltip = "Configure Database Routines";
                     SetBuildDefinitionFromUi_DBRoutines(_BuildDefinition);
                     break;
                 case Panes.QueriesActive:
+                    QueryTooltip = "Configure Query Routines";
                     SetBuildDefintionFromUi_QueryRoutines(_BuildDefinition);
                     break;
-                case Panes.EnumsActive:
-                    SetBuildDefintionFromUi_EnumQueries(_BuildDefinition);
-                    ValidateEnumQueries();
-                    break;
                 case Panes.StaticsActive:
+                    StaticsTooltip = "Configure Static List Queries";
                     SetBuildDefintionFromUi_StaticQueries(_BuildDefinition);
                     ValidateStaticQueries();
                     break;
+                case Panes.EnumsActive:
+                    EnumsTooltip = "Configure Enumeration Queries";
+                    SetBuildDefintionFromUi_EnumQueries(_BuildDefinition);
+                    ValidateEnumQueries();
+                    break;
                 case Panes.SettingsActive:
                     SetBuildDefintionFromUi_BuildOptions(_BuildDefinition);
+                    break;
+            }
+
+            switch(_ActivePane)
+            {
+                case Panes.RoutinesActive:
+                    RoutinesTooltip = "Refresh Database Routines";
+                    break;
+                case Panes.QueriesActive:
+                    QueryTooltip = "Refresh Query Routines";
+                    break;
+                case Panes.StaticsActive:
+                    StaticsTooltip = "Refresh Static List Queries";
+                    break;
+                case Panes.EnumsActive:
+                    EnumsTooltip = "Refresh Enumeration Queries";
                     break;
             }
 
@@ -917,6 +937,22 @@ namespace SQLPlusExtension.Models
                 }
             }
         }
+
+        public bool ConnectActive
+        {
+            get
+            {
+                return _ActivePane == Panes.ConnectActive;
+            }
+            set
+            {
+                if (_ActivePane != Panes.ConnectActive)
+                {
+                    HandleNavigationPropertyChanged(Panes.ConnectActive);
+                }
+            }
+        }
+
         public bool RoutinesActive
         {
             get
@@ -931,6 +967,120 @@ namespace SQLPlusExtension.Models
                 }
             }
         }
+
+        private string _RoutinesTooltip = "Configure Database Routines";
+        public string RoutinesTooltip
+        {
+            get
+            {
+                return _RoutinesTooltip;
+            }
+            set
+            {
+                if(value != _RoutinesTooltip)
+                {
+                    _RoutinesTooltip = value;
+                    RaisePropertyChanged(nameof(RoutinesTooltip));
+                }
+            }
+        }
+
+        public bool QueriesActive
+        {
+            get
+            {
+                return _ActivePane == Panes.QueriesActive;
+            }
+            set
+            {
+                if (_ActivePane != Panes.QueriesActive)
+                {
+                    HandleNavigationPropertyChanged(Panes.QueriesActive);
+                }
+            }
+        }
+
+        private string _QueryTooltip = "Configure Query Routines";
+        public string QueryTooltip
+        {
+            get
+            {
+                return _QueryTooltip;
+            }
+            set
+            {
+                if (value != _QueryTooltip)
+                {
+                    _QueryTooltip = value;
+                    RaisePropertyChanged(nameof(QueryTooltip));
+                }
+            }
+        }
+
+        public bool StaticsActive
+        {
+            get
+            {
+                return _ActivePane == Panes.StaticsActive;
+            }
+            set
+            {
+                if (_ActivePane != Panes.StaticsActive)
+                {
+                    HandleNavigationPropertyChanged(Panes.StaticsActive);
+                }
+            }
+        }
+
+        private string _StaticsTooltip = "Configure Static List Queries";
+        public string StaticsTooltip
+        {
+            get
+            {
+                return _StaticsTooltip;
+            }
+            set
+            {
+                if (value != _StaticsTooltip)
+                {
+                    _StaticsTooltip = value;
+                    RaisePropertyChanged(nameof(StaticsTooltip));
+                }
+            }
+        }
+
+        public bool EnumsActive
+        {
+            get
+            {
+                return _ActivePane == Panes.EnumsActive;
+            }
+            set
+            {
+                if (_ActivePane != Panes.EnumsActive)
+                {
+                    HandleNavigationPropertyChanged(Panes.EnumsActive);
+                }
+            }
+        }
+
+        private string _EnumsTooltip = "Configure Enumeration Queries";
+        public string EnumsTooltip
+        {
+            get
+            {
+                return _EnumsTooltip;
+            }
+            set
+            {
+                if (value != _EnumsTooltip)
+                {
+                    _EnumsTooltip = value;
+                    RaisePropertyChanged(nameof(EnumsTooltip));
+                }
+            }
+        }
+
 
         private bool _IsBusy = false;
         public bool IsBusy
@@ -963,48 +1113,9 @@ namespace SQLPlusExtension.Models
                 }
             }
         }
-        public bool QueriesActive
-        {
-            get
-            {
-                return _ActivePane == Panes.QueriesActive;
-            }
-            set
-            {
-                if (_ActivePane != Panes.QueriesActive)
-                {
-                    HandleNavigationPropertyChanged(Panes.QueriesActive);
-                }
-            }
-        }
-        public bool ConnectActive
-        {
-            get
-            {
-                return _ActivePane == Panes.ConnectActive;
-            }
-            set
-            {
-                if (_ActivePane != Panes.ConnectActive)
-                {
-                    HandleNavigationPropertyChanged(Panes.ConnectActive);
-                }
-            }
-        }
-        public bool EnumsActive
-        {
-            get
-            {
-                return _ActivePane == Panes.EnumsActive;
-            }
-            set
-            {
-                if (_ActivePane != Panes.EnumsActive)
-                {
-                    HandleNavigationPropertyChanged(Panes.EnumsActive);
-                }
-            }
-        }
+        
+        
+        
         public bool HelpActive
         {
             get
@@ -1019,20 +1130,7 @@ namespace SQLPlusExtension.Models
                 }
             }
         }
-        public bool StaticsActive
-        {
-            get
-            {
-                return _ActivePane == Panes.StaticsActive;
-            }
-            set
-            {
-                if (_ActivePane != Panes.StaticsActive)
-                {
-                    HandleNavigationPropertyChanged(Panes.StaticsActive);
-                }
-            }
-        }
+        
 
         private bool _IsConnected = false;
         public bool IsConnected
@@ -1202,6 +1300,7 @@ namespace SQLPlusExtension.Models
 
         public RelayCommand CancelDeleteCommand { private set; get; }
         
+
         public void InitCommands()
         {
             HelpCommand = new RelayCommand
@@ -1224,7 +1323,10 @@ namespace SQLPlusExtension.Models
                     },
                     (o) =>
                     {
+                        if (IsBusy) return;
+                        IsBusy = true;
                         ConnectActive = true;
+                        IsBusy = false;
                     }
                 );
 
@@ -1236,8 +1338,10 @@ namespace SQLPlusExtension.Models
                     },
                     (o) =>
                     {
-                        RoutinesActive = true;
+                        if (IsBusy) return;
+
                         IsBusy = true;
+                        RoutinesActive = true;
                         SetUiModelsFromBuildDefinition_DBRoutines();
                         IsBusy = false;
                     }
@@ -1251,8 +1355,10 @@ namespace SQLPlusExtension.Models
                     },
                     (o) =>
                     {
-                        QueriesActive = true;
+                        if (IsBusy) return;
+
                         IsBusy = true;
+                        QueriesActive = true;
                         SetUiModelsFromBuildDefinition_QueryRoutines();
                         IsBusy = false;
                     }
@@ -1266,8 +1372,12 @@ namespace SQLPlusExtension.Models
                     },
                     (o) =>
                     {
+                        if (IsBusy) return;
+
+                        IsBusy = true;
                         StaticsActive = true;
                         ValidateStaticQueries();
+                        IsBusy = false;
                     }
                 );
 
@@ -1279,8 +1389,12 @@ namespace SQLPlusExtension.Models
                     },
                     (o) =>
                     {
+                        if (IsBusy) return;
+
+                        IsBusy = true;
                         EnumsActive = true;
                         ValidateEnumQueries();
+                        IsBusy = false;
                     }
                 );
 
@@ -1292,7 +1406,11 @@ namespace SQLPlusExtension.Models
                     },
                     (o) =>
                     {
+                        if (IsBusy) return;
+
+                        IsBusy = true;
                         SettingsActive = true;
+                        IsBusy = false;
                     }
                 );
 
@@ -1304,8 +1422,12 @@ namespace SQLPlusExtension.Models
                     },
                     (o) =>
                     {
+                        if (IsBusy) return;
+
+                        IsBusy = true;
                         SaveConfiguration();
                         BuildActive = true;
+                        IsBusy = false;
                     }
                 );
 

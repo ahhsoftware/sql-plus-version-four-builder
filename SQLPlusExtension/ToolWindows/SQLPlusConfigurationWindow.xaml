@@ -33,8 +33,8 @@
         <Style x:Key="ActiveNavigationItemBorder" TargetType="Border">
             <Setter Property="BorderThickness" Value="1"/>
             <Setter Property="BorderBrush" Value="{StaticResource Purple}"/>
-            <Setter Property="Height" Value="36"/>
-            <Setter Property="Width" Value="36"/>
+            <Setter Property="Height" Value="38"/>
+            <Setter Property="Width" Value="38"/>
             <Setter Property="CornerRadius" Value="2" />
         </Style>
         <Style x:Key="ContentBorderStyle" TargetType="Border">
@@ -55,12 +55,11 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border"  Background="{TemplateBinding Background}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" SnapsToDevicePixels="true">
-                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <Border x:Name="border"  Background="{TemplateBinding Background}">
+                            <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                         <ControlTemplate.Triggers>
                             <Trigger Property="IsMouseOver" Value="true">
-                                <!--<Setter Property="BorderBrush" TargetName="border" Value="{StaticResource PrimaryColorBrush}"/>-->
                                 <Setter Property="Cursor" Value="Hand"/>
                                 <Setter Property="RenderTransform">
                                     <Setter.Value>
@@ -80,7 +79,6 @@
                             </Trigger>
                             <Trigger Property="IsEnabled" Value="false">
                                 <Setter Property="Opacity" Value=".5"/>
-                                <Setter Property="Background" Value="#DDDDDD"/>
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
@@ -205,41 +203,31 @@
             </Setter>
         </Style>
     </Window.Resources>
-    <Grid x:Name="Shell">
+    <Grid x:Name="Shell" ShowGridLines="False">
         <Grid.RowDefinitions>
-            <RowDefinition Height="28"/>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="490"/>
+            <RowDefinition Height="48"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="50"/>
+            <ColumnDefinition Width="88"/>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="40"/>
-            <ColumnDefinition Width="660"/>
-            <ColumnDefinition Width="50"/>
         </Grid.ColumnDefinitions>
 
         <!-- Header -->
-        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
-            <Border.Background>
-                <ImageBrush ImageSource="../Resources/BannerControl.png"/>
-            </Border.Background>
-        </Border>
-        <Image Grid.Row="1" Grid.Column="1" Source="{Binding BannerImage}" Height="24" Width="24"/>
-        <TextBlock Grid.Row="1" Grid.Column="2" Style="{StaticResource TextBlockStyleBase}" FontSize="24" Margin="16,4,0,0" Text="{Binding BannerText}" />
-
-        <Button Grid.Row="1" Grid.Column="2" HorizontalAlignment="Right" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding HelpCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Help" Height="36" Width="36">
+        <Border Grid.ColumnSpan="3" Height="2" Background="{StaticResource BrightColorBrush}" VerticalAlignment="Bottom"></Border>
+        <Image Source="{Binding BannerImage}" Height="24" Width="24" />
+        <TextBlock Grid.Column="1" Style="{StaticResource TextBlockStyleBase}" FontSize="24" VerticalAlignment="Center" Text="{Binding BannerText}" />
+        <Button Grid.Column="2" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding HelpCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Help" Height="36" Width="36">
             <Grid>
                 <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding HelpActive, Converter={StaticResource BoolToVisibilityConverter}}" Height="32" Width="32"></Border>
-                <Image Source="../Resources/HelpIcon.png" Height="20" Width="20"/>
+                <Image Source="../Resources/HelpIcon.png" Height="24" Width="24"/>
             </Grid>
         </Button>
-        <Border Grid.Row="2" Background="White" Width="4" Height="24" CornerRadius="2,2,2,2"/>
-
         <!-- End Header -->
 
         <!-- Navigation Buttons -->
-        <Grid Grid.Row="2" Grid.Column="1" Name="NavigationButtons">
+        <Grid Grid.Row="1" Name="NavigationButtons">
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
@@ -257,302 +245,195 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="24"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="24"/>
+            </Grid.ColumnDefinitions>
 
-            <Button Grid.Row="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding ConnectCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Connect">
+            <Border Grid.Row="3" Background="Red" Height="6" Width="6" CornerRadius="3" Visibility="{Binding HasAnyDBRoutineErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Border Grid.Row="5" Background="Red" Height="6" Width="6" CornerRadius="3" Visibility="{Binding HasAnyQueryRoutineErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Border Grid.Row="7" Background="Red" Height="6" Width="6" CornerRadius="3" Visibility="{Binding HasAnyStaticErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
+            <Border Grid.Row="9" Background="Red" Height="6" Width="6" CornerRadius="3" Visibility="{Binding HasAnyEnumErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+            <Button Grid.Row="1" Grid.Column="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding ConnectCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Configure Database Connection">
                 <Grid>
                     <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding ConnectActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
-                    
                     <Image Source="../Resources/ConnectIcon.png" Height="24" Width="24"/>
                 </Grid>
             </Button>
-            <Button Grid.Row="3" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding RoutinesCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="SQL Routines">
+
+            <Button Grid.Row="3" Grid.Column="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding RoutinesCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="{Binding RoutinesTooltip}">
                 <Grid>
-                    <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding RoutinesActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
-                    <Border Background="LightPink" Height="32" Width="32" CornerRadius="2" Visibility="{Binding HasAnyDBRoutineErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                    <Image Source="../Resources/DBRoutinesIcon.png" Height="24" Width="24" />
+                    <Border Style="{StaticResource ActiveNavigationItemBorder}" BorderBrush="Green" Visibility="{Binding RoutinesActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
+                    <Image Source="../Resources/DBRoutinesIcon.png" Height="24" Width="24"/>
                 </Grid>
             </Button>
-            <Button Grid.Row="5" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding QueriesCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Query Routines">
+
+            <Button Grid.Row="5" Grid.Column="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding QueriesCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="{Binding QueryTooltip}">
                 <Grid>
-                    <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding QueriesActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
-                    <Border Background="LightPink" Height="32" Width="32" CornerRadius="2" Visibility="{Binding HasAnyQueryRoutineErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
-                    <Image Source="../Resources/QueriesIcon.png" Height="24" Width="24"/>
+                    <Border Style="{StaticResource ActiveNavigationItemBorder}" BorderBrush="Green" Visibility="{Binding QueriesActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
+                    <Image Source="../Resources/QueriesIcon.png" Height="24" Width="24" Margin="0,4,0,0"/>
                 </Grid>
             </Button>
-            <Button Grid.Row="7"  Style="{DynamicResource NavigationButtonStyle}" Command="{Binding StaticsCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Static Data">
+
+            <Button Grid.Row="7" Grid.Column="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding StaticsCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="{Binding StaticsTooltip}">
                 <Grid>
-                    <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding StaticsActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
-                    <Border Background="LightPink" Height="32" Width="32" CornerRadius="2" Visibility="{Binding HasAnyStaticErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <Border Style="{StaticResource ActiveNavigationItemBorder}" BorderBrush="Green"  Visibility="{Binding StaticsActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
                     <Image Source="../Resources/StaticsIcon.png" Height="24" Width="24" />
                 </Grid>
             </Button>
-            <Button Grid.Row="9"  Style="{DynamicResource NavigationButtonStyle}" Command="{Binding EnumsCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Enumerations">
+
+            <Button Grid.Row="9" Grid.Column="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding EnumsCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="{Binding EnumsTooltip}">
                 <Grid>
-                    <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding EnumsActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
-                    <Border Background="LightPink" Height="32" Width="32" CornerRadius="2" Visibility="{Binding HasAnyEnumErrors, Converter={StaticResource BoolToVisibilityConverter}}"/>
+                    <Border Style="{StaticResource ActiveNavigationItemBorder}" BorderBrush="Green" Visibility="{Binding EnumsActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
                     <Image Source="../Resources/EnumsIcon.png" Height="24" Width="24" />
                 </Grid>
             </Button>
-            <Button Grid.Row="11"  Style="{DynamicResource NavigationButtonStyle}" Command="{Binding SettingsCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Settings">
+
+            <Button Grid.Row="11" Grid.Column="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding SettingsCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Configure Build Settings">
                 <Grid>
-                    <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding SettingsActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
+                    <Border Style="{StaticResource ActiveNavigationItemBorder}"  BorderBrush="Green" Visibility="{Binding SettingsActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
                     <Image Source="../Resources/SettingsIcon.png" Height="24" Width="24" />
                 </Grid>
             </Button>
-            <Button Grid.Row="13" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding BuildCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Build">
+
+            <Button Grid.Row="13" Grid.Column="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding BuildCommand}" KeyboardNavigation.IsTabStop="False" ToolTip="Build Project">
                 <Grid>
-                    <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding BuildActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
+                    <Border Style="{StaticResource ActiveNavigationItemBorder}" BorderBrush="Green" Visibility="{Binding BuildActive, Converter={StaticResource BoolToVisibilityConverter}}"></Border>
                     <Image Source="../Resources/BuildIcon.png" Height="24" Width="24" />
                 </Grid>
             </Button>
+
         </Grid>
         <!-- End Navigation Buttons -->
 
         <!-- Content Grid -->
-        <Grid Grid.Column="2" Grid.Row="2">
+        <Grid Name="ContentGrid" Grid.Column="1" Grid.Row="1" Margin="0,30,0,30">
 
-            <Grid x:Name="HelpContent" d:Visibility="Collapsed" Visibility="{Binding HelpActive, Converter={StaticResource BoolToVisibilityConverter}}">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="48"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" MinHeight="48"/>
-                    <RowDefinition Height="400"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ContentBorderStyle}"/>
-
-                <Grid Grid.Row="1" Grid.Column="1" Name="HelpGrid">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="48"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="48"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="48"/>
-                        <RowDefinition Height="36"/>
-                        <RowDefinition Height="36"/>
-                        <RowDefinition Height="36"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="48"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="0" Grid.Column="1" Text="Follow the links below to get online help." HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource LabelStyleLarge}"/>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource LabelStyleLarge}" VerticalAlignment="Bottom" Margin="20,0,0,0">
+            <StackPanel Name="HelpContent" Margin="30" d:Visibility="Collapsed" Visibility="{Binding HelpActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Text="Follow the links below to get online help." HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource LabelStyleLarge}"/>
+                <TextBlock Style="{StaticResource LabelStyleLarge}" VerticalAlignment="Bottom" Margin="20,0,0,0"/>
+                <TextBlock Style="{StaticResource LabelStyleLarge}" VerticalAlignment="Bottom" Margin="20,0,0,0">
                         <Hyperlink NavigateUri="https://www.sqlplus.net/content/SqlPlusDocs.pdf" RequestNavigate="Hyperlink_RequestNavigate">Online Documentation</Hyperlink>
-                    </TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="1" Style="{StaticResource LabelStyleLarge}" VerticalAlignment="Bottom" Margin="20,0,0,0">
+                </TextBlock>
+                <TextBlock Style="{StaticResource LabelStyleLarge}" VerticalAlignment="Bottom" Margin="20,0,0,0">
                         <Hyperlink NavigateUri="https://github.com/ahhsoftware/SQLPlusSampleApp" RequestNavigate="Hyperlink_RequestNavigate" >Sample Applications</Hyperlink>
-                    </TextBlock>
-                    <TextBlock Grid.Row="3" Grid.Column="1" Style="{StaticResource LabelStyleLarge}" VerticalAlignment="Bottom" Margin="20,0,0,0">
+                </TextBlock>
+                <TextBlock Style="{StaticResource LabelStyleLarge}" VerticalAlignment="Bottom" Margin="20,0,0,0">
                         <Hyperlink NavigateUri="https://www.sqlplus.net/Home/Learn" RequestNavigate="Hyperlink_RequestNavigate">Video Tutorials</Hyperlink>
-                    </TextBlock>
+                </TextBlock>
+            </StackPanel>
 
-                    <!--<StackPanel Grid.Row="4" Grid.Column="1" Margin="0,20,0,20" d:Visibility="Visible" Visibility="{Binding AuthorizedUser, Converter={StaticResource NullToVisibilityConverter}, ConverterParameter=true}" VerticalAlignment="Top">
-                        <TextBlock Style="{StaticResource LabelStyleLarge}" TextWrapping="Wrap">
-                            <Run>If you are a professional or enterprise license holder, please login for access to additional support options.</Run>
-                            <LineBreak/>
-                            <LineBreak/>
-                            <Run>Not registered? Get started by registering here.</Run>
-                            <LineBreak/>
-                            <Button Style="{StaticResource AlternateButtonStyle}" Content="Register" Height="32" Width="96" Margin="0,5,0,0" FontSize="12" Command="{Binding RegisterCommand}" />
-                        </TextBlock>
-
-                    </StackPanel>-->
-                </Grid>
-            </Grid>
-
-            <Grid x:Name="ConnectionContent" d:Visibility="Collapsed" Visibility="{Binding ConnectActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                <Grid Name="ConnectGrid">
-
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="48"/>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="48"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" MinHeight="48"/>
-                        <RowDefinition Height="400"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ContentBorderStyle}"/>
-
-                    <Grid Grid.Row="1" Grid.Column="1">
-                        <Grid HorizontalAlignment="Center" Margin="20,20,20,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="32"/>
-                                <RowDefinition Height="32"/>
-                                <RowDefinition Height="32"/>
-                                <RowDefinition Height="120"/>
-                                <RowDefinition Height="32"/>
-                                <RowDefinition Height="64"/>
-                                <RowDefinition Height="*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150"/>
-                                <ColumnDefinition Width="250"/>
-                            </Grid.ColumnDefinitions>
-
-                            <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource LabelStyleSmall}" VerticalAlignment="Bottom" Text="Database Type:"/>
-                            <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ValidatedTextBoxSmall}" Text="{Binding DatabaseType, Mode=TwoWay}" IsReadOnly="True" TabIndex="0"/>
-                            <TextBlock Grid.Row="2" Grid.Column="0"  Style="{StaticResource LabelStyleSmall}" VerticalAlignment="Bottom" Text="Connection String:"/>
-                            <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource ValidatedTextBoxSmall}" Height="110" Text="{Binding ConnectionString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="1" TextWrapping="Wrap" VerticalContentAlignment="Top"/>
-                            <TextBlock Grid.Row="5" TextWrapping="Wrap" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding ConnectionError}" Style="{StaticResource ErrorStyle}" Margin="0,10,0,10"/>
-                            <Button Grid.Row="8" Width="96" Height="32" Grid.Column="1" HorizontalAlignment="Right" Style="{StaticResource PrimaryButtonStyle}" Content="Connect" Command="{Binding ConnectPaneConnect}" TabIndex="7" IsDefault="True"></Button>
-
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
-
-            <Grid Name="DBRoutinesGridContainer" d:Visibility="Collapsed" Visibility="{Binding RoutinesActive, Converter={StaticResource BoolToVisibilityConverter}}">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48"/>
-                    <ColumnDefinition Width="564"/>
-                    <ColumnDefinition Width="48"/>
-                </Grid.ColumnDefinitions>
+            <Grid Width="500" VerticalAlignment="Center" x:Name="ConnectionContent" d:Visibility="Visible" Visibility="{Binding ConnectActive, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Center" >
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" MinHeight="48"/>
-                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="32"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="32"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ContentBorderStyle}"/>
+                <TextBlock Grid.Row="0" Style="{StaticResource LabelStyleSmall}" VerticalAlignment="Bottom" Text="Database Type:"/>
+                <TextBox Grid.Row="1" Style="{StaticResource ValidatedTextBoxSmall}" Text="{Binding DatabaseType, Mode=TwoWay}" IsReadOnly="True" TabIndex="0"/>
+                <TextBlock Grid.Row="2" Style="{StaticResource LabelStyleSmall}" VerticalAlignment="Bottom" Text="Connection String:"/>
+                <TextBox Grid.Row="3" Style="{StaticResource ValidatedTextBoxSmall}" Height="110" Text="{Binding ConnectionString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TabIndex="1" TextWrapping="Wrap" VerticalContentAlignment="Top"/>
+                <TextBlock Grid.Row="5" TextWrapping="Wrap" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding ConnectionError}" Style="{StaticResource ErrorStyle}" Margin="0,10,0,10"/>
+                <Button Grid.Row="6" Width="96" Height="32" HorizontalAlignment="Right" Style="{StaticResource PrimaryButtonStyle}" Content="Connect" Command="{Binding ConnectPaneConnect}" TabIndex="7" IsDefault="True"></Button>
 
-                <!-- DB Routines -->
-                <Grid Name="DBRoutinesGrid" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <TreeView Grid.Column="0" Grid.Row="0"  Focusable="False" ItemsSource="{Binding DBRoutines}" IsTabStop="False" KeyboardNavigation.TabNavigation="Cycle" Margin="10,10,0,0" BorderBrush="Transparent">
-                        <TreeView.ItemContainerStyle>
-                            <Style TargetType="{x:Type TreeViewItem}">
-                                <Setter Property="IsExpanded" Value="True"/>
-                            </Style>
-                        </TreeView.ItemContainerStyle>
-                        <TreeView.Resources>
-                            <HierarchicalDataTemplate DataType="{x:Type models:Schema}" ItemsSource="{Binding Routines}">
-                                <StackPanel Orientation="Horizontal" Width="520" Height="32" Margin="5">
-                                    <CheckBox VerticalAlignment="Center" Margin="0,0,5,0" BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" IsChecked="{Binding IsSelected, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" KeyboardNavigation.IsTabStop="False"/>
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding Name}" Style="{StaticResource LabelStyle}" TextTrimming="CharacterEllipsis" Width="180" FontWeight="SemiBold" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" ></TextBlock>
-                                    <TextBlock VerticalAlignment="Center" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"
+            </Grid>
+
+            <TreeView Name="DatabaseRoutines" ItemsSource="{Binding DBRoutines}" Visibility="{Binding RoutinesActive, Converter={StaticResource BoolToVisibilityConverter}}" KeyboardNavigation.IsTabStop="False" IsTabStop="False" KeyboardNavigation.TabNavigation="Cycle" BorderBrush="{StaticResource ContentBorderBrush}">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="True"/>
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible"/>
+                        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Visible"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type models:Schema}" ItemsSource="{Binding Routines}">
+                        <StackPanel Orientation="Horizontal" Width="600" Height="32" Margin="5">
+                            <CheckBox VerticalAlignment="Center" Margin="0,0,5,0" BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" IsChecked="{Binding IsSelected, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" KeyboardNavigation.IsTabStop="False"/>
+                            <TextBlock Width="180" VerticalAlignment="Center" Text="{Binding Name}" Style="{StaticResource LabelStyle}" TextTrimming="CharacterEllipsis" FontWeight="SemiBold" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}"/>
+                            <TextBlock VerticalAlignment="Center" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"
                                         Text=" Namespace: " Style="{StaticResource LabelStyle}" FontWeight="SemiBold" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}"/>
-                                    <TextBox VerticalAlignment="Center" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"
+                            <TextBox VerticalAlignment="Center" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}"
                                         Text="{Binding Namespace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
                                         Style="{StaticResource ValidatedTextBoxSmall}" FontWeight="SemiBold"
-                                        Width="190" Margin="0,0,30,0" KeyboardNavigation.TabNavigation="Continue" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}">
-                                    </TextBox>
-                                </StackPanel>
-                            </HierarchicalDataTemplate>
-                            <DataTemplate DataType="{x:Type models:Routine}">
-                                <Grid>
-                                    <Border Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}" BorderBrush="{StaticResource ErrorColorBrush}" BorderThickness="2" CornerRadius="2" Margin="-5,-3,1,0"></Border>
-                                    <StackPanel Orientation="Vertical">
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5" Height="28">
-                                            <CheckBox VerticalAlignment="Center" BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" IsChecked="{Binding IsSelected, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" KeyboardNavigation.IsTabStop="False"/>
-                                            <TextBlock VerticalAlignment="Center" Text="{Binding Name}" Style="{StaticResource LabelStyle}" TextTrimming="CharacterEllipsis" Width="170" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}"></TextBlock>
-                                            <TextBlock VerticalAlignment="Center" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" Text=" Namespace: " Style="{StaticResource LabelStyle}" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}"/>
-                                            <TextBox VerticalAlignment="Center" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}"
+                                        Width="300" Margin="0,0,30,0" KeyboardNavigation.TabNavigation="Continue" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}">
+                            </TextBox>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                    <DataTemplate DataType="{x:Type models:Routine}">
+                        <Grid>
+                            <Border Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}" BorderBrush="{StaticResource ErrorColorBrush}" BorderThickness="2" CornerRadius="2" Margin="-5,-3,1,0"></Border>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5" Height="28">
+                                    <CheckBox VerticalAlignment="Center" BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" IsChecked="{Binding IsSelected, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" KeyboardNavigation.IsTabStop="False"/>
+                                    <TextBlock Width="180" VerticalAlignment="Center" Text="{Binding Name}" Style="{StaticResource LabelStyle}" TextTrimming="CharacterEllipsis" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}"></TextBlock>
+                                    <TextBlock VerticalAlignment="Center" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" Text=" Namespace: " Style="{StaticResource LabelStyle}" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}"/>
+                                    <TextBox VerticalAlignment="Center" Visibility="{Binding IsSelected, Converter={StaticResource BoolToVisibilityConverter}}" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}"
                                         Text="{Binding Namespace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}"
                                         Style="{StaticResource ValidatedTextBoxSmall}"
-                                        Width="180" Margin="0,0,30,0" KeyboardNavigation.IsTabStop="True"/>
-                                        </StackPanel>
-
-                                        <TextBlock Text="{Binding RoutineError}" Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}" Foreground="{StaticResource ErrorColorBrush}" Margin="5"/>
-                                    </StackPanel>
-                                </Grid>
-                            </DataTemplate>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="Black" />
-                        </TreeView.Resources>
-                    </TreeView>
-                </Grid>
-                <!--<Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding SQLRoutines, Converter={StaticResource NotNullToVisibilityConverter}}">
-                    <TextBlock Visibility="{Binding RoutinesActive, Converter={StaticResource BoolToVisibilityConverter}}" Style="{StaticResource ErrorStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" FontSize="16"  Text="No SQL+ Routines found in connected database. Only routines that have been semantically tagged can be built."></TextBlock>
-                </Grid>-->
-                <!-- End SQL Routines -->
-
-
-            </Grid>
-
-            <Grid Name="QueryRoutinesGridContainer" d:Visibility="Collapsed" Visibility="{Binding QueriesActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48"/>
-                    <ColumnDefinition Width="564"/>
-                    <ColumnDefinition Width="48"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" MinHeight="48"/>
-                    <RowDefinition Height="400"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-
-                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ContentBorderStyle}"/>
-                <Grid Name="QueryROutinesGrid" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top">
-                    <TreeView Focusable="False" ItemsSource="{Binding QueryRoutines}" IsTabStop="False" KeyboardNavigation.TabNavigation="Cycle" Margin="10,10,0,0" BorderBrush="Transparent">
-                        <TreeView.Resources>
-                            <HierarchicalDataTemplate DataType="{x:Type models:Schema}" ItemsSource="{Binding Routines}">
-                                <StackPanel Orientation="Horizontal" Width="520" Height="32" Margin="5">
-                                    <CheckBox VerticalAlignment="Center" BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" Margin="0,0,5,0" IsChecked="{Binding IsSelected, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" KeyboardNavigation.IsTabStop="False"/>
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding Namespace}" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" Style="{StaticResource LabelStyle}" TextTrimming="CharacterEllipsis" Width="180" FontWeight="SemiBold"></TextBlock>
+                                        Width="280" Margin="0,0,30,0" KeyboardNavigation.IsTabStop="True"/>
                                 </StackPanel>
-                            </HierarchicalDataTemplate>
-                            <DataTemplate DataType="{x:Type models:Routine}">
-                                <Grid>
-                                    <Border Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}" BorderBrush="{StaticResource ErrorColorBrush}" BorderThickness="2" CornerRadius="2" Margin="-5,-3,1,0"></Border>
-                                    <StackPanel Orientation="Vertical">
-                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5" Height="28">
-                                            <CheckBox BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" VerticalAlignment="Center" IsChecked="{Binding IsSelected, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" KeyboardNavigation.IsTabStop="False"/>
-                                            <TextBlock Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" VerticalAlignment="Center" Text="{Binding Name}" Style="{StaticResource LabelStyle}" TextTrimming="CharacterEllipsis" Width="170"></TextBlock>
-                                        </StackPanel>
-                                        <TextBlock Text="{Binding RoutineError}" Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}" Foreground="{StaticResource ErrorColorBrush}" Margin="5"/>
-                                    </StackPanel>
-                                </Grid>
-                            </DataTemplate>
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Transparent" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="Black" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="Transparent" />
-                            <SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="Black" />
-                        </TreeView.Resources>
-                    </TreeView>
-                </Grid>
-                <!--<Grid Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="{Binding SQLQueries, Converter={StaticResource NotNullToVisibilityConverter}}">
-                    <TextBlock Visibility="{Binding QueriesActive, Converter={StaticResource BoolToVisibilityConverter}}" Style="{StaticResource ErrorStyle}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" FontSize="16"  Text="No SQL+ Queries found. You can add queries to the Queries folder."></TextBlock>
-                </Grid>-->
-            </Grid>
+                                <TextBlock Width="550" Text="{Binding RoutineError}" Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}" Foreground="{StaticResource ErrorColorBrush}" Margin="5" TextWrapping="WrapWithOverflow"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </TreeView.Resources>
+            </TreeView>
+
+            <TreeView Name="QueryRoutines" ItemsSource="{Binding QueryRoutines}" Visibility="{Binding QueriesActive, Converter={StaticResource BoolToVisibilityConverter}}" IsTabStop="False" KeyboardNavigation.TabNavigation="Cycle" BorderBrush="{StaticResource ContentBorderBrush}">
+                <TreeView.ItemContainerStyle>
+                    <Style TargetType="{x:Type TreeViewItem}">
+                        <Setter Property="IsExpanded" Value="True"/>
+                        <Setter Property="Focusable" Value="False"/>
+                        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Visible"/>
+                        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Visible"/>
+                    </Style>
+                </TreeView.ItemContainerStyle>
+                <TreeView.Resources>
+                    <HierarchicalDataTemplate DataType="{x:Type models:Schema}" ItemsSource="{Binding Routines}">
+                        <StackPanel Orientation="Horizontal" Width="600" Height="32" Margin="5">
+                            <CheckBox VerticalAlignment="Center" Margin="0,0,5,0" BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" IsChecked="{Binding IsSelected, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" KeyboardNavigation.IsTabStop="False"/>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Namespace}" Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" Style="{StaticResource LabelStyle}" TextTrimming="CharacterEllipsis" Width="180" FontWeight="SemiBold"></TextBlock>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                    <DataTemplate DataType="{x:Type models:Routine}">
+                        <Grid>
+                            <Border Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}" BorderBrush="{StaticResource ErrorColorBrush}" BorderThickness="2" CornerRadius="2" Margin="-5,-3,1,0"></Border>
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,5" Height="28">
+                                    <CheckBox BorderBrush="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" VerticalAlignment="Center" IsChecked="{Binding IsSelected, Mode=TwoWay, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" KeyboardNavigation.IsTabStop="False"/>
+                                    <TextBlock Foreground="{Binding HasError, Converter={StaticResource IsErrorToColorConvertRedBlack}}" VerticalAlignment="Center" Text="{Binding Name}" Style="{StaticResource LabelStyle}" TextTrimming="CharacterEllipsis" Width="170"></TextBlock>
+                                </StackPanel>
+                                <TextBlock Width="550" Text="{Binding RoutineError}" Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}" Foreground="{StaticResource ErrorColorBrush}" Margin="5" TextWrapping="WrapWithOverflow"/>
+                            </StackPanel>
+                        </Grid>
+                    </DataTemplate>
+                </TreeView.Resources>
+            </TreeView>
 
             <Grid x:Name="StaticsContentGridContainer" d:Visibility="Collapsed" Visibility="{Binding StaticsActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48"/>
-                    <ColumnDefinition Width="564"/>
-                    <ColumnDefinition Width="48"/>
-                </Grid.ColumnDefinitions>
+
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" MinHeight="48"/>
-                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="42"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ContentBorderStyle}"/>
+                <Button HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource AlternateButtonStyle}" Width="28" Height="28"  Command="{Binding AddStaticsCommand}" ToolTip="Add Static List Query">
+                    <Image Source="../Resources/Add.png" Height="16" Width="16"/>
+                </Button>
 
-                <Grid x:Name="StaticsContentGrid" Grid.Row="1" Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="36"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="128" Height="30" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding AddStaticsCommand}" Margin="0,0,10,0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Add Static Query" FontWeight="Bold"></TextBlock>
-                        </StackPanel>
-                    </Button>
-
-                    <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="10" Height="340">
+                <Grid x:Name="StaticsContentGrid" Grid.Row="1">
+                    <Border BorderBrush="{StaticResource ContentBorderBrush}" BorderThickness="1"/>
+                    <ScrollViewer Margin="2" Name="StaticLists">
                         <ItemsControl ItemsSource="{Binding StaticQueries}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -566,24 +447,23 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="20"/>
                                                     <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="436"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="Name: " VerticalAlignment="Center" Style="{StaticResource LabelStyle}"></TextBlock>
                                                 <TextBox Grid.Row="0" Grid.Column="2" 
                                                      Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Style="{StaticResource ValidatedTextBoxSmall}" Width="200" HorizontalAlignment="Left"></TextBox>
                                                 <Button Grid.Row="0" Grid.Column="2" Margin="0,0,16,0" Command="{Binding DeleteCommand}" BorderBrush="{StaticResource ErrorColorBrush}" Style="{StaticResource AlternateButtonStyle}" Width="24" Height="24" HorizontalAlignment="Right" KeyboardNavigation.IsTabStop="False">
-                                                    <Image Height="14" Width="14" Source="../Resources/Delete.png"/>
+                                                    <Image Height="14" Width="14" Source="../Resources/Delete.png" ToolTip="Delete Static List Query"/>
                                                 </Button>
                                                 <TextBlock Grid.Row="1" Grid.Column="1" Text="Query:" VerticalAlignment="Center" Style="{StaticResource LabelStyle}"></TextBlock>
-                                                <TextBox Grid.Row="1" Grid.Column="2" Width="420" HorizontalAlignment="Left"
+                                                <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Width="536"
                                                      Text="{Binding Query, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" TextWrapping="Wrap" Height="64" VerticalContentAlignment="Top" VerticalScrollBarVisibility="Visible" Style="{StaticResource ValidatedTextBoxSmall}"/>
                                             </Grid>
-                                            
+
                                             <TextBlock Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}" Text="{Binding QueryError}" Style="{StaticResource ErrorStyle}"/>
-                                            
+
                                         </StackPanel>
-                                        
+
                                     </GroupBox>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -593,34 +473,20 @@
                 </Grid>
             </Grid>
 
-            <Grid x:Name="EnumsContainerGrid" d:Visibility="Collapsed" Visibility="{Binding EnumsActive, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid x:Name="EnumsContainerGrid" d:Visibility="Visible" Visibility="{Binding EnumsActive, Converter={StaticResource BoolToVisibilityConverter}}">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48"/>
-                    <ColumnDefinition Width="564"/>
-                    <ColumnDefinition Width="48"/>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" MinHeight="48"/>
-                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="42"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
-                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ContentBorderStyle}"/>
+                <Button HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource AlternateButtonStyle}" Width="28" Height="28" Command="{Binding AddEnumCommand}" ToolTip="Add Enumeration Query">
+                    <Image Source="../Resources/Add.png" Height="16" Width="16"/>
+                </Button>
 
-                <Grid x:Name="EnumsContentGrid" Grid.Row="1" Grid.Column="1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="36"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Button Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="128" Height="30" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding AddEnumCommand}" Margin="0,0,10,0">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Text="Add Enum Query" FontWeight="Bold" ></TextBlock>
-                        </StackPanel>
-                    </Button>
-
-                    <ScrollViewer Grid.Row="1" Grid.Column="0" VerticalAlignment="Top" Margin="10" Height="340">
+                <Grid x:Name="EnumsContentGrid" Grid.Row="1">
+                    <Border BorderBrush="{StaticResource ContentBorderBrush}" BorderThickness="1"/>
+                    <ScrollViewer Margin="2">
                         <ItemsControl ItemsSource="{Binding EnumQueries}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
@@ -634,105 +500,74 @@
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="20"/>
                                                     <ColumnDefinition Width="40"/>
-                                                    <ColumnDefinition Width="436"/>
                                                     <ColumnDefinition Width="*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <TextBlock Grid.Row="0" Grid.Column="1" Text="Name: " VerticalAlignment="Center" Style="{StaticResource LabelStyle}"></TextBlock>
                                                 <TextBox Grid.Row="0" Grid.Column="2" 
                                                      Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" Style="{StaticResource ValidatedTextBoxSmall}" Width="200" HorizontalAlignment="Left"></TextBox>
                                                 <Button Grid.Row="0" Grid.Column="2" Margin="0,0,16,0" Command="{Binding DeleteCommand}" BorderBrush="{StaticResource ErrorColorBrush}" Style="{StaticResource AlternateButtonStyle}" Width="24" Height="24" HorizontalAlignment="Right" KeyboardNavigation.IsTabStop="False">
-                                                    <Image Height="14" Width="14" Source="../Resources/Delete.png" ToolTip="Delete Enumeration"/>
+                                                    <Image Height="14" Width="14" Source="../Resources/Delete.png" ToolTip="Delete Enumeration Query"/>
                                                 </Button>
                                                 <TextBlock Grid.Row="1" Grid.Column="1" Text="Query:" VerticalAlignment="Center" Style="{StaticResource LabelStyle}"></TextBlock>
-                                                <TextBox Grid.Row="1" Grid.Column="2" Width="420" HorizontalAlignment="Left"
+                                                <TextBox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Width="536" 
                                                      Text="{Binding Query, UpdateSourceTrigger=PropertyChanged, NotifyOnValidationError=True, ValidatesOnDataErrors=True}" TextWrapping="Wrap" Height="64" VerticalContentAlignment="Top" VerticalScrollBarVisibility="Visible" Style="{StaticResource ValidatedTextBoxSmall}"/>
-                                                
                                             </Grid>
-                                            
                                             <TextBlock Visibility="{Binding HasError, Converter={StaticResource BoolToVisibilityConverter}}" Text="{Binding QueryError}" Style="{StaticResource ErrorStyle}"/>
-                                            
                                         </StackPanel>
-                                        
                                     </GroupBox>
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
                         </ItemsControl>
                     </ScrollViewer>
-
                 </Grid>
             </Grid>
 
-            <Grid Name="SettingsGridContainer" d:Visibility="Collapsed" Visibility="{Binding SettingsActive, Converter={StaticResource BoolToVisibilityConverter}}">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="48"/>
-                </Grid.ColumnDefinitions>
+            <Grid Name="SettingsGrid" ShowGridLines="False" Visibility="{Binding SettingsActive, Converter={StaticResource BoolToVisibilityConverter}}">
+
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" MinHeight="48"/>
-                    <RowDefinition Height="400"/>
+                    <RowDefinition Height="0"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60"/>
+                    <ColumnDefinition Width="24"/>
+                    <ColumnDefinition Width="*"/>
 
-                <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource ContentBorderStyle}"/>
+                </Grid.ColumnDefinitions>
 
-                <Grid Name="SettingsGrid" Grid.Row="1" Grid.Column="1">
+                <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Text="SQL Client:" Style="{StaticResource LabelStyleSmall}"/>
+                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left" Style="{StaticResource ValidatedTextBoxSmall}" Text="{Binding SQLClientNamespace}" />
 
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="120"/>
-                        <ColumnDefinition Width="24"/>
-                        <ColumnDefinition Width="*"/>
+                <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ImplementINotifyPropertyChanged}"/>
+                <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Text="Implement INotifyPropertyChanged"/>
 
-                    </Grid.ColumnDefinitions>
+                <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ImplementIChangeTracking}"/>
+                <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Text="Implement IChangeTracking"/>
 
-                    <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Text="SQL Client:" Style="{StaticResource LabelStyleSmall}"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left" Style="{StaticResource ValidatedTextBoxSmall}" Text="{Binding SQLClientNamespace}" />
+                <CheckBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ImplementIRevertibleChangeTracking}"/>
+                <TextBlock Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Text="Implement IRevertibleChangeTracking"/>
 
-                    <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ImplementINotifyPropertyChanged}"/>
-                    <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Text="Implement INotifyPropertyChanged"/>
-
-                    <CheckBox Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ImplementIChangeTracking}"/>
-                    <TextBlock Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" Text="Implement IChangeTracking"/>
-
-                    <CheckBox Grid.Row="5" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ImplementIRevertibleChangeTracking}"/>
-                    <TextBlock Grid.Row="5" Grid.Column="2" VerticalAlignment="Center" Text="Implement IRevertibleChangeTracking"/>
-
-                    <CheckBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IncludeAsynchronousMethods}" IsEnabled="False"/>
-                    <TextBlock Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Text="Include Asynchronous Methods"/>
-
-                    <CheckBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding UseNullableReferenceTypes}"/>
-                    <TextBlock Grid.Row="7" Grid.Column="2" VerticalAlignment="Center" Text="Use Nullable Reference Types"/>
-
-                </Grid>
+                <CheckBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding UseNullableReferenceTypes}"/>
+                <TextBlock Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Text="Use Nullable Reference Types"/>
 
             </Grid>
 
-            <Grid x:Name="BuildContent" d:Visibility="Visible" Visibility="{Binding BuildActive, Converter={StaticResource BoolToVisibilityConverter}}">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="48"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="48"/>
-                </Grid.ColumnDefinitions>
+            <Grid x:Name="BuildContent" d:Visibility="Collapsed" Visibility="{Binding BuildActive, Converter={StaticResource BoolToVisibilityConverter}}">
+                
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="48"/>
-                    <RowDefinition Height="350"/>
-                    <RowDefinition Height="60"/>
-                    <RowDefinition Height="7*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="64"/>
                 </Grid.RowDefinitions>
 
-                <ScrollViewer ScrollChanged="ScrollViewer_ScrollChanged"  Grid.Row="1" Grid.Column="1" Background="Black" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
+                <ScrollViewer ScrollChanged="ScrollViewer_ScrollChanged" Background="Black" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" >
                     <StackPanel>
                         <ItemsControl ItemsSource="{Binding BuildOutput, Mode=OneWay}">
                             <ItemsControl.ItemTemplate>
@@ -744,35 +579,31 @@
                     </StackPanel>
                 </ScrollViewer>
 
-                <!--<Button Grid.Row="2" Grid.Column="1" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding SaveConfigurationCommand}"
-                        Width="150" Height="36" HorizontalAlignment="Left" Content="Save Configuration" VerticalAlignment="Bottom"></Button>-->
-
                 <Button Grid.Row="2" Grid.Column="1" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding BuildProjectCommand}"
-                        Width="150" Height="36" HorizontalAlignment="Right" Content="Build Project" VerticalAlignment="Bottom"></Button>
+                        Width="150" Height="36" HorizontalAlignment="Right" Content="Build Project" VerticalAlignment="Center"></Button>
 
             </Grid>
         </Grid>
 
-        <Grid x:Name="BusyIndicator" d:Visibility="Collapsed" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="4" Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
+        <Grid x:Name="BusyIndicator" d:Visibility="Collapsed" Grid.RowSpan="4" Grid.ColumnSpan="5" Visibility="{Binding IsBusy, Converter={StaticResource BoolToVisibilityConverter}}">
             <Border Background="Black" Opacity=".2"/>
             <TextBlock Text="Loading..." FontSize="36" Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
         </Grid>
 
-        <Grid x:Name="ConfirmDelet" Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" Grid.ColumnSpan="4" Visibility="{Binding DeleteMessage, Converter={StaticResource NullToVisibilityConverter}}">
+        <Grid x:Name="ConfirmDelete" d:Visibility="Collapsed" Grid.RowSpan="4" Grid.ColumnSpan="5" Visibility="{Binding DeleteMessage, Converter={StaticResource NullToVisibilityConverter}}">
             <Border Background="Black" Opacity=".5"></Border>
-            <Grid Background="White" Margin="225,150">
+            <Grid Background="White" Margin="225,170" ShowGridLines="True">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="24"/>
-                    <RowDefinition Height="150"/>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="120"/>
+                    <RowDefinition Height="80"/>
                 </Grid.RowDefinitions>
-                <Border Background="Black"/>
+                <Border Background="#333333"/>
                 <TextBlock Grid.Row="1" Text="{Binding DeleteMessage}" TextWrapping="WrapWithOverflow" Margin="24" FontSize="16" FontWeight="Bold"></TextBlock>
-                <Button Grid.Row="2" Style="{StaticResource PrimaryButtonStyle}" Height="36" Width="100" Content="Delete" HorizontalAlignment="Right" Command="{Binding ConfirmDeleteCommand}" Margin="15"></Button>
-                <Button Grid.Row="2" Style="{StaticResource AlternateButtonStyle}" Height="36" Width="100" Content="Cancel" HorizontalAlignment="Left"  Command="{Binding CancelDeleteCommand}" Margin="15"></Button>
+                <Button Grid.Row="2" Style="{StaticResource PrimaryButtonStyle}" Height="36" Width="100" Content="Delete" HorizontalAlignment="Right" VerticalAlignment="Top" Command="{Binding ConfirmDeleteCommand}" Margin="20"></Button>
+                <Button Grid.Row="2" Style="{StaticResource AlternateButtonStyle}" Height="36" Width="100" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Top" Command="{Binding CancelDeleteCommand}" Margin="20"></Button>
             </Grid>
         </Grid>
-        
     </Grid>
 
 </platform:DialogWindow>
