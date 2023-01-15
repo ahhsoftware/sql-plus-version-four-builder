@@ -364,11 +364,13 @@
                         else
                         {
                             if (!string.IsNullOrEmpty(parameter.EnumerationName))
-                            {
-                                inputUsings.TryAddItem(project.EnumerationsNamespace);
+                            { 
+                                if(!parameter.EnumerationName.Contains("."))
+                                {
+                                    inputUsings.TryAddItem(project.EnumerationsNamespace);
+                                }
                             }
                             inputUsings.TryAddItem(parameter.Using);
-                            
                         }
                         if (parameter.Annotations.Count != 0)
                         {

@@ -592,7 +592,7 @@
 
         <Grid x:Name="ConfirmDelete" d:Visibility="Collapsed" Grid.RowSpan="4" Grid.ColumnSpan="5" Visibility="{Binding DeleteMessage, Converter={StaticResource NullToVisibilityConverter}}">
             <Border Background="Black" Opacity=".5"></Border>
-            <Grid Background="White" Margin="225,170" ShowGridLines="True">
+            <Grid Background="White" Margin="225,170">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="24"/>
                     <RowDefinition Height="120"/>

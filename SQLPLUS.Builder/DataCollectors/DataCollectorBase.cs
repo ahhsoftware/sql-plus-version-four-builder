@@ -238,9 +238,6 @@
             }
         }
 
-
-
-
         /// <summary>
         /// Comments out the query text between the start and end index identified by the query.
         /// Changes the query start and query end lines to print statements to avoid and errors.
@@ -267,7 +264,6 @@
             }
             lines[query.EndIndex] = query.QueryEndTag();
         }
-
 
         protected string[] CleansedRoutineLines(string[] lines)
         {
