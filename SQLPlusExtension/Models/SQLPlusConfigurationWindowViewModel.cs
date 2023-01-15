@@ -42,7 +42,7 @@ namespace SQLPlusExtension.Models
 
         private IDataCollector GetDataCollector(DataCollectorModes mode, BuildDefinition buildDefinition = null)
         {
-            if(buildDefinition == null)
+            if (buildDefinition == null)
             {
                 return new MSSQLDataCollector(_BuildDefinition, _DatabaseConnection, _ProjectInformation) { DataCollectorMode = mode };
             }
@@ -118,7 +118,7 @@ namespace SQLPlusExtension.Models
                 RaisePropertyChanged(nameof(EnumQueries));
             }
         }
-        
+
         private ObservableCollection<BuildItem> _BuildOutput;
         public ObservableCollection<BuildItem> BuildOutput
         {
@@ -276,11 +276,11 @@ namespace SQLPlusExtension.Models
                 }
             }
 
-            if(buildDefinition.DBSchemas.Count == 0)
+            if (buildDefinition.DBSchemas.Count == 0)
             {
                 buildDefinition.DBSchemas = null;
             }
-            if(buildDefinition.DBRoutines.Count == 0)
+            if (buildDefinition.DBRoutines.Count == 0)
             {
                 buildDefinition.DBRoutines = null;
             }
@@ -322,12 +322,12 @@ namespace SQLPlusExtension.Models
                 }
             }
 
-            if(buildDefinition.QuerySchemas.Count == 0)
+            if (buildDefinition.QuerySchemas.Count == 0)
             {
                 buildDefinition.QuerySchemas = null;
             }
 
-            if(buildDefinition.QueryRoutines.Count == 0)
+            if (buildDefinition.QueryRoutines.Count == 0)
             {
                 buildDefinition.QueryRoutines = null;
             }
@@ -348,7 +348,7 @@ namespace SQLPlusExtension.Models
                 }
             }
 
-            if(buildDefinition.EnumQueries.Count == 0)
+            if (buildDefinition.EnumQueries.Count == 0)
             {
                 buildDefinition.EnumQueries = null;
             }
@@ -369,7 +369,7 @@ namespace SQLPlusExtension.Models
                 }
             }
 
-            if(buildDefinition.StaticQueries.Count == 0)
+            if (buildDefinition.StaticQueries.Count == 0)
             {
                 buildDefinition.StaticQueries = null;
             }
@@ -391,7 +391,7 @@ namespace SQLPlusExtension.Models
         {
             HasAnyEnumErrors = false;
 
-            if(_EnumQueries == null || _EnumQueries.Count == 0)
+            if (_EnumQueries == null || _EnumQueries.Count == 0)
             {
                 return;
             }
@@ -401,7 +401,7 @@ namespace SQLPlusExtension.Models
             var collector = GetDataCollector(DataCollectorModes.Configuration, buildDefinition);
             var results = collector.CollectEnumCollections();
 
-            foreach(EnumCollection enumCollection in results)
+            foreach (EnumCollection enumCollection in results)
             {
                 var query = _EnumQueries.FirstOrDefault(q => q.Name == enumCollection.Name);
 
@@ -456,7 +456,7 @@ namespace SQLPlusExtension.Models
         private void SetUiModelsFromBuildDefinition_DBRoutines()
         {
             HasAnyDBRoutineErrors = false;
-            
+
             var routines = GetDataCollector(DataCollectorModes.Configuration).CollectDBRoutines();
 
             List<Schema> schemas = BuildRoutinesToSchema(routines, _BuildDefinition.DBSchemas, _BuildDefinition.DBRoutines, false);
@@ -484,7 +484,7 @@ namespace SQLPlusExtension.Models
                 EnumQueries = new ObservableCollection<EnumQuery>();
                 foreach (var item in _BuildDefinition.EnumQueries)
                 {
-                    
+
                     EnumQueries.Add(new EnumQuery(RemoveItemFromCollection)
                     {
                         Query = item.Query,
@@ -529,16 +529,33 @@ namespace SQLPlusExtension.Models
 
                 foreach (var routine in routines)
                 {
-                    if (currentSchema.Name != routine.Schema)
+                    if (isQuery)
                     {
-                        currentSchema = new Schema()
+                        if (currentSchema.Name != routine.Namespace)
                         {
-                            IsSelected = false,
-                            Name = routine.Schema,
-                            Namespace = isQuery? routine.Namespace : routine.Schema,
-                            Routines = new ObservableCollection<Routine>()
-                        };
-                        result.Add(currentSchema);
+                            currentSchema = new Schema()
+                            {
+                                IsSelected = false,
+                                Name = routine.Schema,
+                                Namespace = routine.Namespace,
+                                Routines = new ObservableCollection<Routine>()
+                            };
+                            result.Add(currentSchema);
+                        }
+                    }
+                    else
+                    {
+                        if (currentSchema.Name != routine.Schema)
+                        {
+                            currentSchema = new Schema()
+                            {
+                                IsSelected = false,
+                                Name = routine.Schema,
+                                Namespace = routine.Schema,
+                                Routines = new ObservableCollection<Routine>()
+                            };
+                            result.Add(currentSchema);
+                        }
                     }
 
                     Routine routineToAdd = new Routine()
@@ -546,7 +563,7 @@ namespace SQLPlusExtension.Models
                         IsSelected = false,
                         Name = routine.Name,
                         Schema = currentSchema.Name,
-                        Namespace = isQuery? currentSchema.Name : currentSchema.Name,
+                        Namespace = isQuery ? currentSchema.Namespace : currentSchema.Name,
                         IsSelectedChangedCallback = currentSchema.RoutineSelectedCallback
                     };
 
@@ -558,6 +575,8 @@ namespace SQLPlusExtension.Models
                     }
                     currentSchema.Routines.Add(routineToAdd);
                 }
+
+
 
                 if (buildSchemas != null)
                 {
@@ -606,7 +625,7 @@ namespace SQLPlusExtension.Models
             }
             return false;
         }
-        
+
         private void SaveConfiguration()
         {
             SetBuildDefinitionFromUi_All();
@@ -655,7 +674,7 @@ namespace SQLPlusExtension.Models
                 return _ConnectionString;
             }
         }
-        
+
         private void SaveDatabaseConnection()
         {
             UIToDatabaseConnection();
@@ -716,7 +735,7 @@ namespace SQLPlusExtension.Models
 
             //TODO: Depends on the Template
             IRenderProvider renderProvider = new NetRenderProvider(_ProjectInformation, _BuildDefinition);
-            
+
             BuildService service = new BuildService(_BuildDefinition, _ProjectInformation, collector, renderProvider);
             AttachEvents(service);
             service.Run();
@@ -880,7 +899,7 @@ namespace SQLPlusExtension.Models
                     break;
             }
 
-            switch(_ActivePane)
+            switch (_ActivePane)
             {
                 case Panes.RoutinesActive:
                     RoutinesTooltip = "Refresh Database Routines";
@@ -960,7 +979,7 @@ namespace SQLPlusExtension.Models
             }
             set
             {
-                if(value != _RoutinesTooltip)
+                if (value != _RoutinesTooltip)
                 {
                     _RoutinesTooltip = value;
                     RaisePropertyChanged(nameof(RoutinesTooltip));
@@ -1096,9 +1115,9 @@ namespace SQLPlusExtension.Models
                 }
             }
         }
-        
-        
-        
+
+
+
         public bool HelpActive
         {
             get
@@ -1113,7 +1132,7 @@ namespace SQLPlusExtension.Models
                 }
             }
         }
-        
+
 
         private bool _IsConnected = false;
         public bool IsConnected
@@ -1216,10 +1235,10 @@ namespace SQLPlusExtension.Models
         {
             set
             {
-                if(_DeleteMessage != value)
+                if (_DeleteMessage != value)
                 {
                     _DeleteMessage = value;
-                    if(_DeleteMessage == null)
+                    if (_DeleteMessage == null)
                     {
                         ConfirmDeleteCommand = new RelayCommand
                         (
@@ -1246,7 +1265,7 @@ namespace SQLPlusExtension.Models
                 return _DeleteMessage;
             }
         }
-        
+
         #endregion
 
         #region Relay Commands
@@ -1282,7 +1301,7 @@ namespace SQLPlusExtension.Models
         public RelayCommand ConfirmDeleteCommand { private set; get; }
 
         public RelayCommand CancelDeleteCommand { private set; get; }
-        
+
 
         public void InitCommands()
         {
@@ -1497,7 +1516,7 @@ namespace SQLPlusExtension.Models
                     }
                 );
 
-           
+
             BuildProjectCommand = new RelayCommand
              (
                  (o) =>
@@ -1521,11 +1540,11 @@ namespace SQLPlusExtension.Models
                 },
                 (o) =>
                 {
-                    if(enumToDelete != null)
+                    if (enumToDelete != null)
                     {
                         EnumQueries.Remove(enumToDelete);
                     }
-                    if(staticToDelete != null)
+                    if (staticToDelete != null)
                     {
                         StaticQueries.Remove(staticToDelete);
                     }
