@@ -1408,9 +1408,7 @@ namespace SQLPlusExtension.Models
                     {
                         if (IsBusy) return;
 
-                        IsBusy = true;
                         SettingsActive = true;
-                        IsBusy = false;
                     }
                 );
 
