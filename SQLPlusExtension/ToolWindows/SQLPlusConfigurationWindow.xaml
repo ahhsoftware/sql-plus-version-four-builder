@@ -544,7 +544,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Text="SQL Client:" Style="{StaticResource LabelStyleSmall}"/>
-                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left" Style="{StaticResource ValidatedTextBoxSmall}" Text="{Binding SQLClientNamespace}" />
+                <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left" Style="{StaticResource ValidatedTextBoxSmall}" Text="{Binding SQLClientNamespace, Mode=TwoWay}" />
 
                 <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ImplementINotifyPropertyChanged}"/>
                 <TextBlock Grid.Row="3" Grid.Column="2" VerticalAlignment="Center" Text="Implement INotifyPropertyChanged"/>

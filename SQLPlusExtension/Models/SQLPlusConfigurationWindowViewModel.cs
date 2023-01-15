@@ -212,23 +212,6 @@ namespace SQLPlusExtension.Models
             }
         }
 
-        public bool _IncludeAsynchronousMethods;
-        public bool IncludeAsynchronousMethods
-        {
-            get
-            {
-                return _IncludeAsynchronousMethods;
-            }
-            set
-            {
-                if (_IncludeAsynchronousMethods != value)
-                {
-                    _IncludeAsynchronousMethods = value;
-                    RaisePropertyChanged(nameof(IncludeAsynchronousMethods));
-                }
-            }
-        }
-
         private bool _UseNullableReferenceTypes;
         public bool UseNullableReferenceTypes
         {
@@ -258,7 +241,6 @@ namespace SQLPlusExtension.Models
 
             _BuildDefinition = buildDefinition;
         }
-
         private void SetBuildDefinitionFromUi_DBRoutines(BuildDefinition buildDefinition)
         {
             buildDefinition.DBSchemas = new List<BuildSchema>();
@@ -394,15 +376,17 @@ namespace SQLPlusExtension.Models
         }
         private void SetBuildDefintionFromUi_BuildOptions(BuildDefinition buildDefinition)
         {
+            buildDefinition.SQLClient = SQLClientNamespace;
+
             buildDefinition.BuildOptions = new BuildOptions()
             {
                 ImplementIChangeTracking = _ImplementIChangeTracking,
                 ImplementINotifyPropertyChanged = ImplementINotifyPropertyChanged,
                 ImplementIRevertibleChangeTracking = ImplementIRevertibleChangeTracking,
-                IncludeAsyncServices = IncludeAsynchronousMethods,
                 UseNullableReferenceTypes = UseNullableReferenceTypes
             };
         }
+
         private void ValidateEnumQueries()
         {
             HasAnyEnumErrors = false;
@@ -533,7 +517,6 @@ namespace SQLPlusExtension.Models
             ImplementINotifyPropertyChanged = _BuildDefinition.BuildOptions.ImplementINotifyPropertyChanged;
             ImplementIChangeTracking = _BuildDefinition.BuildOptions.ImplementIChangeTracking;
             ImplementIRevertibleChangeTracking = _BuildDefinition.BuildOptions.ImplementIRevertibleChangeTracking;
-            IncludeAsynchronousMethods = _BuildDefinition.BuildOptions.IncludeAsyncServices;
             UseNullableReferenceTypes = _BuildDefinition.BuildOptions.UseNullableReferenceTypes;
         }
         private List<Schema> BuildRoutinesToSchema(List<SQLPLUS.Builder.TemplateModels.Routine> routines, List<BuildSchema> buildSchemas, List<BuildRoutine> buildRoutines, bool isQuery)

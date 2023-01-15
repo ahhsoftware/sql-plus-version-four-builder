@@ -174,7 +174,6 @@
         public bool ImplementIChangeTracking { set; get; } = false;
         public bool ImplementIRevertibleChangeTracking { set; get; } = false;
         public bool ImplementINotifyPropertyChanged { set; get; } = false;
-        public bool IncludeAsyncServices { set; get; } = false;
         public bool UseNullableReferenceTypes { set; get; } = false;
 
     }
