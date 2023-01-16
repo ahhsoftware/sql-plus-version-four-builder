@@ -1,0 +1,17 @@
+Hello fellow developers and welcome to version 4.
+
+This version represents a complete rewrite of the tool, and includes many enhancements including:
+* A new UI that simplifies setting up the build definition.
+* Errors are now tracked and displayed prior to executing a build.
+* Improved model structure for inputs, outputs, and services.
+* Full documentation on all generated objects.
+* Support for Nullable types (Optional Setting).
+* IChangeTracking interface implementation (Optional Setting).
+* IRevertibleChangeTracking interface implementation (Optional Setting)
+* INotifyPropertyChanged interface implementation (Optional Setting)
+
+To migrate an existing project, change the name of the "ConcreteQueries" folder to "Queries" prior to launching the extension.
+
+Configure the remaining specifics about your build using the new UI, and when satisfied with your selections, run the builder.
+
+Please keep us abreast of any problems.
