@@ -72,36 +72,46 @@ namespace SQLPLUS.Builder.TemplateModels
                     switch (item.PropertyType)
                     {
                         case "DateTime":
+                        case "DateTime?":
                             bldr.Append($"DateTime.Parse(\"{val}\")");
                             break;
                         case "TimeSpan":
+                        case "TimeSpan?":
                             bldr.Append($"TimeSpan.Parse(\"{val}\")");
                             break;
                         case "DateTimeOffset":
+                        case "DateTimeOffset?":
                             bldr.Append($"DateTimeOffset.Parse(\"{val}\")");
                             break;
                         case "bool":
-                            bool temp = (bool)val;
-                            bldr.Append(temp.ToString().ToLower());
+                        case "bool?":
+                            bldr.Append(((bool)val).ToString().ToLower());
                             break;
                         case "Guid":
+                        case "Guid?":
                             bldr.Append($"new System.Guid(\"{val}\")");
                             break;
                         case "byte[]":
+                        case "byte[]?":
                             byte[] array = val as byte[];
                             bldr.Append($"new byte[]{{{ByteArrayString(array)}}}");
                             break;
                         case "string":
                         case "object":
+                        case "string?":
+                        case "object?":
                             bldr.Append($"@\"{val.ToString().Replace(@"""", @"""""")}\"");
                             break;
                         case "SqlHierarchyId":
+                        case "SqlHierarchyId?":
                             bldr.Append($"SqlHierarchyId.Parse(\"{val}\")");
                             break;
                         case "SqlGeometry":
+                        case "SqlGeometry?":
                             bldr.Append($"SqlGeometry.Parse(\"{val}\")");
                             break;
                         case "SqlGeography":
+                        case "SqlGeography?":
                             bldr.Append($"SqlGeography.Parse(\"{val}\")");
                             break;
                         default:

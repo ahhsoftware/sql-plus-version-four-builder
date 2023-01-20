@@ -525,13 +525,13 @@ namespace SQLPlusExtension.Models
 
             if (routines is not null)
             {
-                var currentSchema = new Schema { Name = string.Empty };
+                var currentSchema = new Schema { Name = string.Empty, Namespace = string.Empty };
 
                 foreach (var routine in routines)
                 {
                     if (isQuery)
                     {
-                        if (currentSchema.Name != routine.Namespace)
+                        if (currentSchema.Namespace != routine.Namespace)
                         {
                             currentSchema = new Schema()
                             {
@@ -586,7 +586,10 @@ namespace SQLPlusExtension.Models
                         if (schema is not null)
                         {
                             schema.IsSelected = true;
-                            schema.Namespace = buildSchema.Namespace;
+                            if(!isQuery)
+                            {
+                                schema.Namespace = buildSchema.Namespace;
+                            }
                         }
                     }
                 }
@@ -602,7 +605,10 @@ namespace SQLPlusExtension.Models
                             if (routine is not null)
                             {
                                 routine.IsSelected = true;
-                                routine.Namespace = buildDefinitionRoutine.Namespace;
+                                if (!isQuery)
+                                {
+                                    routine.Namespace = buildDefinitionRoutine.Namespace;
+                                }
                             }
                         }
                     }

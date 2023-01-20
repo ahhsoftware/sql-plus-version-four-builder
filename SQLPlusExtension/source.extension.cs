@@ -11,7 +11,7 @@ namespace SQLPlusExtension
         public const string Name = "SQL+ .NET Code Generation Utility Version 4";
         public const string Description = @"Code generation utility for building data services with SQL+ semantically tagged routines. Also provides the ability to generate static lists of data and enumerations based on Sequel Queries.";
         public const string Language = "en-US";
-        public const string Version = "4.0.0";
+        public const string Version = "4.0.2";
         public const string Author = "AHH Software";
         public const string Tags = "SQL, Data Services, ORM, SQL Tools, Code Generation";
     }

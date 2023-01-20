@@ -741,6 +741,8 @@
                 }
             }
 
+            result.OrderBy(r => r.Schema).ThenBy(r => r.Name);
+
             return result;
         }
 
