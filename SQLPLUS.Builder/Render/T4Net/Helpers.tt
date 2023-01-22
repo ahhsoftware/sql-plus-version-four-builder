@@ -17,7 +17,7 @@
 //     Visit https://www.SQLplus.net for more information about the SQL PLUS build time ORM.
 // </auto-generated>
 // --------------------------------------------------------------------------------------------------------
-namespace <#=project.SqlPlusBaseNamespace#>
+namespace <#=project.SQLPLUSBaseNamespace#>
 {
 <#if (build.BuildOptions.UseNullableReferenceTypes){#>
     #nullable enable
@@ -249,7 +249,7 @@ namespace <#=project.SqlPlusBaseNamespace#>
         /// <param name="value">Object existing.</param>
         /// <param name="compareValue">Object to compare to.</param>
         /// <returns>True or False depending on the outcome of the comparison.</returns>
-        public static bool ValueIsChanged(object value, object compareValue)
+        public static bool VariantIsChanged(object value, object compareValue)
         {
             if (value == null && compareValue == null)
             {
@@ -260,6 +260,27 @@ namespace <#=project.SqlPlusBaseNamespace#>
                 return true;
             }
             return value.ToString() != compareValue.ToString();
+        }
+<#}#>
+
+<#if(ListContains(types, "object?")){#>
+        /// <summary>
+        /// Compares two objects - note in the context of SQLPLUS this will compare sql variants.
+        /// </summary>
+        /// <param name="value">Object existing.</param>
+        /// <param name="compareValue">Object to compare to.</param>
+        /// <returns>True or False depending on the outcome of the comparison.</returns>
+        public static bool VariantIsChanged(object? value, object? compareValue)
+        {
+            if (value == null && compareValue == null)
+            {
+                return false;
+            }
+            if ((value == null && compareValue != null) || (value != null && compareValue == null))
+            {
+                return true;
+            }
+            return value!.ToString() != compareValue!.ToString();
         }
 <#}#>
 

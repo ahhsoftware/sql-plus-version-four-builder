@@ -3,6 +3,7 @@
     using SQLPLUS.Builder.BuildServices;
     using SQLPLUS.Builder.ConfigurationModels;
     using SQLPLUS.Builder.DataCollectors;
+    using SQLPLUS.Builder.DataServices.MSSQL.Models;
     using SQLPLUS.Builder.Helpers;
     using SQLPLUS.Builder.Render;
     using SQLPLUS.Builder.TemplateModels;
@@ -331,6 +332,13 @@
                     if (!parameter.IsTableValueParameter)
                     {
                         if (parameter.EqualityTestType == EqualityTestTypes.ValuesAreEqual)
+                        {
+                            if (!result.Contains(parameter.PropertyType))
+                            {
+                                result.Add(parameter.PropertyType);
+                            }
+                        }
+                        if(parameter.EqualityTestType == EqualityTestTypes.VariantsAreEqual)
                         {
                             if (!result.Contains(parameter.PropertyType))
                             {

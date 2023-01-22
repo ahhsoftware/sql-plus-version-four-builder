@@ -253,7 +253,7 @@
                 AdoGetterFormatter = "rdr.GetValue({0})",
                 CSharpType = "object",
                 IsCSharpValueType = false,
-                EqualityTestType = EqualityTestTypes.ValuesAreEqual
+                EqualityTestType = EqualityTestTypes.VariantsAreEqual
             },
             new DataTypeMapping()
             {
@@ -362,7 +362,11 @@
                 {
                     return "if ({0} != {1})";
                 }
-                return "if (Helpers.ValueIsChanged({0}, {1}))";
+                if(EqualityTestType == EqualityTestTypes.ValuesAreEqual)
+                {
+                    return "if (Helpers.ValueIsChanged({0}, {1}))";
+                }
+                return "if (Helpers.VariantIsChanged({0}, {1}))";
             }
         }
     }

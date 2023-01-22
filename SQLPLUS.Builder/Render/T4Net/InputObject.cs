@@ -572,79 +572,30 @@ if(build.BuildOptions.ImplementIRevertibleChangeTracking){
             
             #line default
             #line hidden
-            this.Write("):\r\n");
+            this.Write("):\r\n                        _");
             
             #line 159 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
-    if(p.IsTableValueParameter){
-            
-            #line default
-            #line hidden
-            this.Write("                        _");
-            
-            #line 160 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
-            
-            #line default
-            #line hidden
-            this.Write(" = new ");
-            
-            #line 160 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyType));
-            
-            #line default
-            #line hidden
-            this.Write("((");
-            
-            #line 160 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyType));
-            
-            #line default
-            #line hidden
-            this.Write(")_ChangedProperties[\"");
-            
-            #line 160 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
-            
-            #line default
-            #line hidden
-            this.Write("\"]);\r\n");
-            
-            #line 161 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
-    }else{
-            
-            #line default
-            #line hidden
-            this.Write("                        _");
-            
-            #line 162 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
             
             #line default
             #line hidden
             this.Write(" = (");
             
-            #line 162 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
+            #line 159 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyType));
             
             #line default
             #line hidden
             this.Write(")_ChangedProperties[\"");
             
-            #line 162 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
+            #line 159 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
             
             #line default
             #line hidden
-            this.Write("\"];\r\n");
+            this.Write("\"];\r\n                        break;\r\n");
             
-            #line 163 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
-    }
-            
-            #line default
-            #line hidden
-            this.Write("                        break;\r\n");
-            
-            #line 165 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
+            #line 161 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
   }
             
             #line default
@@ -652,20 +603,20 @@ if(build.BuildOptions.ImplementIRevertibleChangeTracking){
             this.Write("                }\r\n            }\r\n\r\n            _ChangedProperties.Clear();\r\n    " +
                     "        IsChanged = false;\r\n        }\r\n");
             
-            #line 172 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
+            #line 168 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
 }
             
             #line default
             #line hidden
             
-            #line 173 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
+            #line 169 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
 if(build.BuildOptions.ImplementIChangeTracking || build.BuildOptions.ImplementIRevertibleChangeTracking || build.BuildOptions.ImplementINotifyPropertyChanged){
             
             #line default
             #line hidden
             this.Write("\r\n        #endregion Property Changed Management\r\n");
             
-            #line 176 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
+            #line 172 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\InputObject.tt"
 }
             
             #line default

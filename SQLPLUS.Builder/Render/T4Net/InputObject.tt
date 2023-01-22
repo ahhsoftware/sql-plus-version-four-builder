@@ -156,11 +156,7 @@ namespace <#=routine.ModelNamespace#>
                 {
 <#  foreach(Parameter p in routine.InputParameters){#>
                     case nameof(<#=p.PropertyName#>):
-<#    if(p.IsTableValueParameter){#>
-                        _<#=p.PropertyName#> = new <#=p.PropertyType#>((<#=p.PropertyType#>)_ChangedProperties["<#=p.PropertyName#>"]);
-<#    }else{#>
                         _<#=p.PropertyName#> = (<#=p.PropertyType#>)_ChangedProperties["<#=p.PropertyName#>"];
-<#    }#>
                         break;
 <#  }#>
                 }

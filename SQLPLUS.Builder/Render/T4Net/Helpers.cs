@@ -447,7 +447,7 @@ if(ListContains(types, "object")){
         /// <param name=""value"">Object existing.</param>
         /// <param name=""compareValue"">Object to compare to.</param>
         /// <returns>True or False depending on the outcome of the comparison.</returns>
-        public static bool ValueIsChanged(object value, object compareValue)
+        public static bool VariantIsChanged(object value, object compareValue)
         {
             if (value == null && compareValue == null)
             {
@@ -469,6 +469,38 @@ if(ListContains(types, "object")){
             this.Write("\r\n");
             
             #line 266 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+if(ListContains(types, "object?")){
+            
+            #line default
+            #line hidden
+            this.Write(@"        /// <summary>
+        /// Compares two objects - note in the context of SQLPLUS this will compare sql variants.
+        /// </summary>
+        /// <param name=""value"">Object existing.</param>
+        /// <param name=""compareValue"">Object to compare to.</param>
+        /// <returns>True or False depending on the outcome of the comparison.</returns>
+        public static bool VariantIsChanged(object? value, object? compareValue)
+        {
+            if (value == null && compareValue == null)
+            {
+                return false;
+            }
+            if ((value == null && compareValue != null) || (value != null && compareValue == null))
+            {
+                return true;
+            }
+            return value!.ToString() != compareValue!.ToString();
+        }
+");
+            
+            #line 285 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+}
+            
+            #line default
+            #line hidden
+            this.Write("\r\n");
+            
+            #line 287 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 foreach (Parameter p in parameters){
             
             #line default
@@ -477,7 +509,7 @@ foreach (Parameter p in parameters){
                     "parameter value.\r\n        /// </summary>\r\n        /// <param name=\"input\">List o" +
                     "f ");
             
-            #line 270 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 291 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
             
             #line default
@@ -485,42 +517,42 @@ foreach (Parameter p in parameters){
             this.Write("</param>\r\n        /// <returns>DataTable populated with values from input</return" +
                     "s>\r\n        public static DataTable BuildDataTable(");
             
-            #line 272 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 293 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyType));
             
             #line default
             #line hidden
             this.Write(" input)\r\n        {\r\n            DataTable dt = new DataTable();\r\n");
             
-            #line 275 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 296 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 foreach(Column c in p.TVColumns){
             
             #line default
             #line hidden
             this.Write("            dt.Columns.Add(\"");
             
-            #line 276 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 297 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write("\", typeof(");
             
-            #line 276 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 297 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyType.Replace("?","")));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 277 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 298 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
             #line hidden
             this.Write("            if(input != null)\r\n\t\t\t{\r\n                foreach(");
             
-            #line 280 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 301 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.UserDefinedTypeName));
             
             #line default
@@ -528,68 +560,68 @@ foreach(Column c in p.TVColumns){
             this.Write(" item in input)\r\n                {\r\n                    DataRow rw = dt.NewRow();" +
                     "\r\n");
             
-            #line 283 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 304 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 foreach(Column c in p.TVColumns){
             
             #line default
             #line hidden
             
-            #line 284 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 305 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
   if(c.IsNullable){
             
             #line default
             #line hidden
             this.Write("                    if(item.");
             
-            #line 285 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 306 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(" != null)\r\n                    {\r\n                        rw[");
             
-            #line 287 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 308 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.Index));
             
             #line default
             #line hidden
             this.Write("] = item.");
             
-            #line 287 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 308 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(";\r\n                    }\r\n");
             
-            #line 289 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 310 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
   }else{
             
             #line default
             #line hidden
             this.Write("                    rw[");
             
-            #line 290 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 311 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.Index));
             
             #line default
             #line hidden
             this.Write("] = item.");
             
-            #line 290 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 311 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 291 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 312 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
   }
             
             #line default
             #line hidden
             
-            #line 292 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 313 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
@@ -597,7 +629,7 @@ foreach(Column c in p.TVColumns){
             this.Write("                    dt.Rows.Add(rw);\r\n                }\r\n\t\t\t}\r\n            return" +
                     " dt;\r\n        }\r\n");
             
-            #line 298 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+            #line 319 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 }
             
             #line default
@@ -606,7 +638,7 @@ foreach(Column c in p.TVColumns){
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 301 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
+        #line 322 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\Helpers.tt"
 
     public bool ListContains(List<string> items, string item)
     {

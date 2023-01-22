@@ -231,6 +231,7 @@
     public enum EqualityTestTypes
     {
         Equals = 0,
-        ValuesAreEqual = 1
+        ValuesAreEqual = 1,
+        VariantsAreEqual = 2
     }
 }
