@@ -24,9 +24,13 @@ namespace SQLPlusExtension
         
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
-            //TODO: Check the user is registered and logged in, if not show the login screen.
+            //TODO: Config.GetUser or Create a new user token
+            // UserId = 0,
+            // ExpiresTicks = DateTime.Now.AddDays(90)
+            // ComputerName
+            //
 
-
+            
             Project vsProject = await VS.Solutions.GetActiveProjectAsync();
             if(vsProject is null)
             {
