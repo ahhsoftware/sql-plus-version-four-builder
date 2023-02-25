@@ -24,13 +24,24 @@ namespace SQLPlusExtension
         
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
-            //TODO: Config.GetUser or Create a new user token
-            // UserId = 0,
-            // ExpiresTicks = DateTime.Now.AddDays(90)
-            // ComputerName
-            //
 
+            LoginViewModel login = new LoginViewModel()
+            {
+                Email = "Alan@SQLPlus.net",
+            };
+
+          
+
+            SQLPlusLoginWindow loginWindow = new SQLPlusLoginWindow(login);
+            var loginResult = await loginWindow.ShowDialogAsync(WindowStartupLocation.CenterOwner);
+
+            if(loginResult.Value == true)
+            {
+                loginWindow.Close();
+                //Save login information
+            }
             
+
             Project vsProject = await VS.Solutions.GetActiveProjectAsync();
             if(vsProject is null)
             {
@@ -59,9 +70,9 @@ namespace SQLPlusExtension
                 databaseConnection,
                 vsProject);
 
-            SQLPlusConfigurationWindow window = new SQLPlusConfigurationWindow(dataContext);
+            SQLPlusConfigurationWindow configurationWindow = new SQLPlusConfigurationWindow(dataContext);
            
-            var result = await window.ShowDialogAsync(WindowStartupLocation.CenterOwner);
+            var configurationResult = await configurationWindow.ShowDialogAsync(WindowStartupLocation.CenterOwner);
 
         }
 

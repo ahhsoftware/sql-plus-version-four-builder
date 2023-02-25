@@ -111,15 +111,16 @@ namespace SQLPlusExtension.Models
                     }
                     else
                     {
-
-                        if (!Regex.IsMatch(_Namespace, "^[a-zA-Z_][a-zA-Z0-9_]*$"))
+                        if(_Namespace != "+")
                         {
-                            return "Must be a valid C# Identifier";
-                        }
-
-                        if (Constants.CSharpKeywords.Contains(_Namespace))
-                        {
-                            return $"{_Namespace} is a C# reserved word.";
+                            if (!Regex.IsMatch(_Namespace, "^[a-zA-Z_][a-zA-Z0-9_]*$"))
+                            {
+                                return "Must be a valid C# Identifier";
+                            }
+                            if (Constants.CSharpKeywords.Contains(_Namespace))
+                            {
+                                return $"{_Namespace} is a C# reserved word.";
+                            }
                         }
                     }
                 }

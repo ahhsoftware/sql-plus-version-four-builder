@@ -315,13 +315,13 @@
                 <TextBlock Text="Follow the links below to get online help." HorizontalAlignment="Left" VerticalAlignment="Bottom" Style="{StaticResource LabelStyleLarge}"/>
                 <TextBlock Style="{StaticResource LabelStyleLarge}" VerticalAlignment="Bottom" Margin="20,0,0,0"/>
                 <TextBlock Style="{StaticResource LabelStyleLarge}" VerticalAlignment="Bottom" Margin="20,0,0,0">
-                        <Hyperlink NavigateUri="https://www.sqlplus.net/content/SqlPlusDocs.pdf" RequestNavigate="Hyperlink_RequestNavigate">Online Documentation</Hyperlink>
+                        <Hyperlink NavigateUri="https://www.sqlplus.net/documentation" RequestNavigate="Hyperlink_RequestNavigate">Online Documentation</Hyperlink>
                 </TextBlock>
                 <TextBlock Style="{StaticResource LabelStyleLarge}" VerticalAlignment="Bottom" Margin="20,0,0,0">
-                        <Hyperlink NavigateUri="https://github.com/ahhsoftware/SQLPlusSampleApp" RequestNavigate="Hyperlink_RequestNavigate" >Sample Applications</Hyperlink>
+                        <Hyperlink NavigateUri="https://github.com/ahhsoftware" RequestNavigate="Hyperlink_RequestNavigate" >Sample Applications</Hyperlink>
                 </TextBlock>
                 <TextBlock Style="{StaticResource LabelStyleLarge}" VerticalAlignment="Bottom" Margin="20,0,0,0">
-                        <Hyperlink NavigateUri="https://www.sqlplus.net/Home/Learn" RequestNavigate="Hyperlink_RequestNavigate">Video Tutorials</Hyperlink>
+                        <Hyperlink NavigateUri="https://www.sqlplus.net/documentation/video-tutorials" RequestNavigate="Hyperlink_RequestNavigate">Video Tutorials</Hyperlink>
                 </TextBlock>
             </StackPanel>
 

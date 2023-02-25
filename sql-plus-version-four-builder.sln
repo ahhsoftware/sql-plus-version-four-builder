@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLPLUS.Builder.ConsoleBuil
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLPlusExtension", "SQLPlusExtension\SQLPlusExtension.csproj", "{DCFF9C9D-3084-45F8-BFCB-4D04BEB0FFBD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLPlus.AzureFunctions", "SQLPlus.AzureFunctions\SQLPlus.AzureFunctions.csproj", "{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +57,18 @@ Global
 		{DCFF9C9D-3084-45F8-BFCB-4D04BEB0FFBD}.Release|arm64.Build.0 = Release|arm64
 		{DCFF9C9D-3084-45F8-BFCB-4D04BEB0FFBD}.Release|x86.ActiveCfg = Release|x86
 		{DCFF9C9D-3084-45F8-BFCB-4D04BEB0FFBD}.Release|x86.Build.0 = Release|x86
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Debug|arm64.ActiveCfg = Debug|Any CPU
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Debug|arm64.Build.0 = Debug|Any CPU
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Debug|x86.Build.0 = Debug|Any CPU
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Release|arm64.ActiveCfg = Release|Any CPU
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Release|arm64.Build.0 = Release|Any CPU
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Release|x86.ActiveCfg = Release|Any CPU
+		{5DBFB2CE-6544-4A51-B7A7-B6BAFDDBAF58}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

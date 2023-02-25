@@ -172,11 +172,6 @@
                     result = includedBuildRoutine.Namespace;
                 }
             }
-            
-            if(result == "+")
-            {
-                result = project.RootNamespace;
-            }
 
             return result;
         }
@@ -203,7 +198,6 @@
 
             if (DataCollectorMode == DataCollectorModes.Build)
             {
-                //TODO: Reduce the set of schemas and routines by the configuration
                 FilterDBRoutinesByBuildDefinition(output);
             }
 
