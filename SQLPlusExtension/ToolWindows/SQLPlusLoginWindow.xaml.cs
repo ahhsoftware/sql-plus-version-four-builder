@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.Debugger.Interop;
 using Microsoft.VisualStudio.PlatformUI;
+using Newtonsoft.Json;
 using SQLPlusExtension.Models;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -7,6 +8,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Security;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Controls;
@@ -14,6 +16,11 @@ using System.Windows.Input;
 
 namespace SQLPlusExtension
 {
+    public class PostLogin
+    {
+        public string Email { set; get;}
+        public string Password { set; get; }
+    }
 
     public enum SubscriptionTypes : System.Byte
     {
@@ -56,8 +63,6 @@ namespace SQLPlusExtension
 
     public class LoginViewModel: INotifyPropertyChanged, IDataErrorInfo
     {
-        
-        
         private EmailAddressAttribute _emailAttribute = new EmailAddressAttribute();
         private MaxLengthAttribute _emailMaxLengthAttribute = new MaxLengthAttribute(64);
         private StringLengthAttribute _passwordStringLengthAttrinute = new StringLengthAttribute(16) { MinimumLength = 8 };
@@ -196,19 +201,27 @@ namespace SQLPlusExtension
                    {
                        return IsValid();
                    },
-                   (o) =>
+                   async (o) =>
                    {
-                       TryLogin();
+                       await TryLogin();
                    }
                );
         }
 
         private async Task<bool> TryLogin()
         {
+            PostLogin postLogin = new PostLogin() { Email = this.Email, Password = this._Password };
+
+            string json = JsonConvert.SerializeObject(postLogin);
+            var content = new StringContent(json, Encoding.UTF8, "application/json");
             var client = new HttpClient();
+            var result = await client.PostAsync(new Uri("http://localhost:7128/api/Login"), content);
+            if(result.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                string resultJson = await result.Content.ReadAsStringAsync();
 
-            await Task.Delay(1);
-
+            }
+         
             return true;
             
         }

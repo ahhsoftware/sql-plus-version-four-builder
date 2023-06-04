@@ -1,20 +1,11 @@
-﻿using Microsoft.Internal.VisualStudio.PlatformUI;
-using Microsoft.VisualStudio.RpcContracts.Build;
-using Microsoft.VisualStudio.Shell.Interop;
-using Newtonsoft.Json;
-using SQLPLUS.Builder;
+﻿using Newtonsoft.Json;
 using SQLPLUS.Builder.BuildServices;
 using SQLPLUS.Builder.ConfigurationModels;
-using SQLPLUS.Builder.DataCollectors;
-using SQLPLUS.Builder.Render;
-using SQLPLUS.Builder.Render.Common;
 using SQLPlusExtension.Models;
+using SQLPlusExtension.Services;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
 using System.Windows;
-using VSLangProj;
 
 namespace SQLPlusExtension
 {
@@ -24,23 +15,6 @@ namespace SQLPlusExtension
         
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
-
-            LoginViewModel login = new LoginViewModel()
-            {
-                Email = "Alan@SQLPlus.net",
-            };
-
-          
-
-            SQLPlusLoginWindow loginWindow = new SQLPlusLoginWindow(login);
-            var loginResult = await loginWindow.ShowDialogAsync(WindowStartupLocation.CenterOwner);
-
-            if(loginResult.Value == true)
-            {
-                loginWindow.Close();
-                //Save login information
-            }
-            
 
             Project vsProject = await VS.Solutions.GetActiveProjectAsync();
             if(vsProject is null)
@@ -62,13 +36,15 @@ namespace SQLPlusExtension
             
             var databaseConnection = configurationService.GetDatabaseConnection();
             var buildDefinition = configurationService.GetBuildDefinition();
+            CustomerService customerService = new CustomerService();
 
             SQLPlusConfigurationWindowViewModel dataContext = new SQLPlusConfigurationWindowViewModel(
                 configurationService,
                 projectInformation,
                 buildDefinition,
                 databaseConnection,
-                vsProject);
+                vsProject,
+                customerService);
 
             SQLPlusConfigurationWindow configurationWindow = new SQLPlusConfigurationWindow(dataContext);
            

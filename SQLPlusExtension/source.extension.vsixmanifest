@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="SQLPlusExtension.b5772d7b-1e5e-4053-91a8-07d02a44ab70" Version="4.0.6" Language="en-US" Publisher="AHH Software" />
+        <Identity Id="SQLPlusExtension.b5772d7b-1e5e-4053-91a8-07d02a44ab70" Version="4.1.4" Language="en-US" Publisher="AHH Software" />
         <DisplayName>SQL+ .NET Code Generation Utility Version 4</DisplayName>
         <Description xml:space="preserve">Companion Code Generation Utility for building data services utilizing the SQL+ semantic tagging system and generation of static lists of data and enumerations.</Description>
         <MoreInfo>https://www.SQLPlus.net</MoreInfo>
         <License>Resources\license.txt</License>
         <GettingStartedGuide>Resources\GettingStarted.txt</GettingStartedGuide>
         <ReleaseNotes>Resources\ReleaseNotes.txt</ReleaseNotes>
-        <Icon>Resources\SQLPlusLogo.gif</Icon>
+        <Icon>Resources\favicon.png</Icon>
         <PreviewImage>Resources\PreviewImage.PNG</PreviewImage>
-        <Tags>SQL, Data Services, ORM, SQL Tools, Code Generation</Tags>
+        <Tags>SQL, SQL+, ORM</Tags>
     </Metadata>
     <Installation>
         <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0, 18.0)">
