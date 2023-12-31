@@ -265,6 +265,8 @@
             lines[query.EndIndex] = query.QueryEndTag();
         }
 
+        #endregion
+
         protected string[] CleansedRoutineLines(string[] lines)
         {
             List<string> temp = new List<string>();
@@ -312,8 +314,41 @@
             }
             return temp.ToArray();
         }
-        
-        #endregion
+
+        protected string[] CleansedRoutineLinesForResultSetQuery(string[] lines)
+        {
+            List<string> temp = new List<string>();
+            bool commentBlock = false;
+           
+            for (int idx = 0; idx != lines.Length; idx++)
+            {
+                string line = lines[idx];
+                LineTypes lineType = LineType(line);
+                if (commentBlock)
+                {
+                    if (lineType == LineTypes.CommentBlockClose)
+                    {
+                        commentBlock = false;
+                    }
+                    continue;
+                }
+                else
+                {
+                    if (lineType == LineTypes.CommentBlockOpen)
+                    {
+                        commentBlock = true;
+                        continue;
+                    }
+                    if (lineType == LineTypes.PrimaryTag || lineType == LineTypes.SupplementalTag || lineType == LineTypes.CommentLine || lineType == LineTypes.ParameterTag)
+                    {
+                        continue;
+                    }
+                }
+                temp.Add(line);
+            }
+            return temp.ToArray();
+        }
+
 
         #region Extract Methods
 

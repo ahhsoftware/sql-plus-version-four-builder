@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="SQL+\Queries\Samples\HelloWorld.sql" />
+    <Content Include="SQL+\Queries\Samples\Anders.sql" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

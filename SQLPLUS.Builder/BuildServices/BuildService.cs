@@ -181,10 +181,11 @@
                 {
                     if (parameter.IsTableValueParameter)
                     {
-                        if (!parameterNames.Contains(parameter.Name))
+                        //if (!parameterNames.Contains(parameter.Name)) ETask
+                        if (!parameterNames.Contains(parameter.UserDefinedTypeName))
                         {
                             parameters.Add(parameter);
-                            parameterNames.Add(parameter.Name);
+                            parameterNames.Add(parameter.UserDefinedTypeName);
                         }
                     }
                 }

@@ -11,7 +11,7 @@
                         WindowStyle="SingleBorderWindow"
                         Height="600"
                         Width="800"
-                        Title="SQL+ .NET Code Generation Utility Version 4.0.0"
+                        Title="SQL+ Code Generation Utility Version 4.1.6"
                         Background="White"
                         xmlns:converters="clr-namespace:SQLPlusExtension.Converters"
                         >

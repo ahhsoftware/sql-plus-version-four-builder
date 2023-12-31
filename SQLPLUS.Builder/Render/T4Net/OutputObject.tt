@@ -103,14 +103,14 @@ namespace <#=routine.ModelNamespace#>
         /// <summary>
         /// Result data as Json string.
         /// </summary>
-        public <#=OptProp("string")#> ResultJson { set; get; };
+        public <#=OptProp("string")#> ResultJson { set; get; }
 <#}#>
 <#if(routine.SelectType == SelectTypes.Xml){#>
 
         /// <summary>
         /// Result data as Xml string.
         /// </summary>
-        public <#=OptProp("string")#> ResultXml { set; get; };
+        public <#=OptProp("string")#> ResultXml { set; get; }
 <#}#>
 <#if(routine.SelectType == SelectTypes.SingleRow){#>
 
