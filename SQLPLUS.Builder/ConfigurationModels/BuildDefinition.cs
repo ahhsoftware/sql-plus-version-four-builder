@@ -7,7 +7,6 @@
 
     public class BuildDefinition
     {
-       
         public BuildDefinition() { }
 
         #region Ignored Properties
@@ -32,9 +31,6 @@
         [JsonIgnore]
         public string ExplicitTagIndicator { set; get; } = "#";
         
-        [JsonIgnore]
-        public string LicenseType { set; get; } = "Professional"; // Community // Professional // Enterprise
-
         [JsonIgnore]
         public string PrimaryTagPrefix
         {
@@ -63,11 +59,8 @@
         #endregion Ignored Properties
         
         public string SQLClient { set; get; } = "System.Data.SqlClient";
-        
         public string SQLExceptionNamespace { set; get; } = "System.Data";
-        
         public string Template { set; get; } = "NET";
-
         public List<BuildRoutine> DBRoutines { set; get; }
         public List<BuildSchema> DBSchemas { set; get; }
         public List<BuildSchema> QuerySchemas { set; get; }
@@ -117,14 +110,12 @@
         public string Namespace { set; get; }
 
     }
-
     public class BuildRoutine 
     {
         public string Schema { set; get; }
         public string Namespace { set; get; }
         public string Name { set; get; }
     }
-
     public class BuildQuery
     {
         public string Name { set; get; }
@@ -168,7 +159,6 @@
 
 
     }
-
     public class BuildOptions
     {
         public bool ImplementIChangeTracking { set; get; } = false;

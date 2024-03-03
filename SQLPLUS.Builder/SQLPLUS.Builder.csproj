@@ -129,11 +129,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>OutputObject.tt</DependentUpon>
     </Compile>
-    <Compile Include="Render\T4Net\RuntimeTextTemplate1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>RuntimeTextTemplate1.tt</DependentUpon>
-    </Compile>
     <Compile Include="Render\T4Net\ServiceBase.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -246,10 +241,6 @@
     <Content Include="Render\T4Net\OutputObject.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>OutputObject.cs</LastGenOutput>
-    </Content>
-    <Content Include="Render\T4Net\RuntimeTextTemplate1.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>RuntimeTextTemplate1.cs</LastGenOutput>
     </Content>
     <Content Include="Render\T4Net\ServiceBase.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
