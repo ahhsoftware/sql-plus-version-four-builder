@@ -47,15 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="procs\Models\AllTagsInput.cs" />
-    <Compile Include="procs\Models\AllTagsOutput.cs" />
-    <Compile Include="procs\Services\AllTags.cs" />
-    <Compile Include="procs\Services\ServiceBase.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SqlPlusBase\TransientErrors.cs" />
-    <Compile Include="SqlPlusBase\TransientErrorsExample.cs" />
-    <Compile Include="SqlPlusBase\ValidInput.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
