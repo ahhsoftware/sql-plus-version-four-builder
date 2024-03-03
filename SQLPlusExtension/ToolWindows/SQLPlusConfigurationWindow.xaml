@@ -11,7 +11,7 @@
                         WindowStyle="SingleBorderWindow"
                         Height="600"
                         Width="800"
-                        Title="SQL+ Code Generation Utility Version 4.1.7"
+                        Title="SQL+ Code Generation Utility Version 4.2.0"
                         Background="White"
                         xmlns:converters="clr-namespace:SQLPlusExtension.Converters"
                         >
@@ -225,12 +225,12 @@
                 <Image Source="../Resources/HelpIcon.png" Height="24" Width="24"/>
             </Grid>
         </Button>
-        <Button Grid.Column="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding LogoutCommand}" CommandParameter="{Binding ElementName=LoginPasswordBox}" KeyboardNavigation.IsTabStop="False" ToolTip="Log out of your account" Height="36" Width="36" HorizontalAlignment="Right">
+        <!--<Button Grid.Column="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding LogoutCommand}" CommandParameter="{Binding ElementName=LoginPasswordBox}" KeyboardNavigation.IsTabStop="False" ToolTip="Log out of your account" Height="36" Width="36" HorizontalAlignment="Right">
             <Grid>
                 <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding LoginActive, Converter={StaticResource BoolToVisibilityConverter}}" Height="32" Width="32" ></Border>
                 <Image Source="../Resources/Lock.png" Height="24" Width="24"/>
             </Grid>
-        </Button>
+        </Button>-->
         <!-- End Header -->
 
         <!-- Navigation Buttons -->
@@ -353,7 +353,7 @@
 
             </Grid>
 
-            <Grid Width="500" VerticalAlignment="Center" x:Name="LoginContent"  d:Visibility="Visible" Visibility="{Binding LoginActive, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Center" >
+            <!--<Grid Width="500" VerticalAlignment="Center" x:Name="LoginContent"  d:Visibility="Visible" Visibility="{Binding LoginActive, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Center" >
                 <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="10" BorderBrush="Black" BorderThickness="1" Background="Transparent" CornerRadius="3">
                     <Grid Margin="50">
                         <Grid.RowDefinitions>
@@ -392,7 +392,7 @@
                 </Border>
 
 
-            </Grid>
+            </Grid>-->
 
 
             <TreeView Name="DatabaseRoutines"  d:Visibility="Collapsed" ItemsSource="{Binding DBRoutines}" Visibility="{Binding RoutinesActive, Converter={StaticResource BoolToVisibilityConverter}}" KeyboardNavigation.IsTabStop="False" IsTabStop="False" KeyboardNavigation.TabNavigation="Cycle" BorderBrush="{StaticResource ContentBorderBrush}">
