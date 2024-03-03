@@ -596,7 +596,7 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             
             #line default
             #line hidden
-            this.Write(") ? default : ");
+            this.Write(") ? null : ");
             
             #line 135 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Format(c.AdoGetterFormatter,c.Index)));
@@ -729,7 +729,7 @@ if(routine.SelectType == SelectTypes.MultiSet){
             
             #line default
             #line hidden
-            this.Write(") ? default : ");
+            this.Write(") ? null : ");
             
             #line 152 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Format(c.AdoGetterFormatter,c.Index)));
@@ -1663,7 +1663,7 @@ if ((buildValueAcquired == false))
         /// <summary>
         /// The string builder that generation-time code is using to assemble generated output
         /// </summary>
-        protected System.Text.StringBuilder GenerationEnvironment
+        public System.Text.StringBuilder GenerationEnvironment
         {
             get
             {

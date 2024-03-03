@@ -20,12 +20,13 @@ namespace SQLPLUS.Builder.ConsoleBuilder
 
         static async Task Main(string[] args)
         {
-            var service = new procs.Service("initial catalog = v4tests; server=(local); integrated security=true;");
-            var output = await Task.Run(() => service.AllTags(new procs.Models.AllTagsInput("comment", "5555555555554444", "default", "displa", "alan@alan.com", DayOfWeek.Friday, "For", null)));
+            //var service = new procs.Service("initial catalog = v4tests; server=(local); integrated security=true;");
+            //var output = await Task.Run(() => service.AllTags(new procs.Models.AllTagsInput("comment", "5555555555554444", "default", "displa", "alan@alan.com", DayOfWeek.Friday, "For", null)));
 
 
             ProjectInformation projectInformation = new ProjectInformation("SQLPLUS.Build.Test.Basic",
-                "C:\\Users\\Alan\\source\\repos\\sql-plus-version-four-tests\\SQLPLUS.Build.Test.Basic");
+                "C:\\Users\\Alan\\source\\repos\\sql-plus-version-four-builder\\SQLPLUS.Builder.ConsoleBuilder");
+                //"C:\\Users\\Alan\\source\\repos\\sql-plus-version-four-tests\\SQLPLUS.Build.Test.Basic");
 
             ConfigurationService configurationService = new ConfigurationService(projectInformation);
                 
@@ -40,9 +41,9 @@ namespace SQLPLUS.Builder.ConsoleBuilder
             IDataCollector dataCollector = new MSSQLDataCollector(buildDefintion, databaseConnection, projectInformation);
             IRenderProvider render = new Builder.Render.T4Net.NetRenderProvider(projectInformation, buildDefintion);
             BuildService builder = new BuildService(buildDefintion, projectInformation, dataCollector, render);
-            AttachEvents(builder);
+            //AttachEvents(builder);
             builder.Run();
-            DetachEvents(builder);
+            //DetachEvents(builder);
             
             Console.Read();
         }
@@ -176,6 +177,14 @@ namespace SQLPLUS.Builder.ConsoleBuilder
                     UseNullableReferenceTypes = idx == 4 ? true : false,
                 },
 
+                QuerySchemas = new List<BuildSchema>
+                {
+                    new BuildSchema()
+                    {
+                        Schema = "dbo",
+                        Namespace = "Samples"
+                    }
+                },
 
                 //BuildRoutines = new System.Collections.Generic.List<BuildRoutine>()
                 //{

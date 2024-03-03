@@ -1,21 +1,30 @@
-﻿using SQLPLUS.Builder;
+﻿using Microsoft.VisualStudio.Language.Intellisense.AsyncCompletion;
+using Newtonsoft.Json;
+using SQLPLUS.Builder;
 using SQLPLUS.Builder.BuildServices;
 using SQLPLUS.Builder.ConfigurationModels;
 using SQLPLUS.Builder.DataCollectors;
 using SQLPLUS.Builder.Render;
 using SQLPLUS.Builder.Render.T4Net;
 using SQLPLUS.Builder.TemplateModels;
+using SQLPlusExtension.Services;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net.Http;
+using System.Security;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace SQLPlusExtension.Models
 {
+    
+
     public class SQLPlusConfigurationWindowViewModel : INotifyPropertyChanged
     {
         private ConfigurationService _ConfigurationService;
@@ -23,21 +32,97 @@ namespace SQLPlusExtension.Models
         private BuildDefinition _BuildDefinition;
         private DatabaseConnection _DatabaseConnection;
         private Project _Project;
-
+        private CustomerService _customerService;
         private List<string> filesAdded;
 
-        public SQLPlusConfigurationWindowViewModel(ConfigurationService configurationService, ProjectInformation projectInformation, BuildDefinition buildDefinition, DatabaseConnection databaseConnection, Project vsProject)
+        //private Customer _customer;
+
+
+        public SQLPlusConfigurationWindowViewModel(ConfigurationService configurationService, ProjectInformation projectInformation, BuildDefinition buildDefinition, DatabaseConnection databaseConnection, Project vsProject, CustomerService customerService)
         {
             _ConfigurationService = configurationService;
             _ProjectInformation = projectInformation;
             _BuildDefinition = buildDefinition;
             _DatabaseConnection = databaseConnection;
             _Project = vsProject;
+            _customerService = customerService;
 
             InitCommands();
 
-            DatabaseConnectionToUI();
+            HandleAuthentication();
 
+        }
+
+        public void HandleAuthentication()
+        {
+            var customer = _customerService.ExistingCustomerOrDefault();
+            
+            if(customer.RequiresAuthentication())
+            {
+                LoginActive = true;
+            }
+            else
+            {
+                DatabaseConnectionToUI();
+                LoginValid = true;
+                ConnectActive = true;
+            }
+        }
+
+        private async Task TryLogin()
+        {
+            LoginErrorMessage = null;
+            LoginValid = false;
+
+            var customer = await _customerService.Login(_Email, _Password);
+            
+            if (customer.LoginStatus == LoginStatuses.InvalidEmailPassCombo || customer.LoginStatus == LoginStatuses.BadRequest)
+            {
+                LoginErrorMessage = "Invalid Email/Password combination.";
+                return;
+            }
+            
+            if(customer.SubscriptionStatus == SubscriptionStatuses.NoSubscription)
+            {
+                LoginErrorMessage = "There is no active subscription associated with this account. Visit www.sqlplus.net to choose a subscription. You can start with the community edition for free.";
+                return;
+            }
+
+            if(customer.SubscriptionStatus == SubscriptionStatuses.BalanceDue)
+            {
+                LoginErrorMessage = "This subscription has a balance due or has been cancelled. Visit www.sqlplus.net and login to your account to pay your balance or change your plan.";
+                return;
+            }
+
+            customer.SetToken();
+            _customerService.SaveCustomer(customer);
+
+            var renderTrack = _customerService.ExistingRenderTrackOrDefault();
+
+            if(customer.SubscriptionType != SubscriptionTypes.IndividualCommunityMonthly)
+            {
+                renderTrack.CustomerId = customer.CustomerId;
+                renderTrack.FilesCreated = 0;
+                renderTrack.SubscriptionType = customer.SubscriptionType;
+                renderTrack.InitializeDate();
+                renderTrack.SetToken();
+                _customerService.SaveRenderTrack(renderTrack);
+            }
+
+            LoginValid = true;
+            DatabaseConnectionToUI();
+            ConnectActive = true;
+        }
+
+        private void Logout()
+        {
+            Email = string.Empty;
+            _Password = null;
+            IsConnected = false;
+            LoginValid = false;
+            LoginActive = true;
+            LoginErrorMessage = null;
+            _customerService.DeleteCustomer();
         }
 
         private IDataCollector GetDataCollector(DataCollectorModes mode, BuildDefinition buildDefinition = null)
@@ -582,11 +667,12 @@ namespace SQLPlusExtension.Models
                 {
                     foreach (var buildSchema in buildSchemas)
                     {
-                        var schema = result.FirstOrDefault(s => s.Name == buildSchema.Schema);
+                        Schema schema = GetSchema(result, buildSchema, isQuery);
+
                         if (schema is not null)
                         {
                             schema.IsSelected = true;
-                            if(!isQuery)
+                            if (!isQuery)
                             {
                                 schema.Namespace = buildSchema.Namespace;
                             }
@@ -598,7 +684,7 @@ namespace SQLPlusExtension.Models
                 {
                     foreach (var buildDefinitionRoutine in buildRoutines)
                     {
-                        var schema = result.FirstOrDefault(s => s.Name == buildDefinitionRoutine.Schema);
+                        Schema schema = GetSchema(result, buildDefinitionRoutine, isQuery);
                         if (schema is not null)
                         {
                             var routine = schema.Routines.FirstOrDefault(r => r.Name == buildDefinitionRoutine.Name);
@@ -617,6 +703,24 @@ namespace SQLPlusExtension.Models
 
             return result;
         }
+
+        private static Schema GetSchema(List<Schema> result, BuildSchema buildSchema, bool isQuery)
+        {
+            if(isQuery)
+            {
+                return result.FirstOrDefault(s => s.Namespace == buildSchema.Namespace);
+            }
+            return result.FirstOrDefault(s => s.Name == buildSchema.Schema);
+        }
+        private static Schema GetSchema(List<Schema> result, BuildRoutine buildRoutine, bool isQuery)
+        {
+            if (isQuery)
+            {
+                return result.FirstOrDefault(s => s.Namespace == buildRoutine.Namespace);
+            }
+            return result.FirstOrDefault(s => s.Name == buildRoutine.Schema);
+        }
+
         private bool SchemaHasAnyError(List<Schema> schemas)
         {
             foreach (var schema in schemas)
@@ -700,6 +804,69 @@ namespace SQLPlusExtension.Models
 
         #endregion UI Bound DatabaseConnection Properties and Methods
 
+        #region Login
+
+     
+        private string _Email;
+        public string Email
+        {
+            set
+            {
+                if (value != _Email)
+                {
+                    _Email = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Email)));
+                    LogoutCommand.RaiseCanExecuteChanged();
+                }
+            }
+            get
+            {
+                return _Email;
+            }
+        }
+
+        private string _Password;
+
+        private string _LoginMessage = null;
+        public string LoginErrorMessage
+        {
+            set
+            {
+                if (value != _LoginMessage)
+                {
+                    _LoginMessage = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LoginErrorMessage)));
+                    LogoutCommand.RaiseCanExecuteChanged();
+                }
+            }
+            get
+            {
+                return _LoginMessage;
+            }
+        }
+        //File counts for community edition
+
+        private bool _LoginValid = false;
+        public bool LoginValid
+        {
+            set
+            {
+                if (value != _LoginValid)
+                {
+                    _LoginValid = value;
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(LoginValid)));
+                    LogoutCommand.RaiseCanExecuteChanged();
+                }
+            }
+            get
+            {
+                return _LoginValid;
+            }
+        }
+
+
+        #endregion
+
         private int _Progress;
         public int Progress
         {
@@ -721,7 +888,6 @@ namespace SQLPlusExtension.Models
             }
         }
 
-
         public void AppendBuildText(string text, bool isError)
         {
             BuildOutput.Add(new BuildItem() { IsError = isError, Text = text });
@@ -731,8 +897,18 @@ namespace SQLPlusExtension.Models
 
         public async Task BuildProject()
         {
-            SetBuildDefinitionFromUi_All();
+            var renderTrack = _customerService.ExistingRenderTrackOrDefault();
+            if(renderTrack.FilesRemaining() == 0)
+            {
+                AppendBuildText("Cannot run builder.", false);
+                AppendBuildText("You have exceeded the daily limit of files allowed.", false);
+                AppendBuildText("Upgrading to the SQL+ Professional edition removes this limitation.", false);
+                AppendBuildText("You can visit www.sqlplus.net to upgrade your subscription.", false);
+                return;
+            }
 
+            SetBuildDefinitionFromUi_All();
+            filesRendered = 0;
             filesAdded = new List<string>();
 
             //TODO: Depends on the DB type
@@ -747,12 +923,19 @@ namespace SQLPlusExtension.Models
             service.Run();
             DetachEvents(service);
             AppendBuildText("Updating Visual Studio Project...", false);
+            AppendBuildText("This may take a moment...", false);
             if (filesAdded.Count != 0)
             {
                 await _Project.AddExistingFilesAsync(filesAdded.ToArray());
             }
             AppendBuildText("Visual Studio Project Updated", false);
             AppendBuildText("Build Complete", false);
+
+            if (filesRendered != 0)
+            {
+                renderTrack.IncrementCount(filesRendered);
+                _customerService.SaveRenderTrack(renderTrack);
+            }
         }
 
 
@@ -863,6 +1046,10 @@ namespace SQLPlusExtension.Models
                     BannerImage = imagePrefix + "StaticsIcon.png";
                     BannerText = "Configure Static List Queries";
                     break;
+                case Panes.LoginActive:
+                    BannerImage = imagePrefix + "Lock.png";
+                    BannerText = "SQL+ Authentication";
+                    break;
             }
         }
 
@@ -903,6 +1090,9 @@ namespace SQLPlusExtension.Models
                 case Panes.SettingsActive:
                     SetBuildDefintionFromUi_BuildOptions(_BuildDefinition);
                     break;
+                case Panes.BuildActive:
+                    BuildOutput.Clear();
+                    break;
             }
 
             switch (_ActivePane)
@@ -919,6 +1109,7 @@ namespace SQLPlusExtension.Models
                 case Panes.EnumsActive:
                     EnumsTooltip = "Refresh Enumeration Queries";
                     break;
+
             }
 
             if (_PreviousPane != _ActivePane)
@@ -929,6 +1120,21 @@ namespace SQLPlusExtension.Models
 
             SetAndNotifyBanner();
             RaiseCanExecuteChanged();
+        }
+
+        public bool LoginActive
+        {
+            get
+            {
+                return _ActivePane == Panes.LoginActive;
+            }
+            set
+            {
+                if(_ActivePane != Panes.LoginActive)
+                {
+                    HandleNavigationPropertyChanged(Panes.LoginActive);
+                }
+            }
         }
 
         public bool BuildActive
@@ -1287,6 +1493,7 @@ namespace SQLPlusExtension.Models
             QueriesCommand.RaiseCanExecuteChanged();
             EnumsCommand.RaiseCanExecuteChanged();
             ConnectPaneConnect.RaiseCanExecuteChanged();
+            LogoutCommand.RaiseCanExecuteChanged();
         }
 
         public RelayCommand AddEnumCommand { private set; get; }
@@ -1303,11 +1510,11 @@ namespace SQLPlusExtension.Models
         public RelayCommand ConnectPaneConnect { private set; get; }
         public RelayCommand SaveConfigurationCommand { private set; get; }
         public RelayCommand BuildProjectCommand { private set; get; }
-
         public RelayCommand ConfirmDeleteCommand { private set; get; }
-
         public RelayCommand CancelDeleteCommand { private set; get; }
-
+        public RelayCommand LogoutCommand { set; get; }
+        public RelayCommand LoginExecuteCommand { set; get; }
+        public Customer Customer { set; get; }
 
         public void InitCommands()
         {
@@ -1327,7 +1534,7 @@ namespace SQLPlusExtension.Models
                 (
                     (o) =>
                     {
-                        return true;
+                        return LoginValid;
                     },
                     (o) =>
                     {
@@ -1431,7 +1638,14 @@ namespace SQLPlusExtension.Models
                         if (IsBusy) return;
 
                         IsBusy = true;
+                        BuildOutput = new ObservableCollection<BuildItem>();
+                        
+                        AppendBuildText("Saving Configuration...", false);
                         SaveConfiguration();
+                        AppendBuildText("Configuration Save Complete!", false);
+
+                        AppendBuildText("Click Build Project to run builder.", false);
+                        
                         BuildActive = true;
                         IsBusy = false;
                     }
@@ -1522,6 +1736,35 @@ namespace SQLPlusExtension.Models
                     }
                 );
 
+            LogoutCommand = new RelayCommand
+                (
+                     (o) =>
+                     {
+                         return _ActivePane != Panes.LoginActive;
+                     },
+                     (o) =>
+                     {
+                         var passwordBox = o as PasswordBox;
+                         passwordBox.Clear();
+                         Logout();
+                     }
+                );
+
+            LoginExecuteCommand = new RelayCommand
+                (
+                     (o) =>
+                     {
+                         //TODO: Login Is valid and login is dirty login max attempts
+                         return true;
+                     },
+                     async (o) =>
+                     {
+                         var passwordBox = o as PasswordBox;
+                         var password = passwordBox.Password;
+                         _Password = password;
+                         await TryLogin();
+                     }
+                );
 
             BuildProjectCommand = new RelayCommand
              (
@@ -1531,8 +1774,6 @@ namespace SQLPlusExtension.Models
                  },
                  async (o) =>
                  {
-                     BuildOutput = new ObservableCollection<BuildItem>();
-                     AppendBuildText("Ready...", false);
                      SetBuildDefinitionFromUi_All();
                      await BuildProject();
                  }
@@ -1615,8 +1856,11 @@ namespace SQLPlusExtension.Models
             AppendBuildText(e.Message, false);
             Progress = e.Progress;
         }
+
+        private int filesRendered = 0;
         private void Service_OnFileWrite(object sender, FileWriteEventArgs e)
         {
+            filesRendered++;
             AppendBuildText($"File Written: {e.FileName}", false);
         }
         private void Service_OnDirectoryCreated(object sender, DirectoryCreatedEventArgs e)

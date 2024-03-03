@@ -337,7 +337,7 @@ if(routine.SelectType == SelectTypes.Json){
             
             #line default
             #line hidden
-            this.Write(" ResultJson { set; get; };\r\n");
+            this.Write(" ResultJson { set; get; }\r\n");
             
             #line 107 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
@@ -358,7 +358,7 @@ if(routine.SelectType == SelectTypes.Xml){
             
             #line default
             #line hidden
-            this.Write(" ResultXml { set; get; };\r\n");
+            this.Write(" ResultXml { set; get; }\r\n");
             
             #line 114 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
@@ -1100,7 +1100,7 @@ if ((routineValueAcquired == false))
         /// <summary>
         /// The string builder that generation-time code is using to assemble generated output
         /// </summary>
-        protected System.Text.StringBuilder GenerationEnvironment
+        public System.Text.StringBuilder GenerationEnvironment
         {
             get
             {

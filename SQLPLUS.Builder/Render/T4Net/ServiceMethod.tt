@@ -132,7 +132,7 @@ namespace <#=routine.ServiceNamespace#>
             return new <#=routine.Name#>Result(
 <#  foreach(Column c in routine.ResultSets[0].Columns){#>
 <#      if(c.IsNullable){#>
-            rdr.IsDBNull(<#=c.Index#>) ? default : <#=Format(c.AdoGetterFormatter,c.Index)#><#=CommaIfNotLast(routine.ResultSets[0].Columns, c)#>
+            rdr.IsDBNull(<#=c.Index#>) ? null : <#=Format(c.AdoGetterFormatter,c.Index)#><#=CommaIfNotLast(routine.ResultSets[0].Columns, c)#>
 <#      }else{#>
             <#=Format(c.AdoGetterFormatter,c.Index)#><#=CommaIfNotLast(routine.ResultSets[0].Columns, c)#>
 <#      }#>
@@ -149,7 +149,7 @@ namespace <#=routine.ServiceNamespace#>
             return new <#=routine.Name#>Result.<#=rs.Name#>(
 <#  foreach (Column c in rs.Columns){#>
 <#      if(c.IsNullable){#>
-                rdr.IsDBNull(<#=c.Index#>) ? default : <#=Format(c.AdoGetterFormatter,c.Index)#><#=CommaIfNotLast(rs.Columns, c)#>
+                rdr.IsDBNull(<#=c.Index#>) ? null : <#=Format(c.AdoGetterFormatter,c.Index)#><#=CommaIfNotLast(rs.Columns, c)#>
 <#      }else{#>
                 <#=Format(c.AdoGetterFormatter,c.Index)#><#=CommaIfNotLast(rs.Columns, c)#>
 <#      }#>

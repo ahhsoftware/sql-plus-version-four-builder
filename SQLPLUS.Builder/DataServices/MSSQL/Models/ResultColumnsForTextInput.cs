@@ -30,6 +30,5 @@ namespace SQLPLUS.Builder.DataServices.MSSQL.Models
         /// </summary>
         [Required(AllowEmptyStrings = false)]
         public string SQLText { set; get; }
-
     }
 } 

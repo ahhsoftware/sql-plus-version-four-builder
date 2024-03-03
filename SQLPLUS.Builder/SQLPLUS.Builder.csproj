@@ -279,14 +279,11 @@
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>ValidInput.cs</LastGenOutput>
     </Content>
-    <Content Include="SQL+\Queries\Samples\HelloWorld.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="Key.pfx" />
     <None Include="packages.config" />
-    <None Include="SQL+\BuildDefinition.json" />
-    <None Include="SQL+\DatabaseConnection.json" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -17,10 +17,8 @@ namespace SQLPlusExtension
 
         public SQLPlusConfigurationWindow(SQLPlusConfigurationWindowViewModel dataContext)
         {
-            dataContext.InitCommands();
             this.DataContext = dataContext;
             InitializeComponent();
-            dataContext.ConnectActive = true;
         }
 
         private void ScrollViewer_ScrollChanged(object sender, System.Windows.Controls.ScrollChangedEventArgs e)

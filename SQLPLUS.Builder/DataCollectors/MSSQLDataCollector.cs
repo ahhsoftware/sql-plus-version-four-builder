@@ -751,7 +751,9 @@
                 }
                 else
                 {
-                    List<Column> resultColumns = GetColumnsForText(string.Join(Environment.NewLine, routine.RoutineLines));
+                    string[] cleansed = CleansedRoutineLinesForResultSetQuery(routine.RoutineLines);
+                    string sql = string.Join(Environment.NewLine, cleansed);
+                    List<Column> resultColumns = GetColumnsForText(sql);
                     if (resultColumns.Count == 0)
                     {
                         if (routine.SelectType != SelectTypes.NonQuery)

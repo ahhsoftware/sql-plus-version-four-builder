@@ -11,7 +11,7 @@
                         WindowStyle="SingleBorderWindow"
                         Height="380"
                         Width="450"
-                        Title="SQL+ .NET Code Generation Utility Version 4.0.0"
+                        Title="SQL+ .NET Code Generation Utility Version 4.1.6"
                         Background="White"
                         >
     <Window.Resources>
