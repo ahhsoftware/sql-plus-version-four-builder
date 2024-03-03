@@ -2,7 +2,7 @@
 using SQLPLUS.Builder.BuildServices;
 using SQLPLUS.Builder.ConfigurationModels;
 using SQLPlusExtension.Models;
-using SQLPlusExtension.Services;
+//using SQLPlusExtension.Services;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -36,15 +36,14 @@ namespace SQLPlusExtension
             
             var databaseConnection = configurationService.GetDatabaseConnection();
             var buildDefinition = configurationService.GetBuildDefinition();
-            CustomerService customerService = new CustomerService();
+            //CustomerService customerService = new CustomerService();
 
             SQLPlusConfigurationWindowViewModel dataContext = new SQLPlusConfigurationWindowViewModel(
                 configurationService,
                 projectInformation,
                 buildDefinition,
                 databaseConnection,
-                vsProject,
-                customerService);
+                vsProject);
 
             SQLPlusConfigurationWindow configurationWindow = new SQLPlusConfigurationWindow(dataContext);
            

@@ -10,7 +10,6 @@
         EnumsActive,
         StaticsActive,
         SettingsActive,
-        BuildActive,
-        LoginActive
+        BuildActive
     }
 }
