@@ -1,4 +1,5 @@
-﻿<#@ template language="C#" #>
+﻿
+<#@ template language="C#" #>
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
@@ -36,10 +37,8 @@ namespace <#=nameSpace#>
 
         #region Private Readonly Variables
 
-<#if (build.LicenseType != "Community"){#>
         private readonly SqlConnection sqlConnection;
         private readonly SqlTransaction sqlTransaction;
-<#}#>
         private readonly string connectionString;
         private readonly IRetryOptions retryOptions;
 
@@ -60,7 +59,6 @@ namespace <#=nameSpace#>
             this.connectionString = connectionString;
             this.retryOptions = new DefaultRetryOptions();
         }
-<#if(build.LicenseType != "Community"){#>
 
         /// <summary>
         /// Creates a new service object that will connect to the database using the connection string provided.
@@ -100,7 +98,6 @@ namespace <#=nameSpace#>
             this.sqlConnection = sqlConnection;
             this.sqlTransaction = sqlTransaction;
         }
-<#}#>
 
         #endregion Contructors
 
