@@ -66,130 +66,86 @@ foreach(string s in Usings()){
             
             #line default
             #line hidden
-            this.Write(@"
-    #endregion usings
-
-    #region Service Partial
-
-    /// <summary>
-    /// Non-service partial class contains constructors and utility functions available in all service specific partials.
-    /// </summary>
-    public partial class Service
-    {
-
-        #region Private Readonly Variables
-
-");
-            
-            #line 39 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
-if (build.LicenseType != "Community"){
-            
-            #line default
-            #line hidden
-            this.Write("        private readonly SqlConnection sqlConnection;\r\n        private readonly S" +
-                    "qlTransaction sqlTransaction;\r\n");
-            
-            #line 42 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
-}
-            
-            #line default
-            #line hidden
-            this.Write(@"        private readonly string connectionString;
-        private readonly IRetryOptions retryOptions;
-
-        #endregion Private Readonly Variables
-
-        #region Contructors
-
-        /// <summary>
-        /// Creates a new service object that will connect to the database using the connection string provided.
-        /// Note that additional contructors with options for transient error management and transactions are available in pro and enterprise versions.
-        /// Upgrade here: https://www.SQLPlus.net
-        /// </summary>
-        /// <param name=""connectionString"">Connection String to the relevant database with appropriate credentials and settings.</param>
-        public Service(string connectionString)
-        {
-            if (string.IsNullOrEmpty(connectionString)) throw new ArgumentNullException(nameof(connectionString));
-
-            this.connectionString = connectionString;
-            this.retryOptions = new DefaultRetryOptions();
-        }
-");
-            
-            #line 63 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
-if(build.LicenseType != "Community"){
-            
-            #line default
-            #line hidden
-            this.Write("\r\n        /// <summary>\r\n        /// Creates a new service object that will conne" +
-                    "ct to the database using the connection string provided.\r\n        /// All servic" +
-                    "e calls will execute using the retry options provided.\r\n        /// Visit https:" +
-                    "//www.SQLPlus.net/ for more information on transient error management.\r\n        " +
-                    "/// </summary>\r\n        /// <param name=\"connectionString\">Connection String to " +
-                    "the relevant database with appropriate credentials and settings.</param>\r\n      " +
-                    "  /// <param name=\"retryOptions\">Object implementing the IRetryOptions interface" +
-                    ".</param>\r\n        public Service(string connectionString, IRetryOptions retryOp" +
-                    "tions)\r\n        {\r\n            if (string.IsNullOrEmpty(connectionString))\r\n    " +
-                    "        {\r\n                throw new ArgumentException($\"\'{nameof(connectionStri" +
-                    "ng)}\' cannot be null or empty.\", nameof(connectionString));\r\n            }\r\n\r\n  " +
-                    "          this.connectionString = connectionString;\r\n            this.retryOptio" +
-                    "ns = retryOptions ?? throw new ArgumentNullException(nameof(retryOptions));\r\n   " +
-                    "     }\r\n\r\n        /// <summary>\r\n        /// Creates a new service object that a" +
-                    "llows developer control of the connection and transactions.\r\n        /// Visit h" +
-                    "ttps://www.SQLPlus.net/ for more information on transaction management.\r\n       " +
-                    " /// User is responsible for connection and transaction management.\r\n        ///" +
-                    " </summary>\r\n        /// <param name=\"sqlConnection\">Ready to execute SqlConnect" +
-                    "ion.</param>\r\n        /// <param name=\"sqlTransaction\">Ready to execute SqlTrans" +
-                    "action.</param>\r\n        public Service(SqlConnection sqlConnection, SqlTransact" +
-                    "ion sqlTransaction)\r\n        {\r\n            if (sqlConnection == null)\r\n        " +
-                    "    {\r\n                throw new ArgumentNullException(nameof(sqlConnection));\r\n" +
-                    "            }\r\n            if (sqlTransaction == null)\r\n            {\r\n         " +
-                    "       throw new ArgumentNullException(nameof(sqlTransaction));\r\n            }\r\n" +
-                    "            this.sqlConnection = sqlConnection;\r\n            this.sqlTransaction" +
-                    " = sqlTransaction;\r\n        }\r\n");
-            
-            #line 103 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
-}
-            
-            #line default
-            #line hidden
-            this.Write("\r\n        #endregion Contructors\r\n\r\n        #region Default Retry Options\r\n\r\n    " +
-                    "    /// <summary>\r\n        /// Default implementation of Retry Options. Used whe" +
-                    "n no retry options are passed.\r\n        /// </summary>\r\n        private class De" +
-                    "faultRetryOptions : RetryOptions\r\n        {\r\n            public DefaultRetryOpti" +
-                    "ons() :\r\n            base(\r\n                new System.Collections.Generic.List<" +
-                    "int>(),\r\n                new System.Collections.Generic.List<int>(),\r\n          " +
-                    "      null\r\n                )\r\n            { }\r\n        }\r\n\r\n        #endregion " +
-                    "Default Retry Options\r\n\r\n        #region Private Methods\r\n\r\n        /// <summary" +
-                    ">\r\n        /// This method is called on every service call to validate the input" +
-                    " prior to sumbitting to the database.\r\n        /// </summary>\r\n        /// <para" +
-                    "m name=\"input\">Input object derive from ValidInput.</param>\r\n        /// <param " +
-                    "name=\"method\">The method name where the validation is taking place.</param>\r\n   " +
-                    "     private void ValidateInput(ValidInput input, string method)\r\n        {\r\n   " +
-                    "         if(input is null)\r\n            {\r\n                throw new ArgumentNul" +
-                    "lException($\"The input object passed to service method {method} cannot be null.\"" +
-                    ", \"input\");\r\n            }\r\n            if (!input.IsValid())\r\n            {\r\n  " +
-                    "              throw new ArgumentException($\"The input object passed to service m" +
-                    "ethod {method} fails validation. Use the {method}Input.IsValid() method prior to" +
-                    " calling the service.\", \"input\");\r\n            }\r\n        }\r\n\r\n        /// <summ" +
-                    "ary>\r\n        /// This method checks a SQL exception to see it is to be treated " +
-                    "as a transient error.\r\n        /// If it is infact a transient error the retry o" +
-                    "ptions will determine if the exception is thrown or handled.\r\n        /// </summ" +
-                    "ary>\r\n        /// <param name=\"idx\">Current index in the currently executing ser" +
-                    "vice.</param>\r\n        /// <param name=\"exception\">The SqlException that was the" +
-                    " source of the call.</param>\r\n        private void AllowRetryOrThrowError(int id" +
-                    "x, SqlException exception)\r\n        {\r\n            bool throwException = true;\r\n" +
-                    "\r\n            if (retryOptions.TransientErrorNumbers.Contains(exception.Number))" +
-                    "\r\n            {\r\n                throwException = (idx == retryOptions.RetryInte" +
-                    "rvals.Count);\r\n\r\n                if (retryOptions.Logger != null)\r\n             " +
-                    "   {\r\n                    retryOptions.Logger.Log(exception);\r\n                }" +
-                    "\r\n            }\r\n            if (throwException)\r\n            {\r\n               " +
-                    " throw exception;\r\n            }\r\n        }\r\n\r\n        #endregion Private Method" +
-                    "s\r\n\r\n    }\r\n\r\n    #endregion Service Partial\r\n}\r\n\r\n");
+            this.Write("\r\n    #endregion usings\r\n\r\n    #region Service Partial\r\n\r\n    /// <summary>\r\n    " +
+                    "/// Non-service partial class contains constructors and utility functions availa" +
+                    "ble in all service specific partials.\r\n    /// </summary>\r\n    public partial cl" +
+                    "ass Service\r\n    {\r\n\r\n        #region Private Readonly Variables\r\n\r\n        priv" +
+                    "ate readonly SqlConnection sqlConnection;\r\n        private readonly SqlTransacti" +
+                    "on sqlTransaction;\r\n        private readonly string connectionString;\r\n        p" +
+                    "rivate readonly IRetryOptions retryOptions;\r\n\r\n        #endregion Private Readon" +
+                    "ly Variables\r\n\r\n        #region Contructors\r\n\r\n        /// <summary>\r\n        //" +
+                    "/ Creates a new service object that will connect to the database using the conne" +
+                    "ction string provided.\r\n        /// Note that additional contructors with option" +
+                    "s for transient error management and transactions are available in pro and enter" +
+                    "prise versions.\r\n        /// Upgrade here: https://www.SQLPlus.net\r\n        /// " +
+                    "</summary>\r\n        /// <param name=\"connectionString\">Connection String to the " +
+                    "relevant database with appropriate credentials and settings.</param>\r\n        pu" +
+                    "blic Service(string connectionString)\r\n        {\r\n            if (string.IsNullO" +
+                    "rEmpty(connectionString)) throw new ArgumentNullException(nameof(connectionStrin" +
+                    "g));\r\n\r\n            this.connectionString = connectionString;\r\n            this." +
+                    "retryOptions = new DefaultRetryOptions();\r\n        }\r\n\r\n        /// <summary>\r\n " +
+                    "       /// Creates a new service object that will connect to the database using " +
+                    "the connection string provided.\r\n        /// All service calls will execute usin" +
+                    "g the retry options provided.\r\n        /// Visit https://www.SQLPlus.net/ for mo" +
+                    "re information on transient error management.\r\n        /// </summary>\r\n        /" +
+                    "// <param name=\"connectionString\">Connection String to the relevant database wit" +
+                    "h appropriate credentials and settings.</param>\r\n        /// <param name=\"retryO" +
+                    "ptions\">Object implementing the IRetryOptions interface.</param>\r\n        public" +
+                    " Service(string connectionString, IRetryOptions retryOptions)\r\n        {\r\n      " +
+                    "      if (string.IsNullOrEmpty(connectionString))\r\n            {\r\n              " +
+                    "  throw new ArgumentException($\"\'{nameof(connectionString)}\' cannot be null or e" +
+                    "mpty.\", nameof(connectionString));\r\n            }\r\n\r\n            this.connection" +
+                    "String = connectionString;\r\n            this.retryOptions = retryOptions ?? thro" +
+                    "w new ArgumentNullException(nameof(retryOptions));\r\n        }\r\n\r\n        /// <su" +
+                    "mmary>\r\n        /// Creates a new service object that allows developer control o" +
+                    "f the connection and transactions.\r\n        /// Visit https://www.SQLPlus.net/ f" +
+                    "or more information on transaction management.\r\n        /// User is responsible " +
+                    "for connection and transaction management.\r\n        /// </summary>\r\n        /// " +
+                    "<param name=\"sqlConnection\">Ready to execute SqlConnection.</param>\r\n        ///" +
+                    " <param name=\"sqlTransaction\">Ready to execute SqlTransaction.</param>\r\n        " +
+                    "public Service(SqlConnection sqlConnection, SqlTransaction sqlTransaction)\r\n    " +
+                    "    {\r\n            if (sqlConnection == null)\r\n            {\r\n                th" +
+                    "row new ArgumentNullException(nameof(sqlConnection));\r\n            }\r\n          " +
+                    "  if (sqlTransaction == null)\r\n            {\r\n                throw new Argument" +
+                    "NullException(nameof(sqlTransaction));\r\n            }\r\n            this.sqlConne" +
+                    "ction = sqlConnection;\r\n            this.sqlTransaction = sqlTransaction;\r\n     " +
+                    "   }\r\n\r\n        #endregion Contructors\r\n\r\n        #region Default Retry Options\r" +
+                    "\n\r\n        /// <summary>\r\n        /// Default implementation of Retry Options. U" +
+                    "sed when no retry options are passed.\r\n        /// </summary>\r\n        private c" +
+                    "lass DefaultRetryOptions : RetryOptions\r\n        {\r\n            public DefaultRe" +
+                    "tryOptions() :\r\n            base(\r\n                new System.Collections.Generi" +
+                    "c.List<int>(),\r\n                new System.Collections.Generic.List<int>(),\r\n   " +
+                    "             null\r\n                )\r\n            { }\r\n        }\r\n\r\n        #end" +
+                    "region Default Retry Options\r\n\r\n        #region Private Methods\r\n\r\n        /// <" +
+                    "summary>\r\n        /// This method is called on every service call to validate th" +
+                    "e input prior to sumbitting to the database.\r\n        /// </summary>\r\n        //" +
+                    "/ <param name=\"input\">Input object derive from ValidInput.</param>\r\n        /// " +
+                    "<param name=\"method\">The method name where the validation is taking place.</para" +
+                    "m>\r\n        private void ValidateInput(ValidInput input, string method)\r\n       " +
+                    " {\r\n            if(input is null)\r\n            {\r\n                throw new Argu" +
+                    "mentNullException($\"The input object passed to service method {method} cannot be" +
+                    " null.\", \"input\");\r\n            }\r\n            if (!input.IsValid())\r\n          " +
+                    "  {\r\n                throw new ArgumentException($\"The input object passed to se" +
+                    "rvice method {method} fails validation. Use the {method}Input.IsValid() method p" +
+                    "rior to calling the service.\", \"input\");\r\n            }\r\n        }\r\n\r\n        //" +
+                    "/ <summary>\r\n        /// This method checks a SQL exception to see it is to be t" +
+                    "reated as a transient error.\r\n        /// If it is infact a transient error the " +
+                    "retry options will determine if the exception is thrown or handled.\r\n        ///" +
+                    " </summary>\r\n        /// <param name=\"idx\">Current index in the currently execut" +
+                    "ing service.</param>\r\n        /// <param name=\"exception\">The SqlException that " +
+                    "was the source of the call.</param>\r\n        private void AllowRetryOrThrowError" +
+                    "(int idx, SqlException exception)\r\n        {\r\n            bool throwException = " +
+                    "true;\r\n\r\n            if (retryOptions.TransientErrorNumbers.Contains(exception.N" +
+                    "umber))\r\n            {\r\n                throwException = (idx == retryOptions.Re" +
+                    "tryIntervals.Count);\r\n\r\n                if (retryOptions.Logger != null)\r\n      " +
+                    "          {\r\n                    retryOptions.Logger.Log(exception);\r\n          " +
+                    "      }\r\n            }\r\n            if (throwException)\r\n            {\r\n        " +
+                    "        throw exception;\r\n            }\r\n        }\r\n\r\n        #endregion Private" +
+                    " Methods\r\n\r\n    }\r\n\r\n    #endregion Service Partial\r\n}\r\n\r\n");
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 176 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
+        #line 172 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
 
     private List<string> Usings()
     {
@@ -197,7 +153,7 @@ if(build.LicenseType != "Community"){
         result.Add("System");
         result.Add("System.Collections.Generic");
         result.Add(project.SQLPLUSBaseNamespace);
-        result.Add(build.SQLClient);
+        result.Add(build.SQLClientNamespace);
         result.Add(build.SQLExceptionNamespace);
         return result;
     }
@@ -329,7 +285,7 @@ if ((nameSpaceValueAcquired == false))
         /// <summary>
         /// The string builder that generation-time code is using to assemble generated output
         /// </summary>
-        protected System.Text.StringBuilder GenerationEnvironment
+        public System.Text.StringBuilder GenerationEnvironment
         {
             get
             {

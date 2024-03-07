@@ -17,7 +17,7 @@
             SQLPLUSBaseNamespace = "SqlPlusBase";
             SQLPLUSValidInputPath = Path.Combine(SQLPLUSBaseDirectory, "ValidInput.cs");
             SQLPLUSValueComparisonsPath = Path.Combine(SQLPLUSBaseDirectory, "ValueComparisons.cs");
-            SQLPlusTransientErrorsPath = Path.Combine(SQLPLUSBaseDirectory, "TransientErrors.cs");
+            SQLPLUSTransientErrorsPath = Path.Combine(SQLPLUSBaseDirectory, "TransientErrors.cs");
             SQLPLUSFolder = Path.Combine(rootDirectory, "SQL+");
             SQLPLUSQueriesFolder = Path.Combine(SQLPLUSFolder, "Queries");
             SQLPLUSSampleQueriesFolder = Path.Combine(SQLPLUSQueriesFolder, "Samples");
@@ -41,7 +41,7 @@
         public string SQLPLUSBaseNamespace { get; }
         public string SQLPLUSValidInputPath { get; }
         public string SQLPLUSValueComparisonsPath { get; }
-        public string SQLPlusTransientErrorsPath { get; }
+        public string SQLPLUSTransientErrorsPath { get; }
         public string SQLPLUSQueriesFolder { get; }
         public string SQLPLUSSampleQueriesFolder { get; }
         public string SQLPLUSSampleQueryPath { get; }

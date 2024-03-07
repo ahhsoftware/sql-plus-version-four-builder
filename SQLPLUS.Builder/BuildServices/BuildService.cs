@@ -1,9 +1,7 @@
 ﻿namespace SQLPLUS.Builder
 {
-    using SQLPLUS.Builder.BuildServices;
     using SQLPLUS.Builder.ConfigurationModels;
     using SQLPLUS.Builder.DataCollectors;
-    using SQLPLUS.Builder.DataServices.MSSQL.Models;
     using SQLPLUS.Builder.Helpers;
     using SQLPLUS.Builder.Render;
     using SQLPLUS.Builder.TemplateModels;
@@ -19,16 +17,13 @@
         private readonly BuildDefinition build;
         private readonly ProjectInformation project;
         private List<string> directories = new List<string>();
+        private decimal progress = 0;
+        private decimal progressMax = 20;
 
         public event EventHandler<FileCreatedEventArgs> OnFileCreated;
         public event EventHandler<DirectoryCreatedEventArgs> OnDirectoryCreated;
         public event EventHandler<FileWriteEventArgs> OnFileWrite;
         public event EventHandler<ProgressStatusArgs> OnProgressChanged;
-
-        public void UpdateProgress(string message)
-        {
-            OnProgressChanged?.Invoke(this, new ProgressStatusArgs(Progress(), message));
-        }
 
         public BuildService(BuildDefinition build, ProjectInformation project, IDataCollector data, IRenderProvider render)
         {
@@ -37,11 +32,6 @@
             this.build = build;
             this.project = project;
         }
-
-        public int renderCount = 0;
-        private decimal progress = 0;
-        private decimal progressMax = 20;
-
         public void Run()
         {
             UpdateProgress("Starting build...");
@@ -117,7 +107,23 @@
             UpdateProgress("Write Static objects complete.");
 
         }
-
+        private int Progress()
+        {
+            progress++;
+            decimal percent = (progress / progressMax) * 100;
+            if (percent >= 100)
+            {
+                return 99;
+            }
+            else
+            {
+                return decimal.ToInt32(percent);
+            }
+        }
+        private void UpdateProgress(string message)
+        {
+            OnProgressChanged?.Invoke(this, new ProgressStatusArgs(Progress(), message));
+        }
         private void WriteStatics(List<StaticCollection> statics)
         {
             foreach(StaticCollection data in statics)
@@ -126,8 +132,6 @@
                 WriteText(content, project.StaticDataDirectory, data.Name);
             }
         }
-
-
         private void WriteEnums(List<EnumCollection> enums)
         {
             foreach(EnumCollection e in enums)
@@ -136,7 +140,6 @@
                 WriteText(content, project.EnumerationsDirectory, e.Name);
             }
         }
-
         private void WriteServices(List<Routine> routines)
         {
             foreach(Routine routine in routines)
@@ -145,7 +148,6 @@
                 WriteText(content, routine.ServiceDirectory, routine.ServiceName);
             }
         }
-
         private void WriteServiceBase(List<Routine> routines)
         {
             List<string> nameSpaces = new List<string>();
@@ -159,9 +161,6 @@
                 }
             }
         }
-
-        #region Complete
-
         private void WriteOutputObjects(List<Routine> routines)
         {
             foreach (Routine routine in routines)
@@ -170,7 +169,6 @@
                 WriteText(content, routine.ModelDirectory, routine.OutputObjectName);
             }
         }
-
         private void WriteUserDefinedTypes(List<Routine> routines)
         {
             List<string> parameterNames = new List<string>();
@@ -197,7 +195,6 @@
                 WriteText(content, project.UserDefinedTypeDirectory, parameter.UserDefinedTypeName);
             }
         }
-
         public void WriteTransientErrors()
         {
             string content = render.TransientErrors();
@@ -205,7 +202,6 @@
             string fileName = "TransientErrors";
             WriteText(content, directory, fileName);
         }
-
         public void WriteTransientErrorsExample()
         {
             string content = render.TransientErrorsExample();
@@ -213,23 +209,6 @@
             string fileName = "TransientErrorsExample";
             WriteText(content, directory, fileName);
         }
-
-        
-
-        private int Progress()
-        {
-            progress++;
-            decimal percent = (progress / progressMax) * 100;
-            if (percent >= 100)
-            {
-                return 99;
-            }
-            else
-            {
-                return decimal.ToInt32(percent);
-            }
-        }
-
         private bool RequiresValidInput(List<Routine> routines)
         {
             bool result = false;
@@ -243,7 +222,6 @@
             }
             return result;
         }
-
         private void WriteText(string content, string directory, string fileName)
         {
             if (!directories.Contains(directory))
@@ -263,9 +241,7 @@
                 OnFileCreated?.Invoke(this, new FileCreatedEventArgs(path));
             }
             OnFileWrite?.Invoke(this, new FileWriteEventArgs(path));
-            renderCount++;
         }
-
         private void WriteBaseObjectsIfRequired(List<Routine> routines)
         {
             if (RequiresValidInput(routines))
@@ -289,7 +265,6 @@
                 }
             }
         }
-
         private List<Parameter> ParametersForHelpers(List<Routine> routines)
         {
             List<string> allParameters = new List<string>();
@@ -311,7 +286,6 @@
             }
             return result;
         }
-
         private void WriteValidInput()
         {
             string content = render.ValidInput();
@@ -322,7 +296,6 @@
             string content = render.Helpers(usings, types, parameters);
             WriteText(content, project.SQLPLUSBaseDirectory, "Helpers");
         }
-
         private static List<string> TypesHelpers(List<Routine> routines)
         {
             List<string> result = new List<string>();
@@ -351,7 +324,6 @@
             }
             return result;
         }
-
         private List<string> UsingsForHelpers(List<Routine> routines)
         {
             List<string> result = new List<string>();
@@ -375,7 +347,6 @@
             }
             return result;
         }
-
         private void CreateSchemaDirectoriesIfRequired(List<Routine> routines)
         {
             foreach (Routine routine in routines)
@@ -395,7 +366,6 @@
                 }
             }
         }
-
         private void WriteInputObjectsIfRequired(List<Routine> routines)
         {
             //Insuring we have all 
@@ -413,7 +383,5 @@
                 }
             }
         }
-
-        #endregion
     }
 }

@@ -36,10 +36,8 @@ namespace <#=nameSpace#>
 
         #region Private Readonly Variables
 
-<#if (build.LicenseType != "Community"){#>
         private readonly SqlConnection sqlConnection;
         private readonly SqlTransaction sqlTransaction;
-<#}#>
         private readonly string connectionString;
         private readonly IRetryOptions retryOptions;
 
@@ -60,7 +58,6 @@ namespace <#=nameSpace#>
             this.connectionString = connectionString;
             this.retryOptions = new DefaultRetryOptions();
         }
-<#if(build.LicenseType != "Community"){#>
 
         /// <summary>
         /// Creates a new service object that will connect to the database using the connection string provided.
@@ -100,7 +97,6 @@ namespace <#=nameSpace#>
             this.sqlConnection = sqlConnection;
             this.sqlTransaction = sqlTransaction;
         }
-<#}#>
 
         #endregion Contructors
 
@@ -179,7 +175,7 @@ namespace <#=nameSpace#>
         List<string> result = new List<string>();
         result.Add("System");
         result.Add("System.Collections.Generic");
-        result.Add(project.SqlPlusBaseNamespace);
+        result.Add(project.SQLPLUSBaseNamespace);
         result.Add(build.SQLClientNamespace);
         result.Add(build.SQLExceptionNamespace);
         return result;

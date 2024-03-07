@@ -2,17 +2,14 @@
 {
     using Newtonsoft.Json;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
-    using System.Linq;
 
     public class BuildDefinition
     {
-       
+        private List<string> errors = new List<string>();
+
         public BuildDefinition() { }
 
         #region Ignored Properties
-
-        //TODO: JsonIgnoreProperties shoud be replaced with private readonly variables.
 
         [JsonIgnore]
         public string SingleLineComment { set; get; } = "--";
@@ -33,9 +30,6 @@
         public string ExplicitTagIndicator { set; get; } = "#";
         
         [JsonIgnore]
-        public string LicenseType { set; get; } = "Professional"; // Community // Professional // Enterprise
-
-        [JsonIgnore]
         public string PrimaryTagPrefix
         {
             get
@@ -43,6 +37,7 @@
                 return SingleLineComment + PrimaryTagIndicator;
             }
         }
+        
         [JsonIgnore]
         public string SupplementalTagPrefix
         {
@@ -51,6 +46,7 @@
                 return SingleLineComment + SupplementalTagIndicator;
             }
         }
+        
         [JsonIgnore]
         public string ExplicitTagPrefix
         {
@@ -63,11 +59,9 @@
         #endregion Ignored Properties
         
         public string SQLClient { set; get; } = "System.Data.SqlClient";
-        
+        public string SQLClientNamespace { set; get; } = "System.Data.SqlClient";
         public string SQLExceptionNamespace { set; get; } = "System.Data";
-        
         public string Template { set; get; } = "NET";
-
         public List<BuildRoutine> DBRoutines { set; get; }
         public List<BuildSchema> DBSchemas { set; get; }
         public List<BuildSchema> QuerySchemas { set; get; }
@@ -75,13 +69,10 @@
         public List<BuildQuery> EnumQueries { set; get; }
         public List<BuildQuery> StaticQueries { set; get; }
         public BuildOptions BuildOptions { set; get; } = new BuildOptions();
-
-        private List<string> errors = new List<string>();
         public List<string> GetErrors()
         {
             return errors;
         }
-
         public void NullOutZeroLengthCollections()
         {
             if (DBSchemas?.Count == 0)
@@ -117,14 +108,12 @@
         public string Namespace { set; get; }
 
     }
-
     public class BuildRoutine 
     {
         public string Schema { set; get; }
         public string Namespace { set; get; }
         public string Name { set; get; }
     }
-
     public class BuildQuery
     {
         public string Name { set; get; }
@@ -168,7 +157,6 @@
 
 
     }
-
     public class BuildOptions
     {
         public bool ImplementIChangeTracking { set; get; } = false;

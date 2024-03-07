@@ -1,12 +1,10 @@
 ﻿namespace SQLPLUS.Builder.DataCollectors
 {
     using SQLPLUS.Builder.ConfigurationModels;
-    using SQLPLUS.Builder.Mappings;
     using SQLPLUS.Builder.Tags;
     using SQLPLUS.Builder.TemplateModels;
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using System.Text;
 
