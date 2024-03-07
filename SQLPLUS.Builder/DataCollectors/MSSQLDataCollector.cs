@@ -14,10 +14,6 @@
     using System.Data.SqlClient;
     using System.IO;
     using System.Linq;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Security.Cryptography;
     using System.Text;
     using System.Text.RegularExpressions;
 
@@ -25,11 +21,20 @@
 
     public class MSSQLDataCollector : DataCollectorBase
     {
+        /// <summary>
+        /// MSSQM has the following ways to retrieve values
+        /// 1. Procedure - in and out paramters, a return value, as well as result sets.
+        /// 2. Scalar Function - functions that return single values
+        /// 3. Table Function - functions that return result sets (table)
+        /// The contstants below are used for convenience identifying the types
+        /// In addition, queries are buildable file based SQL
+        /// </summary>
         public const string ROUTINE_TYPE_PROCEDURE = "PROCEDURE";
         public const string ROUTINE_TYPE_FUNCTION = "FUNCTION";
         public const string ROUTINE_TYPE_QUERY = "QUERY";
         public const string DATA_TYPE_TABLE = "TABLE";
 
+        //This is the data service used to collect database objects
         private readonly Service dataService;
 
         public MSSQLDataCollector(BuildDefinition buildDefintion, DatabaseConnection databaseConnection, ProjectInformation projectInformation)
@@ -54,53 +59,6 @@
                 return false;
             }
         }
-
-        public List<BuildRoutine> RoutinesMeta()
-        {
-            var output = dataService.SQLPlusRoutines();
-            if (output.ReturnValue == SQLPlusRoutinesOutput.Returns.Ok)
-            {
-                List<BuildRoutine> result = new List<BuildRoutine>();
-
-                foreach (var item in output.ResultData)
-                {
-                    result.Add(new BuildRoutine
-                    {
-                        Name = item.Name,
-                        Schema = item.Schema,
-                        Namespace = item.Schema
-                    });
-                }
-
-                return result;
-            }
-
-            return null;
-        }
-
-        public List<BuildRoutine> QueriesMeta()
-        {
-            List<Routine> routines = CollectQueryRoutines();
-            if (routines.Count == 0)
-            {
-                return null;
-            }
-            List<BuildRoutine> result = new List<BuildRoutine>();
-            foreach (var item in routines)
-            {
-                result.Add(new BuildRoutine()
-                {
-                    Name = item.Name,
-                    Schema = item.Schema,
-                    Namespace = item.Namespace
-                });
-            }
-
-            return result.OrderBy(s => s.Schema).ThenBy(s => s.Name).ToList();
-
-        }
-
-        
         public override List<Routine> CollectDBRoutinesAndQueryRoutines()
         {
             List<Routine> routines = CollectDBRoutines();
@@ -1303,42 +1261,3 @@
         }
     }
 }
-
-//private void SetResultColumnsForMultiSetNew(Routine routine)
-//{
-//    string tempProcedureName = $"[{routine.Schema}].[{routine.Name}_SQLPX]";
-//    string dropTempProcedureText = $"DROP PROCEDURE {tempProcedureName}";
-//    string[] copy = GetRoutineLinesSafeCopy(routine.RoutineLines);
-//    CommentOutIgnores(copy, routine.Ignores);
-//    int declarationLine = IndexOf(copy, "CREATE PROCEDURE", IndexOfTypes.StartsWith, 0);
-//    copy[declarationLine] = ReplaceFirst(copy[declarationLine], routine.Name, $"{routine.Name}_SQLPX");
-//    for (int idx = 0; idx != routine.Queries.Count; idx++)
-//    {
-//        QueryStart currentQuery = routine.Queries[idx];
-//        ExecuteRawText(dropTempProcedureText, true);
-//        string createTempProcureText = StringArrayToString(copy);
-//        ExecuteRawText(createTempProcureText);
-//        List<Column> columns = GetColumnsForText($"[{routine.Schema}].[{routine.Name}_SQLPX]");
-//        if (columns == null)
-//        {
-//            throw new Exception($"MultiSet query {currentQuery.Name} failed to produce a result set.");
-//        }
-//        routine.ResultSets.Add(new ResultSet(currentQuery.Name, currentQuery.SelectType, columns));
-//        CommentOutQueryLines(copy, currentQuery);
-//    }
-
-//    ExecuteRawText(dropTempProcedureText, true);
-
-//    List<string> concatColumns = new List<string>();
-//    foreach (ResultSet rs in routine.ResultSets)
-//    {
-//        if (concatColumns.Contains(rs.ConcatColumns))
-//        {
-//            throw new Exception("Each result set in a multiset query must be unique. Update the routine so that each result has at least one different column.");
-//        }
-//        concatColumns.Add(rs.ConcatColumns);
-//    }
-//}
-
-
-

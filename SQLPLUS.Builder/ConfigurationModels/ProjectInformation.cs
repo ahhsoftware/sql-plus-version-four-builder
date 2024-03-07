@@ -7,8 +7,6 @@
         {
             RootNamespace = rootNamespace;
             RootDirectory = rootDirectory;
-            //ConstantsDirectory = Path.Combine(rootDirectory, "Constants");
-            //ConstantsNamespace = $"{rootNamespace}.Constants";
             EnumerationsDirectory = Path.Combine(rootDirectory, "Enumerations");
             EnumerationsNamespace = $"{rootNamespace}.Enumerations";
             StaticDataDirectory = Path.Combine(rootDirectory, "Statics");
@@ -29,8 +27,6 @@
             SQLPLUSBuildErrorPath = Path.Combine(SQLPLUSFolder, "Errors.txt");
         }
 
-        //public string ConstantsDirectory { get; }
-        //public string ConstantsNamespace { get; }
         public string EnumerationsDirectory { get; }
         public string EnumerationsNamespace { get; }
         public string RootNamespace { get; }
@@ -45,14 +41,11 @@
         public string SQLPLUSQueriesFolder { get; }
         public string SQLPLUSSampleQueriesFolder { get; }
         public string SQLPLUSSampleQueryPath { get; }
-
         public string UserDefinedTypeNamepace { get; }
         public string UserDefinedTypeDirectory { get; }
-
         public string SQLPLUSFolder { get; }
         public string SQLPLUSBuildDefinitionPath { get; }
         public string SQLPLUSDatabaseConnectionPath { get; }
-
         public string SQLPLUSBuildErrorPath { get; }
     }
 }
