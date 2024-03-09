@@ -171,13 +171,15 @@ With the code snippets in place, you can right-click, choose **Insert Snippet**,
 **Keyboard shortcut:** CTRL+K+X
 
 ## Code Generator
-Go to the Visual Studio Marketplace and click on the [Download](https://marketplace.visualstudio.com/items?itemName=SQLDevOps.sql-plus-code-generator) to get the SQL+ Code Generation Utility.
+The [Code Generation Utility](https://marketplace.visualstudio.com/items?itemName=AHHSoftware.V4) is available at the Visual Studio Market Place.
 
-![SQL+ Code Generation Utility Download](images/sqlplus_download.png)
+At the Visual Studio Marketplace click on the Download Button to get the SQL+ Code Generation Utility.
+
+![SQL+ Code Generation Utility Download](images/sql-plus-code-generation-utility-download.png)
 
 Navigate to the file you just downloaded and double click to launch the VSIX Installer, then click **Install**.
 
-![Click Install on the VSIX installer](images/vsix_installer.png)
+![Click Install on the VSIX installer](images/install-extension.png)
 
 Let the installer do its thing. When finished click **Close**.
 
@@ -185,5 +187,3 @@ Let the installer do its thing. When finished click **Close**.
 
 You are good to go!
 ```
-
-Make sure to replace `"images/ssms_code_snippets_manager.png"`, `"images/ssms_add_snippet.png"`, `"images/ssms_select_folder.png"`, `"images/ssms_install_complete.png"`, `"images/vs_code_snippets_manager.png"`, `"images/vs_add_snippet.png"`, `"images/vs_select_folder.png"`, `"images/vs_install_complete.png"`, `"images/sqlplus_download.png"`, and `"images/vsix_installer.png"` with the actual relative URLs of your images. Additionally, replace `"https://marketplace.visualstudio.com/items?itemName=SQLDevOps.sql-plus-code-generator"` with the actual URL of the Visual Studio Marketplace page for the SQL+ Code Generation Utility.
