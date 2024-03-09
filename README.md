@@ -186,16 +186,6 @@ Let the installer do its thing. When finished click **Close**.
 **Extension installation complete**
 
 You are good to go!
-```
-
-
-
-
-
-
-
-
-
 
 # Routines or Queries
 *Last updated: 3/6/2024*
@@ -235,9 +225,6 @@ The real question that needs to be asked is which is better for you?
 If performance is your thing, stored procedures are the way to go. If you like self-contained services that are easier to deploy, ad-hoc queries are a better choice.
 
 You should discuss this with your team, and come up with a strategy that suits the way you work.
-
-
-
 
 
 
