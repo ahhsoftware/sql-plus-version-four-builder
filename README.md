@@ -226,6 +226,151 @@ If performance is your thing, stored procedures are the way to go. If you like s
 
 You should discuss this with your team, and come up with a strategy that suits the way you work.
 
+# Semantic Tags
+*Last updated: 3/6/2024*
+
+Semantic Tags are the key ingredient in SQL+ and provide the means to fine-tune every aspect of your generated code. Use this guide to gain valuable insight into how each tag performs.
+
+## SQL+ Routine Tag
+The routine tag is the only tag that is required and is placed at the beginning of a stored procedure or ad-hoc query. This tag signals to the builder that the routine is available for code generation. This tag also defines the select type, accepts a comment and author name, and has the option of changing the timeout to something other than the default. Each part of this tag is covered in detail below.
+
+```sql
+--+SqlPlusRoutine
+    --&SelectType=NonQuery or SingleRow or MultiRow or JSON or XML or MultiSet
+    --&Comment=Comment
+    --&Author=Author
+    --&CommandTimeout=seconds
+--+SqlPlusRoutine
+```
+
+*Note that the command timeout is optional.*
+
+- **SelectType:**
+  - NonQuery: The output of the call will not contain a result set.
+  - SingleRow: The procedure executes a SELECT that will return a maximum of one row.
+  - MultiRow: The procedure executes a SELECT statement that will return an undetermined number of rows.
+  - JSON: The procedure executes a SELECT … FOR JSON PATH.
+  - MultiSet: Use this in combination with Query tags for services that return multiple result sets.
+  - XML: The procedure executes a SELECT … FOR XML.
+- **Comment:** Provides a comment for your service.
+- **Author:** The creator of the SQL routine.
+- **CommandTimeout:** Used to override the default timeout for commands.
+
+## SQL+ Parameter Validation Tags
+Parameter validation tags are applied to parameters in stored procedures or variables in ad-hoc queries. The following parameter validation tags are available:
+
+```sql
+--+CreditCard
+--+Email
+--+MaxLength=MaximumLength
+--+MinLength=MinimumLength
+--+Phone
+--+PostalCode
+--+Range=MinimumValue,MaximumValue
+--+RegExPattern=RegularExpression
+--+Required
+--+StringLength=MinimumLength,MaximumLength
+--+Url
+```
+
+*Note that the use of these tags is optional.*
+
+- **CreditCard:** Enforces credit card validation.
+- **Email:** Enforces email validation.
+- **MaxLength:** Enforces max length validation.
+- **MinLength:** Enforces min length validation.
+- **Phone:** Enforces liberal phone validation.
+- **PostalCode:** Enforces liberal postal code validation.
+- **Range:** Enforces range validation.
+- **RegExPattern:** Enforces regex validation.
+- **Required:** Enforces required (non-nullable) validation.
+- **StringLength:** Enforces min and max lengths for a string.
+- **Url:** Enforces the format to be a fully qualified URL.
+
+## Validation Tag Supplemental Values
+An additional feature available when applying validation tags is the ability to customize error messages.
+
+```sql
+--+CreditCard
+--&ErrorMessage=ErrorMessage
+
+--+CreditCard
+--&ErrorResource=ResourceType,ResourceName
+```
+
+- **Error Message:** Provides a custom error message.
+- **Error Resource:** Provides a custom error message residing in a resource file.
+
+## SQL+ Parameter Display Tags
+Parameter display tags are applied to parameters in stored procedures or variables in ad-hoc queries.
+
+```sql
+--+Comment=Comment
+--+Display=Name,Description
+```
+
+*Note that the use of these tags is optional.*
+
+- **Comment:** Creates a comment for the generated property.
+- **Display:**
+  - **Name:** The value to be displayed.
+  - **Description:** This value is not currently used.
+
+## Display Tag Supplemental Values
+An additional feature available when applying the display tag is the ability to link to resource files.
+
+```sql
+--&Resource=ResourceType
+```
+
+- **ResourceType:** Specifies the resource file to use in tandem with the display property.
+
+## SQL+ Parameter Direction (Mode) Tags
+Stored Procedures:
+
+```sql
+--+InOut
+```
+
+- **InOut:** The parameter is available in both directions.
+
+Ad-Hoc Queries:
+
+```sql
+--+InOut
+--+Output
+```
+
+- **InOut:** Makes the parameter an in/out parameter.
+- **Output:** Makes the parameter exclusively an out parameter.
+
+## SQL+ Return Value Tags
+The return tag is used to enumerate return values.
+
+```sql
+--+Return=EnumeratedValue,Description
+```
+
+- **EnumeratedValue:** Specifies the return value.
+- **Description:** Describes the return value.
+
+## SQL+ Multiple Result Query Tags
+When procedures or ad-hoc queries return multiple result sets, each query is wrapped with query tags.
+
+```sql
+--+QueryStart=Name,SelectType
+--+QueryEnd
+```
+
+- **Name:** Specifies the name of the result object.
+- **SelectType:** Specifies the select type.
+
+
+
+
+
+
+
 
 
 
