@@ -143,7 +143,7 @@ Click **OK** on the Code Snippets Manager Dialog to complete the installation.
 ![Click Ok in the SSMS Code Snippets Manager](images/ssms-code-snippets-manager-click-ok.png)
 
 With the code snippets in place, you can right click, choose **Insert Snippet**, select the + folder, and add the desired tags.
-![CInsert Snippets](images/ssms-code-snippet-example.gif)
+![CInsert Snippets](images/SSMS-code-snippet-example.gif)
 **Keyboard shortcut:** CTRL+K+X
 
 ## Visual Studio Code Snippets
@@ -167,6 +167,7 @@ Click **OK** on the Code Snippets Manager Dialog to complete the installation.
 ![Click Ok in the VS Code Snippets Manager](images/vs_install_complete.png)
 
 With the code snippets in place, you can right-click, choose **Insert Snippet**, select the "+" folder, and add the desired tags.
+![Click Ok in the VS Code Snippets Manager](images/vs_install_complete.png)
 **Keyboard shortcut:** CTRL+K+X
 
 ## Code Generator
