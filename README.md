@@ -1,5 +1,4 @@
 # Introduction
-*Last updated: 3/6/2024*
 
 SQL+ is a natural evolution to the SQL programming language. By simply adding Semantic Tags to your SQL in the form of comments, you can build enterprise-worthy data services in minutes. Feature for feature, SQL+ is the best ORM for C# and SQL.
 
@@ -118,7 +117,6 @@ public void CustomerInsertTest()
 ```
 
 # Installation
-*Last updated: 3/6/2024*
 
 Let's get you set up and ready to start generating some code. There are a few requirements before using these tools; you will need Visual Studio and SQL Server Management Studio. If you don't have these, you can get the [SQL Developer Edition](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) and the [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/) for free from Microsoft.
 
@@ -188,7 +186,6 @@ Let the installer do its thing. When finished click **Close**.
 You are good to go!
 
 # Routines or Queries
-*Last updated: 3/6/2024*
 
 SQL+ will work with any database routine or ad-hoc SQL that you apply Semantic Tags to.
 
@@ -365,19 +362,7 @@ When procedures or ad-hoc queries return multiple result sets, each query is wra
 - **Name:** Specifies the name of the result object.
 - **SelectType:** Specifies the select type.
 
-
-
-
-
-
-
-
-
-
-
-
 # Static Data
-*Last updated: 3/6/2024*
 
 Quite often it’s the case where certain database tables contain data that rarely, if ever changes. A customer type table would be a good example. This type of data is a candidate for creating a static version.
 
@@ -415,10 +400,59 @@ Again with the following data in the CustomerType table:
 The result would be the following:
 ![Generated enumerations](images/enumerations-generated-code.png)
 
+# Code Generation
 
+With your SQL enhanced with the SQL+ Semantic Tags, it's time to put the SQL+ Code Generation Utility to work.
 
+1. **Launch the Builder**
+   Right click your project and choose the menu option "SQL+ Builder" to launch the SQL+ Code Generation Utility.
 
+   ![Launch the SQL+ Code Generation Utility](images/launch-sql-plus-builder.png)
 
+2. **Configure Database Connection**
+   Enter your database type and connection string for the database that hosts the objects you intend to build.
+
+   ![SQL+ Code Generation Utility configure the connection string](images/configure-connection.png)
+
+   Once you have filled in these values, click connect to load the build objects into the UI.
+
+3. **Configure Database Routines**
+   After connecting to the database, any database routines that include the SQL+ Routine tag will be displayed in the Configure Database Routines area.
+
+   ![SQL+ Code Generation Utility configure database routines with errors](images/builder-db-routines-error.png)
+
+   Once you have cleared any errors, use the text inputs to assign your routines to a namespace.
+
+4. **Configure Ad-Hoc Queries**
+   If you have any ad-hoc queries in your project, they will be displayed here.
+
+   ![SQL+ Code Generation Utility configure ad-hoc queries with errors](images/configuration-routines-ui-illustration.png)
+
+   Once you have cleared any errors, select the queries you wish to include in the build.
+
+5. **Configure Static Lists**
+   Class definitions, as well as populated lists of static data will be created for each query defined in the builder.
+
+   ![SQL+ Code Generation Utility configure static lists with build errors](images/configure-queries-error.png)
+
+   Once you have cleared any errors you are ready to move onto the queries for enumerations.
+
+6. **Configure Enumerations**
+   Enumeration definitions will be created for each query defined in the builder.
+
+   ![SQL+ Code Generation Utility configure enumerations with build errors](images/configure-queries-select.png)
+
+   Once you have cleared any errors you are ready to move on to build options.
+
+7. **Configure Build Options**
+   Choose any of the build options you want to utilize for your generated services.
+
+   ![SQL+ Code Generation Utility configure build options](images/configuration-static-queries-error.png)
+
+   Once you are satisfied with your build options, you can proceed to the build area.
+
+8. **Run The Builder**
+   Once you are satisfied with all your build objects, and have made your build option choices, you can simply run the builder. In the Build Project area, click the Build Project button.
 
 
 
