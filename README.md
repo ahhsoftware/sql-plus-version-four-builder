@@ -74,6 +74,8 @@ END;
 ## 3. Configure Build Options
 With your Semantically Tagged SQL in place, you can choose build options that match your exact use case. If you want to implement a particular interface, check a box and you are done.
 
+![Click Add in the SSMS Code Snippets Manager](~/images/build-options.png)
+
 SQL+ Code Generation Utility Build Options
 
 ## 4. Generate Code
@@ -146,11 +148,11 @@ You can utilize code snippets in Visual Studio to simplify adding the Semantic T
 ### Code Snippets Download
 After downloading and extracting, in Visual Studio click on Tools, Code Snippets Manager.
 
-![Launch the VS Code Snippets Manager](images/vs_code_snippets_manager.png)
+![Launch the VS Code Snippets Manager](~images/vs_code_snippets_manager.png)
 
 On the Code Snippets Manager dialog, set the language to Microsoft SQL Server Data Tools and click Add.
 
-![Click Add in the VS Code Snippets Manager](images/vs_add_snippet.png)
+![Click Add in the VS Code Snippets Manager](~images/vs_add_snippet.png)
 
 In the Code Snippets Directory dialog, navigate to the "+" folder you just extracted, and click Select Folder.
 
@@ -158,7 +160,7 @@ In the Code Snippets Directory dialog, navigate to the "+" folder you just extra
 
 Click OK on the Code Snippets Manager Dialog to complete the installation.
 
-![Click Ok in the VS Code Snippets Manager](images/vs_install_complete.png)
+![Click Ok in the VS Code Snippets Manager](~images/vs_install_complete.png)
 
 With the code snippets in place, you can right-click, choose insert snippet, select the "+" folder, and add the desired tags.
 **Keyboard shortcut:** CTRL+K+X
