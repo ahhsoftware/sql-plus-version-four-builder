@@ -91,80 +91,79 @@ if (routine.RoutineType == "QUERY"){
             
             #line default
             #line hidden
-            this.Write("\r\n//     Visit https://www.SQLPLUS.net for more information about the SQL Plus bu" +
-                    "ild time ORM.\r\n// </auto-generated>\r\n// ----------------------------------------" +
-                    "----------------------------------------------------------------\r\nnamespace ");
+            this.Write("\r\n// </auto-generated>\r\n// ------------------------------------------------------" +
+                    "--------------------------------------------------\r\nnamespace ");
             
-            #line 25 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 24 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ModelNamespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n");
             
-            #line 27 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 26 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if (routine.UseNullableReferenceTypes){
             
             #line default
             #line hidden
             this.Write("    #nullable enable\r\n\r\n");
             
-            #line 30 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 29 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             
-            #line 31 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 30 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if(routine.OutputUsings.Count != 0){
             
             #line default
             #line hidden
             this.Write("\r\n    #region usings\r\n\r\n");
             
-            #line 35 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 34 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 foreach(string usingDeclaration in routine.OutputUsings){
             
             #line default
             #line hidden
             this.Write("    using ");
             
-            #line 36 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 35 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(usingDeclaration));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 37 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 36 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n    #endregion usings\r\n\r\n");
             
-            #line 41 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 40 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             this.Write("    /// <summary>\r\n    /// Output object for ");
             
-            #line 43 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 42 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write(" service.\r\n    /// </summary>\r\n    public partial class ");
             
-            #line 45 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 44 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.OutputObjectName));
             
             #line default
             #line hidden
             this.Write("\r\n    {\r\n");
             
-            #line 47 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 46 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if(routine.ReturnValueEnums.Count != 0){
             
             #line default
@@ -173,109 +172,109 @@ if(routine.ReturnValueEnums.Count != 0){
                     " Enumerated return values based on the ReturnTags in the procedure.\r\n        ///" +
                     " </summary>\r\n        public enum Returns\r\n        {\r\n");
             
-            #line 56 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 55 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   for(int idx = 0; idx !=  routine.ReturnValueEnums.Count; idx++){
             
             #line default
             #line hidden
             this.Write("            /// <summary>\r\n            /// ");
             
-            #line 58 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 57 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ReturnValueEnums[idx].Comment));
             
             #line default
             #line hidden
             this.Write("\r\n            /// </summary>\r\n             ");
             
-            #line 60 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 59 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ReturnValueEnums[idx].Name));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 60 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 59 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ReturnValueEnums[idx].Value));
             
             #line default
             #line hidden
             
-            #line 60 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 59 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CommaIfNotLast(routine.ReturnValueEnums.Count - 1, idx)));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 61 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 60 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   }
             
             #line default
             #line hidden
             this.Write("        }\r\n\r\n        #endregion Return Value Enumerations\r\n");
             
-            #line 65 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 64 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             
-            #line 66 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 65 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if (routine.OutputParameters.Count != 0){
             
             #line default
             #line hidden
             this.Write("\r\n        #region Output Parameters\r\n\r\n");
             
-            #line 70 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 69 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   foreach(Parameter p in routine.OutputParameters){
             
             #line default
             #line hidden
             this.Write("        /// <summary>\r\n        /// ");
             
-            #line 72 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 71 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.Comment));
             
             #line default
             #line hidden
             this.Write("\r\n        /// </summary>\r\n        public ");
             
-            #line 74 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 73 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 74 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 73 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
             
             #line default
             #line hidden
             this.Write(" { set; get; }\r\n");
             
-            #line 75 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 74 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   }
             
             #line default
             #line hidden
             this.Write("\r\n\t    #endregion Output Parameters\r\n");
             
-            #line 78 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 77 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             
-            #line 79 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 78 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if (routine.ReturnValueParameter != null){
             
             #line default
             #line hidden
             this.Write("\r\n        #region Return Value\r\n\r\n");
             
-            #line 83 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 82 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   if (routine.ReturnValueEnums.Count != 0){
             
             #line default
@@ -283,7 +282,7 @@ if (routine.ReturnValueParameter != null){
             this.Write("        /// <summary>\r\n        /// Enumerated return value.\r\n        /// </summar" +
                     "y>\r\n        public Returns ReturnValue { set; get; }\r\n");
             
-            #line 88 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 87 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }  else{
             
             #line default
@@ -291,40 +290,40 @@ if (routine.ReturnValueParameter != null){
             this.Write("        /// <summary>\r\n        /// Actual return value for the routine.\r\n        " +
                     "/// </summary>\r\n        public ");
             
-            #line 92 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 91 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ReturnValueParameter.PropertyType));
             
             #line default
             #line hidden
             this.Write(" ReturnValue { set; get; }\r\n");
             
-            #line 93 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 92 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   }
             
             #line default
             #line hidden
             this.Write("\r\n        #endregion Return Value\r\n");
             
-            #line 96 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 95 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             
-            #line 97 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 96 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if(routine.SelectType != SelectTypes.NonQuery){
             
             #line default
             #line hidden
             this.Write("\r\n        #region Result Data\r\n");
             
-            #line 100 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 99 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             
-            #line 101 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 100 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if(routine.SelectType == SelectTypes.Json){
             
             #line default
@@ -332,20 +331,20 @@ if(routine.SelectType == SelectTypes.Json){
             this.Write("\r\n        /// <summary>\r\n        /// Result data as Json string.\r\n        /// </s" +
                     "ummary>\r\n        public ");
             
-            #line 106 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 105 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptProp("string")));
             
             #line default
             #line hidden
             this.Write(" ResultJson { set; get; }\r\n");
             
-            #line 107 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 106 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             
-            #line 108 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 107 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if(routine.SelectType == SelectTypes.Xml){
             
             #line default
@@ -353,74 +352,74 @@ if(routine.SelectType == SelectTypes.Xml){
             this.Write("\r\n        /// <summary>\r\n        /// Result data as Xml string.\r\n        /// </su" +
                     "mmary>\r\n        public ");
             
-            #line 113 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 112 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptProp("string")));
             
             #line default
             #line hidden
             this.Write(" ResultXml { set; get; }\r\n");
             
-            #line 114 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 113 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             
-            #line 115 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 114 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if(routine.SelectType == SelectTypes.SingleRow){
             
             #line default
             #line hidden
             this.Write("\r\n        /// <summary>\r\n        /// Single instance of ");
             
-            #line 118 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 117 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ResultObjectName));
             
             #line default
             #line hidden
             this.Write(".\r\n        /// </summary>\r\n        public ");
             
-            #line 120 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 119 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptProp(routine.ResultObjectName)));
             
             #line default
             #line hidden
             this.Write(" ResultData { set; get; }\r\n");
             
-            #line 121 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 120 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             
-            #line 122 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 121 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if(routine.SelectType == SelectTypes.MultiRow){
             
             #line default
             #line hidden
             this.Write("\r\n        /// <summary>\r\n        /// List of ");
             
-            #line 125 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 124 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ResultObjectName));
             
             #line default
             #line hidden
             this.Write(".\r\n        /// </summary>\r\n        public ");
             
-            #line 127 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 126 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptList(routine.ResultObjectName)));
             
             #line default
             #line hidden
             this.Write(" ResultData { set; get; }\r\n");
             
-            #line 128 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 127 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             
-            #line 129 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 128 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if(routine.SelectType == SelectTypes.MultiSet){
             
             #line default
@@ -428,268 +427,268 @@ if(routine.SelectType == SelectTypes.MultiSet){
             this.Write("\r\n        /// <summary>\r\n        /// Result set wrapper for multiset queries.\r\n  " +
                     "      /// </summary>\r\n        public ");
             
-            #line 134 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 133 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptProp(routine.ResultObjectName)));
             
             #line default
             #line hidden
             this.Write(" ResultData { set; get; }\r\n");
             
-            #line 135 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 134 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             
-            #line 136 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 135 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if(routine.SelectType != SelectTypes.NonQuery){
             
             #line default
             #line hidden
             this.Write("\r\n        #endregion Result Data\r\n");
             
-            #line 139 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 138 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             this.Write("    }\r\n\r\n\r\n");
             
-            #line 143 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 142 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if(routine.SelectType != SelectTypes.NonQuery){
             
             #line default
             #line hidden
             this.Write("\r\n    #region Result Set Objects\r\n\r\n    /// <summary>\r\n");
             
-            #line 148 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 147 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   if(routine.SelectType == SelectTypes.MultiSet){
             
             #line default
             #line hidden
             this.Write("    /// Result set objects for ");
             
-            #line 149 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 148 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ServiceName));
             
             #line default
             #line hidden
             this.Write(" service.\r\n");
             
-            #line 150 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 149 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   }else if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTypes.MultiRow){
             
             #line default
             #line hidden
             this.Write("    /// Result object for ");
             
-            #line 151 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 150 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ServiceName));
             
             #line default
             #line hidden
             this.Write(" service.\r\n");
             
-            #line 152 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 151 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   }
             
             #line default
             #line hidden
             this.Write("    /// </summary>\r\n");
             
-            #line 154 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 153 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n\r\n");
             
-            #line 157 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 156 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if (routine.SelectType == SelectTypes.MultiSet){
             
             #line default
             #line hidden
             this.Write("\r\n    public partial class ");
             
-            #line 159 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 158 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("Result\r\n\t{\r\n");
             
-            #line 161 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 160 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   foreach(ResultSet rs in routine.ResultSets){
             
             #line default
             #line hidden
             this.Write("        #region ");
             
-            #line 162 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 161 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 162 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 161 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 163 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 162 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     if(rs.SelectType == SelectTypes.SingleRow){
             
             #line default
             #line hidden
             this.Write("\r\n        /// <summary>\r\n        /// Single instance of ");
             
-            #line 166 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 165 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write(".\r\n        /// </summary>\r\n        public  ");
             
-            #line 168 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 167 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptProp(rs.Name)));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 168 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 167 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("Result { set; get; }\r\n");
             
-            #line 169 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 168 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     }
             
             #line default
             #line hidden
             
-            #line 170 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 169 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     if(rs.SelectType == SelectTypes.MultiRow){
             
             #line default
             #line hidden
             this.Write("\r\n        /// <summary>\r\n        /// List of ");
             
-            #line 173 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 172 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write(".\r\n        /// </summary>\r\n        public ");
             
-            #line 175 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 174 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptList(rs.Name)));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 175 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 174 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("Result { set; get; }\r\n");
             
-            #line 176 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 175 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     }
             
             #line default
             #line hidden
             
-            #line 177 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 176 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     if(rs.SelectType == SelectTypes.Json){
             
             #line default
             #line hidden
             this.Write("\r\n        /// <summary>\r\n        /// ");
             
-            #line 180 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 179 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write(" result as Json string.\r\n        /// </summary>\r\n        public ");
             
-            #line 182 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 181 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptProp("string")));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 182 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 181 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("Json { set; get; }\r\n");
             
-            #line 183 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 182 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     }
             
             #line default
             #line hidden
             
-            #line 184 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 183 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     if(rs.SelectType == SelectTypes.Xml){
             
             #line default
             #line hidden
             this.Write("\r\n        /// <summary>\r\n        /// ");
             
-            #line 187 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 186 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write(" as XML string.\r\n        /// </summary>\r\n        public ");
             
-            #line 189 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 188 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptProp("string")));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 189 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 188 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("Xml { set; get; }\r\n");
             
-            #line 190 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 189 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     }
             
             #line default
             #line hidden
             
-            #line 191 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 190 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     if(rs.SelectType == SelectTypes.SingleRow || rs.SelectType == SelectTypes.MultiRow){
             
             #line default
             #line hidden
             this.Write("\r\n        /// <summary>\r\n        /// Result set object for ");
             
-            #line 194 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 193 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write(".\r\n        /// </summary>\r\n        public class ");
             
-            #line 196 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 195 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
@@ -697,299 +696,299 @@ if (routine.SelectType == SelectTypes.MultiSet){
             this.Write("\r\n        {\r\n            /// <summary>\r\n            /// Parameterized constructor" +
                     " for Second\r\n            /// </summary>\r\n");
             
-            #line 201 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 200 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
       foreach(Column c in rs.Columns){
             
             #line default
             #line hidden
             this.Write("            /// <param name=\"");
             
-            #line 202 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 201 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write("\">");
             
-            #line 202 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 201 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.Comment));
             
             #line default
             #line hidden
             this.Write("</param>\r\n");
             
-            #line 203 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 202 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
       }
             
             #line default
             #line hidden
             this.Write("            public ");
             
-            #line 204 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 203 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 204 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 203 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.ConstructorParameters));
             
             #line default
             #line hidden
             this.Write(")\r\n            {\r\n");
             
-            #line 206 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 205 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
       foreach(Column c in rs.Columns){
             
             #line default
             #line hidden
             this.Write("                this.");
             
-            #line 207 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 206 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 207 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 206 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 208 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 207 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
       }
             
             #line default
             #line hidden
             this.Write("            }\r\n\r\n");
             
-            #line 211 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 210 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
       foreach(Column c in rs.Columns){
             
             #line default
             #line hidden
             this.Write("            /// <summary>\r\n            /// ");
             
-            #line 213 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 212 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.Comment));
             
             #line default
             #line hidden
             this.Write("\r\n            /// </summary>\r\n            public ");
             
-            #line 215 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 214 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 215 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 214 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(" { set; get; }\r\n\r\n");
             
-            #line 217 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 216 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
       }
             
             #line default
             #line hidden
             this.Write("        }\r\n");
             
-            #line 219 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 218 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     }
             
             #line default
             #line hidden
             this.Write("\r\n        #endregion ");
             
-            #line 221 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 220 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 221 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 220 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("\r\n    \r\n");
             
-            #line 223 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 222 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   }
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 225 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 224 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n\r\n");
             
-            #line 228 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 227 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if (routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTypes.MultiRow){
             
             #line default
             #line hidden
             this.Write("    public partial class ");
             
-            #line 229 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 228 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("Result\r\n\t{\r\n        /// <summary>\r\n        /// Result set object for ");
             
-            #line 232 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 231 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write(".\r\n        /// </summary>\r\n");
             
-            #line 234 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 233 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   foreach(Column c in routine.ResultSets[0].Columns){
             
             #line default
             #line hidden
             this.Write("        /// <param name=\"");
             
-            #line 235 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 234 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write("\">");
             
-            #line 235 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 234 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.Comment));
             
             #line default
             #line hidden
             this.Write("</param>\r\n");
             
-            #line 236 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 235 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   }
             
             #line default
             #line hidden
             this.Write("        public ");
             
-            #line 237 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 236 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("Result(");
             
-            #line 237 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 236 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ResultSets[0].ConstructorParameters));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n");
             
-            #line 239 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 238 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   foreach(Column c in routine.ResultSets[0].Columns){
             
             #line default
             #line hidden
             this.Write("             this.");
             
-            #line 240 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 239 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 240 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 239 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 241 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 240 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   }
             
             #line default
             #line hidden
             this.Write("        }\r\n\r\n");
             
-            #line 244 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 243 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   if(routine.ResultSets.Count != 0){
             
             #line default
             #line hidden
             
-            #line 245 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 244 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     foreach(Column c in routine.ResultSets[0].Columns){
             
             #line default
             #line hidden
             this.Write("\r\n        /// <summary>\r\n        /// ");
             
-            #line 248 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 247 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.Comment));
             
             #line default
             #line hidden
             this.Write("\r\n        /// </summary>\r\n        public ");
             
-            #line 250 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 249 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 250 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 249 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(" { set; get; }\r\n");
             
-            #line 251 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 250 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
     }
             
             #line default
             #line hidden
             
-            #line 252 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 251 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
   }
             
             #line default
             #line hidden
             this.Write("    }\r\n");
             
-            #line 254 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 253 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n\r\n");
             
-            #line 257 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 256 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 if (routine.SelectType != SelectTypes.NonQuery){
             
             #line default
             #line hidden
             this.Write("    #endregion Result Set Objects\r\n");
             
-            #line 259 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+            #line 258 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
 }
             
             #line default
@@ -998,7 +997,7 @@ if (routine.SelectType != SelectTypes.NonQuery){
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 262 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
+        #line 261 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\OutputObject.tt"
  
     private string Format(string sourceString, string value1, string value2)
     {

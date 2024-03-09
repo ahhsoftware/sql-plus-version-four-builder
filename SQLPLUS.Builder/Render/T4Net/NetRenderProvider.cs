@@ -15,8 +15,6 @@ namespace SQLPLUS.Builder.Render.T4Net
             this.project = project;
             this.build = build;
         }
-
-       
         public string InputObject(Routine routine)
         {
             var template = new InputObject()
@@ -31,7 +29,6 @@ namespace SQLPLUS.Builder.Render.T4Net
             template.Initialize();
             return template.TransformText();
         }
-
         public string OutputObject(Routine routine)
         {
             var template = new OutputObject()
@@ -46,7 +43,6 @@ namespace SQLPLUS.Builder.Render.T4Net
             template.Initialize();
             return template.TransformText();
         }
-
         public string ServiceBase(string nameSpace)
         {
             var template = new ServiceBase()
@@ -61,7 +57,6 @@ namespace SQLPLUS.Builder.Render.T4Net
             template.Initialize();
             return template.TransformText();
         }
-
         public string ServiceMethod(Routine routine)
         {
             var template = new ServiceMethod()
@@ -76,7 +71,6 @@ namespace SQLPLUS.Builder.Render.T4Net
             template.Initialize();
             return template.TransformText();
         }
-
         public string TransientErrors()
         {
             var template = new TransientErrors()
@@ -91,7 +85,6 @@ namespace SQLPLUS.Builder.Render.T4Net
             return template.TransformText();
 
         }
-
         public string TransientErrorsExample()
         {
             var template = new TransientErrorsExample
@@ -105,7 +98,6 @@ namespace SQLPLUS.Builder.Render.T4Net
             template.Initialize();
             return template.TransformText();
         }
-
         public string UserDefinedType(Parameter parameter)
         {
             var template = new UserDefinedType
@@ -120,7 +112,6 @@ namespace SQLPLUS.Builder.Render.T4Net
             template.Initialize();
             return template.TransformText();
         }
-
         public string ValidInput()
         {
             var template = new ValidInput
@@ -133,7 +124,6 @@ namespace SQLPLUS.Builder.Render.T4Net
             template.Initialize();
             return template.TransformText();
         }
-
         public string Helpers(List<string> usings, List<string> types, List<Parameter> parameters)
         {
             var template = new T4Net.Helpers()
@@ -150,7 +140,6 @@ namespace SQLPLUS.Builder.Render.T4Net
             template.Initialize();
             return template.TransformText();
         }
-
         public string Enumerations(EnumCollection enums)
         {
             var template = new Enumerations
@@ -164,7 +153,6 @@ namespace SQLPLUS.Builder.Render.T4Net
             template.Initialize();
             return template.TransformText();
         }
-
         public string Statics(StaticCollection data)
         {
             var template = new StaticData

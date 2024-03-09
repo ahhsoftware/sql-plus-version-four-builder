@@ -11,15 +11,13 @@
                         WindowStyle="SingleBorderWindow"
                         Height="600"
                         Width="800"
-                        Title="SQL+ Code Generation Utility Version 4.2.0"
+                        Title="SQL+ Code Generation Utility Version 4.2.5"
                         Background="White"
                         xmlns:converters="clr-namespace:SQLPlusExtension.Converters"
                         >
     <Window.Resources>
         <converters:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
-        <converters:InverseBooleanConverter x:Key="InverseBooleanConverter"/>
         <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter"/>
-        <converters:NotNullToVisibilityConverter x:Key="NotNullToVisibilityConverter"/>
         <converters:IsErrorToColorConverterRedWhite x:Key="IsErrorToColorConverterRedWhite"/>
         <converters:IsErrorToColorConvertRedBlack x:Key="IsErrorToColorConvertRedBlack" />
         <SolidColorBrush x:Key="PrimaryColorBrush" Color="#FF444444"/>
@@ -225,12 +223,6 @@
                 <Image Source="../Resources/HelpIcon.png" Height="24" Width="24"/>
             </Grid>
         </Button>
-        <!--<Button Grid.Column="1" Style="{DynamicResource NavigationButtonStyle}" Command="{Binding LogoutCommand}" CommandParameter="{Binding ElementName=LoginPasswordBox}" KeyboardNavigation.IsTabStop="False" ToolTip="Log out of your account" Height="36" Width="36" HorizontalAlignment="Right">
-            <Grid>
-                <Border Style="{StaticResource ActiveNavigationItemBorder}" Visibility="{Binding LoginActive, Converter={StaticResource BoolToVisibilityConverter}}" Height="32" Width="32" ></Border>
-                <Image Source="../Resources/Lock.png" Height="24" Width="24"/>
-            </Grid>
-        </Button>-->
         <!-- End Header -->
 
         <!-- Navigation Buttons -->
@@ -352,48 +344,6 @@
                 <Button Grid.Row="6" Width="96" Height="32" HorizontalAlignment="Right" Style="{StaticResource PrimaryButtonStyle}" Content="Connect" Command="{Binding ConnectPaneConnect}" TabIndex="7" IsDefault="True"></Button>
 
             </Grid>
-
-            <!--<Grid Width="500" VerticalAlignment="Center" x:Name="LoginContent"  d:Visibility="Visible" Visibility="{Binding LoginActive, Converter={StaticResource BoolToVisibilityConverter}}" HorizontalAlignment="Center" >
-                <Border Grid.Row="0" Grid.Column="0" Grid.RowSpan="10" BorderBrush="Black" BorderThickness="1" Background="Transparent" CornerRadius="3">
-                    <Grid Margin="50">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="48"/>
-                            <RowDefinition Height="32"/>
-                            <RowDefinition Height="32"/>
-                            <RowDefinition Height="32"/>
-                            <RowDefinition Height="32"/>
-                            <RowDefinition Height="96"/>
-                            <RowDefinition Height="32"/>
-                            <RowDefinition Height="32"/>
-                        </Grid.RowDefinitions>
-
-                        <TextBlock Text="{Binding LoginErrorMessage}" Style="{StaticResource ErrorStyle}" Visibility="{Binding LoginErrorMessage, Converter={StaticResource NullToVisibilityConverter}}" TextWrapping="WrapWithOverflow" ScrollViewer.VerticalScrollBarVisibility="Visible"></TextBlock>
-                        <TextBlock Text="Enter the email and password from your SQL+ registration to continue." Visibility="{Binding LoginErrorMessage, Converter={StaticResource NotNullToVisibilityConverter}}" TextWrapping="WrapWithOverflow"/>
-                        <TextBlock Grid.Row="1" Style="{StaticResource LabelStyleSmall}" VerticalAlignment="Bottom" Text="Email:"/>
-                        <TextBox Grid.Row="2" Text="{Binding Email,  Mode=TwoWay}" VerticalContentAlignment="Center"/>
-
-                        <TextBlock Grid.Row="3" Style="{StaticResource LabelStyleSmall}" VerticalAlignment="Bottom" Text="Password:"/>
-                        <PasswordBox x:Name="LoginPasswordBox" Grid.Row="4" VerticalContentAlignment="Center"/>
-
-                        <Button Grid.Row="5" Width="96" Height="32" HorizontalAlignment="Center" Style="{StaticResource PrimaryButtonStyle}" Content="Login" IsDefault="True" Command="{Binding LoginExecuteCommand}" CommandParameter="{Binding ElementName=LoginPasswordBox}"></Button>
-
-                        <TextBlock Grid.Row="6" Text="{Binding PasswordValue}"/>
-                        <TextBlock Grid.Row="6" Style="{StaticResource LabelStyleSmall}" HorizontalAlignment="Center">
-                    <Run>Not Yet Registered? Sign Up</Run>
-                        <Hyperlink NavigateUri="https://www.sqlplus.net/account/register" RequestNavigate="Hyperlink_RequestNavigate" >Here</Hyperlink>
-                        </TextBlock>
-
-                        <TextBlock Grid.Row="7" Style="{StaticResource LabelStyleSmall}" HorizontalAlignment="Center">
-                    <Run>Forgot Password? Reset it </Run>
-                        <Hyperlink NavigateUri="https://www.sqlplus.net/account/forgot-password" RequestNavigate="Hyperlink_RequestNavigate" >Here</Hyperlink>
-                        </TextBlock>
-
-                    </Grid>
-                </Border>
-
-
-            </Grid>-->
-
 
             <TreeView Name="DatabaseRoutines"  d:Visibility="Collapsed" ItemsSource="{Binding DBRoutines}" Visibility="{Binding RoutinesActive, Converter={StaticResource BoolToVisibilityConverter}}" KeyboardNavigation.IsTabStop="False" IsTabStop="False" KeyboardNavigation.TabNavigation="Cycle" BorderBrush="{StaticResource ContentBorderBrush}">
                 <TreeView.ItemContainerStyle>

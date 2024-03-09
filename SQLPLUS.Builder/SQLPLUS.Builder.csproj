@@ -58,7 +58,6 @@
     <Compile Include="ConfigurationModels\BuildDefinition.cs" />
     <Compile Include="ConfigurationModels\DatabaseConnection.cs" />
     <Compile Include="ConfigurationModels\ProjectInformation.cs" />
-    <Compile Include="ConfigurationModels\TableValueParameterTags.cs" />
     <Compile Include="DataCollectors\DataCollectorBase.cs" />
     <Compile Include="DataCollectors\IDataCollector.cs" />
     <Compile Include="DataCollectors\MSSQLDataCollector.cs" />
@@ -92,16 +91,6 @@
     <Compile Include="Mappings\KeywordMappings.cs" />
     <Compile Include="Mappings\ParameterModeMappings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Render\Common\BuildDefinitionTemplate.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BuildDefinitionTemplate.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Render\Common\DatabaseConnectionTemplate.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DatabaseConnectionTemplate.tt</DependentUpon>
-    </Compile>
     <Compile Include="Render\Common\MSSQLSampleQueryTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -203,7 +192,6 @@
     <Compile Include="TemplateModels\DBField.cs" />
     <Compile Include="TemplateModels\EnumDefinition.cs" />
     <Compile Include="TemplateModels\ErrorBase.cs" />
-    <Compile Include="TemplateModels\ObsoleteTypesEnum.cs" />
     <Compile Include="TemplateModels\Parameter.cs" />
     <Compile Include="TemplateModels\ResultSet.cs" />
     <Compile Include="TemplateModels\Routine.cs" />
@@ -214,14 +202,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Render\Common\BuildDefinitionTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>BuildDefinitionTemplate.cs</LastGenOutput>
-    </Content>
-    <Content Include="Render\Common\DatabaseConnectionTemplate.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>DatabaseConnectionTemplate.cs</LastGenOutput>
-    </Content>
     <Content Include="Render\Common\MSSQLSampleQueryTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>MSSQLSampleQueryTemplate.cs</LastGenOutput>

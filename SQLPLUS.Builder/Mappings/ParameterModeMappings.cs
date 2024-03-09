@@ -1,6 +1,5 @@
-﻿using SQLPLUS.Builder.TemplateModels;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 namespace SQLPLUS.Builder.Mappings
 {
     public class ParameterModeMappings

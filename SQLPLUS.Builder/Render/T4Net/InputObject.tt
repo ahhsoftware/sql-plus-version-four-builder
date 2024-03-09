@@ -20,7 +20,6 @@
 <#}#>
 //     Last Modified On: <#=routine.LastModified.ToString()#>
 //     Written By: <#=routine.Author#>
-//     Visit https://www.SQLPLUS.net for more information about the SQL PLUS build time ORM.
 // </auto-generated>
 // --------------------------------------------------------------------------------------------------------
 namespace <#=routine.ModelNamespace#>

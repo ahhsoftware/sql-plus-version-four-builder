@@ -120,6 +120,26 @@
                 return decimal.ToInt32(percent);
             }
         }
+        private void WriteText(string content, string directory, string fileName)
+        {
+            if (!directories.Contains(directory))
+            {
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                    OnDirectoryCreated?.Invoke(this, new DirectoryCreatedEventArgs(directory));
+                }
+                directories.Add(directory);
+            }
+            string path = Path.Combine(directory, $"{fileName}.cs");
+            bool fileExisted = File.Exists(path);
+            File.WriteAllText(path, content);
+            if (!fileExisted)
+            {
+                OnFileCreated?.Invoke(this, new FileCreatedEventArgs(path));
+            }
+            OnFileWrite?.Invoke(this, new FileWriteEventArgs(path));
+        }
         private void UpdateProgress(string message)
         {
             OnProgressChanged?.Invoke(this, new ProgressStatusArgs(Progress(), message));
@@ -221,27 +241,7 @@
                 }
             }
             return result;
-        }
-        private void WriteText(string content, string directory, string fileName)
-        {
-            if (!directories.Contains(directory))
-            {
-                if (!Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                    OnDirectoryCreated?.Invoke(this, new DirectoryCreatedEventArgs(directory));
-                }
-                directories.Add(directory);
-            }
-            string path = Path.Combine(directory, $"{fileName}.cs");
-            bool fileExisted = File.Exists(path);
-            File.WriteAllText(path, content);
-            if (!fileExisted)
-            {
-                OnFileCreated?.Invoke(this, new FileCreatedEventArgs(path));
-            }
-            OnFileWrite?.Invoke(this, new FileWriteEventArgs(path));
-        }
+        }   
         private void WriteBaseObjectsIfRequired(List<Routine> routines)
         {
             if (RequiresValidInput(routines))

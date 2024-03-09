@@ -1,8 +1,6 @@
-﻿using Newtonsoft.Json;
-using SQLPLUS.Builder.BuildServices;
+﻿using SQLPLUS.Builder.BuildServices;
 using SQLPLUS.Builder.ConfigurationModels;
 using SQLPlusExtension.Models;
-//using SQLPlusExtension.Services;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -12,7 +10,6 @@ namespace SQLPlusExtension
     [Command(PackageIds.MyCommand)]
     internal sealed class MyCommand : BaseCommand<MyCommand>
     {
-        
         protected override async Task ExecuteAsync(OleMenuCmdEventArgs e)
         {
 
@@ -36,7 +33,6 @@ namespace SQLPlusExtension
             
             var databaseConnection = configurationService.GetDatabaseConnection();
             var buildDefinition = configurationService.GetBuildDefinition();
-            //CustomerService customerService = new CustomerService();
 
             SQLPlusConfigurationWindowViewModel dataContext = new SQLPlusConfigurationWindowViewModel(
                 configurationService,
@@ -50,6 +46,5 @@ namespace SQLPlusExtension
             var configurationResult = await configurationWindow.ShowDialogAsync(WindowStartupLocation.CenterOwner);
 
         }
-
     }
 }

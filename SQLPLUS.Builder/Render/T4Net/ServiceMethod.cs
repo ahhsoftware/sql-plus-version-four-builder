@@ -84,46 +84,45 @@ if (routine.RoutineType == "QUERY"){
             
             #line default
             #line hidden
-            this.Write("\r\n//     Visit https://www.SQLPLUS.net for more information about the SQL PLUS bu" +
-                    "ild time ORM.\r\n// </auto-generated>\r\n// ----------------------------------------" +
-                    "----------------------------------------------------------------\r\nnamespace ");
+            this.Write("\r\n// </auto-generated>\r\n// ------------------------------------------------------" +
+                    "--------------------------------------------------\r\nnamespace ");
             
-            #line 26 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 25 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ServiceNamespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n");
             
-            #line 28 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 27 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 if (routine.UseNullableReferenceTypes){
             
             #line default
             #line hidden
             this.Write("    #nullable enable\r\n\r\n");
             
-            #line 31 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 30 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             this.Write("    #region Using Statments\r\n\r\n");
             
-            #line 34 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 33 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 foreach(string @using in routine.ServiceUsings){
             
             #line default
             #line hidden
             this.Write("    using ");
             
-            #line 35 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 34 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(@using));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 36 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 35 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
@@ -131,7 +130,7 @@ foreach(string @using in routine.ServiceUsings){
             this.Write("\r\n    #endregion Using Statements\r\n\r\n    /// <summary>\r\n    /// This file contain" +
                     "s the source code for the ");
             
-            #line 41 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 40 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
@@ -139,56 +138,56 @@ foreach(string @using in routine.ServiceUsings){
             this.Write(" routine.\r\n    /// </summary>\r\n    public partial class Service\r\n    {\r\n        #" +
                     "region Build SqlCommand\r\n\r\n        private SqlCommand ");
             
-            #line 47 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 46 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.BuildCommandName));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 47 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 46 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.BuildCommandParameters));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n            SqlCommand result = new SqlCommand()\r\n            {\r\n");
             
-            #line 51 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 50 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 if(routine.CommandTimeout.HasValue){
             
             #line default
             #line hidden
             this.Write("                CommandTimeout = ");
             
-            #line 52 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 51 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.CommandTimeout.Value));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 53 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 52 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             this.Write("                CommandType = ");
             
-            #line 54 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 53 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.AdoCommandType));
             
             #line default
             #line hidden
             this.Write(",\r\n                CommandText = ");
             
-            #line 55 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 54 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.AdoCommandText));
             
             #line default
             #line hidden
             this.Write(",\r\n                Connection = cnn\r\n            };\r\n");
             
-            #line 58 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 57 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 foreach(Parameter p in routine.Parameters){
             
             #line default
@@ -196,278 +195,278 @@ foreach(Parameter p in routine.Parameters){
             this.Write("\r\n            result.Parameters.Add(new SqlParameter()\r\n            {\r\n          " +
                     "      ParameterName = \"");
             
-            #line 62 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 61 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.AdoParameterName));
             
             #line default
             #line hidden
             this.Write("\",\r\n                Direction = ");
             
-            #line 63 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 62 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.AdoDirection));
             
             #line default
             #line hidden
             this.Write(",\r\n                SqlDbType = ");
             
-            #line 64 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 63 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.AdoSqlDbType));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 65 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 64 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   if(p.AdoSize != null){
             
             #line default
             #line hidden
             this.Write("                Size = ");
             
-            #line 66 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 65 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.AdoSize ?? p.AdoSize));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 67 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 66 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }
             
             #line default
             #line hidden
             
-            #line 68 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 67 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   if(p.AdoScale != null){
             
             #line default
             #line hidden
             this.Write("                Scale = ");
             
-            #line 69 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 68 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.AdoScale));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 70 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 69 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }
             
             #line default
             #line hidden
             
-            #line 71 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 70 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   if(p.AdoPrecision != null){
             
             #line default
             #line hidden
             this.Write("                Precision = ");
             
-            #line 72 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 71 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.AdoPrecision));
             
             #line default
             #line hidden
             this.Write(",\r\n");
             
-            #line 73 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 72 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }
             
             #line default
             #line hidden
             
-            #line 74 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 73 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   if(p.UserDefinedTypeSchema != null){
             
             #line default
             #line hidden
             this.Write("                TypeName = \"");
             
-            #line 75 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 74 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.UserDefinedTypeSchema));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 75 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 74 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.UserDefinedTypeName));
             
             #line default
             #line hidden
             this.Write("\",\r\n");
             
-            #line 76 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 75 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }
             
             #line default
             #line hidden
             
-            #line 77 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 76 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   if(p.AdoUdtTypeName != null){
             
             #line default
             #line hidden
             this.Write("                UdtTypeName = \"");
             
-            #line 78 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 77 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.AdoUdtTypeName));
             
             #line default
             #line hidden
             this.Write("\",\r\n");
             
-            #line 79 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 78 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }
             
             #line default
             #line hidden
             
-            #line 80 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 79 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   if(p.IsRequired){
             
             #line default
             #line hidden
             
-            #line 81 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 80 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
     if(p.UserDefinedTypeSchema != null){
             
             #line default
             #line hidden
             this.Write("\t\t\t    Value = Helpers.BuildDataTable(input.");
             
-            #line 82 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 81 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
             
             #line default
             #line hidden
             this.Write(")\r\n");
             
-            #line 83 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 82 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
     }else{
             
             #line default
             #line hidden
             this.Write("                Value = input.");
             
-            #line 84 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 83 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 85 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 84 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
     }
             
             #line default
             #line hidden
             
-            #line 86 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 85 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }else{
             
             #line default
             #line hidden
             this.Write("                Value = DBNull.Value\r\n");
             
-            #line 88 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 87 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }
             
             #line default
             #line hidden
             this.Write("            });\r\n");
             
-            #line 90 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 89 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 92 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 91 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 foreach(Parameter p in routine.InputParameters){
             
             #line default
             #line hidden
             
-            #line 93 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 92 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   if (!p.IsRequired){
             
             #line default
             #line hidden
             this.Write("            if (input.");
             
-            #line 94 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 93 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
             
             #line default
             #line hidden
             this.Write(" != null)\r\n            {\r\n");
             
-            #line 96 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 95 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
     if(p.UserDefinedTypeSchema != null){
             
             #line default
             #line hidden
             this.Write("\t\t\t    result.Parameters[\"");
             
-            #line 97 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 96 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.Name));
             
             #line default
             #line hidden
             this.Write("\"].Value = Helpers.BuildDataTable(input.");
             
-            #line 97 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 96 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
             
             #line default
             #line hidden
             this.Write(");\r\n");
             
-            #line 98 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 97 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
     }else{
             
             #line default
             #line hidden
             this.Write("                result.Parameters[\"");
             
-            #line 99 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 98 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.Name));
             
             #line default
             #line hidden
             this.Write("\"].Value = input.");
             
-            #line 99 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 98 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 100 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 99 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
     }
             
             #line default
             #line hidden
             this.Write("            }\r\n");
             
-            #line 102 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 101 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }
             
             #line default
             #line hidden
             
-            #line 103 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 102 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             this.Write("            return result;\r\n        }\r\n\r\n        #endregion Build SqlCommand\r\n");
             
-            #line 108 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 107 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 if (routine.NonInputParameters.Count != 0){
             
             #line default
@@ -475,347 +474,347 @@ if (routine.NonInputParameters.Count != 0){
             this.Write("\r\n        #region Read Output Parameters And Return Value\r\n\r\n        private void" +
                     " ");
             
-            #line 112 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 111 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.SetParametersName));
             
             #line default
             #line hidden
             this.Write("(SqlCommand cmd, ");
             
-            #line 112 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 111 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("Output output)\r\n        {\r\n");
             
-            #line 114 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 113 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 foreach(Parameter p in routine.NonInputParameters){
             
             #line default
             #line hidden
             this.Write("            if(cmd.Parameters[");
             
-            #line 115 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 114 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.Index));
             
             #line default
             #line hidden
             this.Write("].Value != DBNull.Value)\r\n            {\r\n                output.");
             
-            #line 117 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 116 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.PropertyName));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 117 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 116 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OutParameterCast(p)));
             
             #line default
             #line hidden
             this.Write("cmd.Parameters[");
             
-            #line 117 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 116 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(p.Index));
             
             #line default
             #line hidden
             this.Write("].Value;\r\n            }\r\n");
             
-            #line 119 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 118 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             this.Write("        }\r\n\r\n        #endregion Read Output Parameters And Return Value\r\n");
             
-            #line 123 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 122 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             
-            #line 124 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 123 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 if(routine.SelectType != SelectTypes.NonQuery){
             
             #line default
             #line hidden
             this.Write("\r\n        #region Reader To Result Objects\r\n");
             
-            #line 127 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 126 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             
-            #line 128 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 127 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTypes.MultiRow){
             
             #line default
             #line hidden
             this.Write("        \r\n        private ");
             
-            #line 130 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 129 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("Result ");
             
-            #line 130 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 129 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("_ResultData(SqlDataReader rdr)\r\n        {\r\n            return new ");
             
-            #line 132 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 131 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("Result(\r\n");
             
-            #line 133 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 132 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   foreach(Column c in routine.ResultSets[0].Columns){
             
             #line default
             #line hidden
             
-            #line 134 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 133 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       if(c.IsNullable){
             
             #line default
             #line hidden
             this.Write("            rdr.IsDBNull(");
             
-            #line 135 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 134 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.Index));
             
             #line default
             #line hidden
             this.Write(") ? null : ");
             
-            #line 135 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 134 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Format(c.AdoGetterFormatter,c.Index)));
             
             #line default
             #line hidden
             
-            #line 135 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 134 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CommaIfNotLast(routine.ResultSets[0].Columns, c)));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 136 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 135 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }else{
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 137 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 136 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Format(c.AdoGetterFormatter,c.Index)));
             
             #line default
             #line hidden
             
-            #line 137 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 136 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CommaIfNotLast(routine.ResultSets[0].Columns, c)));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 138 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 137 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }
             
             #line default
             #line hidden
             
-            #line 139 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 138 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }
             
             #line default
             #line hidden
             this.Write("            );\r\n        }\r\n");
             
-            #line 142 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 141 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             
-            #line 143 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 142 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 if(routine.SelectType == SelectTypes.MultiSet){
             
             #line default
             #line hidden
             
-            #line 144 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 143 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   foreach(ResultSet rs in routine.ResultSets){
             
             #line default
             #line hidden
             
-            #line 145 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 144 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       if(rs.SelectType == SelectTypes.SingleRow || rs.SelectType == SelectTypes.MultiRow){
             
             #line default
             #line hidden
             this.Write("      \r\n        private ");
             
-            #line 147 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 146 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("Result.");
             
-            #line 147 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 146 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 147 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 146 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("_");
             
-            #line 147 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 146 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("(SqlDataReader rdr)\r\n        {\r\n            return new ");
             
-            #line 149 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 148 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("Result.");
             
-            #line 149 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 148 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("(\r\n");
             
-            #line 150 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 149 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   foreach (Column c in rs.Columns){
             
             #line default
             #line hidden
             
-            #line 151 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 150 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       if(c.IsNullable){
             
             #line default
             #line hidden
             this.Write("                rdr.IsDBNull(");
             
-            #line 152 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 151 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.Index));
             
             #line default
             #line hidden
             this.Write(") ? null : ");
             
-            #line 152 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 151 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Format(c.AdoGetterFormatter,c.Index)));
             
             #line default
             #line hidden
             
-            #line 152 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 151 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CommaIfNotLast(rs.Columns, c)));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 153 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 152 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }else{
             
             #line default
             #line hidden
             this.Write("                ");
             
-            #line 154 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 153 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(Format(c.AdoGetterFormatter,c.Index)));
             
             #line default
             #line hidden
             
-            #line 154 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 153 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(CommaIfNotLast(rs.Columns, c)));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 155 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 154 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }
             
             #line default
             #line hidden
             
-            #line 156 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 155 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }
             
             #line default
             #line hidden
             this.Write("            );\r\n        }\r\n");
             
-            #line 159 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 158 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }
             
             #line default
             #line hidden
             
-            #line 160 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 159 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }
             
             #line default
             #line hidden
             
-            #line 161 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 160 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             
-            #line 162 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 161 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 if(routine.SelectType != SelectTypes.NonQuery){
             
             #line default
             #line hidden
             this.Write("    \r\n        #endregion Reader To Result Objects\r\n");
             
-            #line 164 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 163 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             
-            #line 165 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 164 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 if(routine.SelectType == SelectTypes.MultiSet){
             
             #line default
             #line hidden
             this.Write("\r\n        #region MultiSetResolve\r\n\r\n        private string ");
             
-            #line 169 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 168 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ServiceName));
             
             #line default
@@ -833,28 +832,28 @@ if(routine.SelectType == SelectTypes.MultiSet){
             {
 ");
             
-            #line 180 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 179 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       foreach(ResultSet rs in routine.ResultSets){
             
             #line default
             #line hidden
             this.Write("                case (\"");
             
-            #line 181 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 180 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.ConcatColumns));
             
             #line default
             #line hidden
             this.Write("\"):\r\n                    return \"");
             
-            #line 182 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 181 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("\";\r\n");
             
-            #line 183 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 182 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }
             
             #line default
@@ -867,41 +866,41 @@ if(routine.SelectType == SelectTypes.MultiSet){
         #endregion MultSet Resolver
 ");
             
-            #line 190 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 189 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             this.Write("\r\n        #region Execute Command\r\n\r\n        private void ");
             
-            #line 194 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 193 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("_Execute(SqlCommand cmd, ");
             
-            #line 194 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 193 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("Output output)\r\n        {\r\n");
             
-            #line 196 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 195 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 if(routine.SelectType == SelectTypes.NonQuery){
             
             #line default
             #line hidden
             this.Write("            cmd.ExecuteNonQuery();\r\n");
             
-            #line 198 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 197 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             
-            #line 199 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 198 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 if(routine.SelectType == SelectTypes.Json || routine.SelectType == SelectTypes.Xml){
             
             #line default
@@ -916,27 +915,27 @@ if(routine.SelectType == SelectTypes.Json || routine.SelectType == SelectTypes.X
                 rdr.Close();
                 output.Result");
             
-            #line 208 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 207 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.SelectType.ToString()));
             
             #line default
             #line hidden
             this.Write(" = bldr.ToString();\r\n            }\r\n");
             
-            #line 210 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 209 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             
-            #line 211 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 210 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTypes.MultiRow){
             
             #line default
             #line hidden
             this.Write("            using (SqlDataReader rdr = cmd.ExecuteReader())\r\n            {\r\n");
             
-            #line 214 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 213 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   if(routine.SelectType == SelectTypes.SingleRow){
             
             #line default
@@ -944,21 +943,21 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             this.Write("                if(rdr.Read())\r\n                {\r\n                    output.Res" +
                     "ultData = ");
             
-            #line 217 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 216 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("_ResultData(rdr);\r\n                }\r\n");
             
-            #line 219 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 218 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }else{
             
             #line default
             #line hidden
             this.Write("                output.ResultData = new List<");
             
-            #line 220 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 219 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
@@ -966,27 +965,27 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             this.Write("Result>();\r\n                while(rdr.Read())\r\n                {\r\n               " +
                     "     output.ResultData.Add(");
             
-            #line 223 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 222 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("_ResultData(rdr));\r\n                }\r\n");
             
-            #line 225 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 224 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
   }
             
             #line default
             #line hidden
             this.Write("                rdr.Close();\r\n            }\r\n");
             
-            #line 228 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 227 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             
-            #line 229 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 228 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       if(routine.SelectType == SelectTypes.MultiSet){
             
             #line default
@@ -995,35 +994,35 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
                     "           do\r\n                {\r\n                    if (rdr.HasRows)\r\n        " +
                     "            {\r\n                        switch (");
             
-            #line 236 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 235 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("_Resolve(rdr))\r\n                        {\r\n");
             
-            #line 238 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 237 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
           foreach(ResultSet rs in routine.ResultSets){
             
             #line default
             #line hidden
             this.Write("                            case \"");
             
-            #line 239 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 238 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("\":\r\n");
             
-            #line 240 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 239 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
               if(rs.SelectType == SelectTypes.Json || rs.SelectType == SelectTypes.Xml){
             
             #line default
             #line hidden
             this.Write("\r\n                                StringBuilder ");
             
-            #line 242 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 241 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
@@ -1032,7 +1031,7 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
                     "Read())\r\n                                {\r\n                                    " +
                     "");
             
-            #line 245 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 244 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
@@ -1040,40 +1039,40 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             this.Write("StringBuilder.Append(rdr.GetString(0));\r\n                                }\r\n     " +
                     "                           ");
             
-            #line 247 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 246 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptNotNull("output.ResultData")));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 247 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 246 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             
-            #line 247 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 246 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.SelectType.ToString()));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 247 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 246 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("StringBuilder.ToString();\r\n");
             
-            #line 248 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 247 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
               }
             
             #line default
             #line hidden
             
-            #line 249 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 248 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
               if(rs.SelectType == SelectTypes.SingleRow){
             
             #line default
@@ -1081,69 +1080,69 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             this.Write("\r\n                                if(rdr.Read())\r\n                               " +
                     " {\r\n                                    ");
             
-            #line 253 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 252 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptNotNull("output.ResultData")));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 253 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 252 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("Result = ");
             
-            #line 253 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 252 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("_");
             
-            #line 253 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 252 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("(rdr);\r\n                                }\r\n");
             
-            #line 255 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 254 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
               }
             
             #line default
             #line hidden
             
-            #line 256 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 255 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
               if(rs.SelectType == SelectTypes.MultiRow){
             
             #line default
             #line hidden
             this.Write("\r\n                                ");
             
-            #line 258 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 257 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptNotNull("output.ResultData")));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 258 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 257 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("Result = new List<");
             
-            #line 258 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 257 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("Result.");
             
-            #line 258 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 257 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
@@ -1151,42 +1150,42 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             this.Write(">();\r\n                                while(rdr.Read())\r\n                        " +
                     "        {\r\n                                    ");
             
-            #line 261 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 260 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(OptNotNull("output.ResultData")));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 261 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 260 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("Result.Add(");
             
-            #line 261 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 260 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("_");
             
-            #line 261 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 260 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(rs.Name));
             
             #line default
             #line hidden
             this.Write("(rdr));\r\n                                }\r\n");
             
-            #line 263 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 262 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
               }
             
             #line default
             #line hidden
             this.Write("                                break;\r\n");
             
-            #line 265 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 264 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
           }
             
             #line default
@@ -1194,27 +1193,27 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             this.Write("                        }\r\n                    }\r\n                } while (rdr.Ne" +
                     "xtResult());\r\n\r\n                rdr.Close();\r\n            }\r\n");
             
-            #line 272 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 271 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }
             
             #line default
             #line hidden
             
-            #line 273 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 272 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       if(routine.NonInputParameters.Count != 0){
             
             #line default
             #line hidden
             this.Write("\r\n            ");
             
-            #line 275 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 274 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.SetParametersName));
             
             #line default
             #line hidden
             this.Write("(cmd, output);\r\n");
             
-            #line 276 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 275 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }
             
             #line default
@@ -1222,188 +1221,188 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             this.Write("        }\r\n\r\n        #endregion Execute Command\r\n\r\n        #region Public Service" +
                     "\r\n\r\n        /// <summary>\r\n        /// ");
             
-            #line 284 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 283 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Comment));
             
             #line default
             #line hidden
             this.Write("<br/>\r\n        /// DB Routine: ");
             
-            #line 285 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 284 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Schema));
             
             #line default
             #line hidden
             this.Write(".");
             
-            #line 285 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 284 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Name));
             
             #line default
             #line hidden
             this.Write("<br/>\r\n        /// Author: ");
             
-            #line 286 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 285 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.Author));
             
             #line default
             #line hidden
             this.Write("<br/>\r\n        /// </summary>\r\n");
             
-            #line 288 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 287 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       if(routine.InputParameters.Count != 0){
             
             #line default
             #line hidden
             this.Write("        /// <param name=\"input\">");
             
-            #line 289 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 288 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.InputObjectName));
             
             #line default
             #line hidden
             this.Write(" instance.</param>\r\n");
             
-            #line 290 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 289 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 }
             
             #line default
             #line hidden
             this.Write("        /// <returns>Instance of ");
             
-            #line 291 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 290 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.OutputObjectName));
             
             #line default
             #line hidden
             this.Write("</returns>\r\n        public ");
             
-            #line 292 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 291 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.OutputObjectName));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 292 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 291 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ServiceName));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 292 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 291 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ServiceParameters));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n");
             
-            #line 294 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 293 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       if(routine.InputParameters.Count != 0){
             
             #line default
             #line hidden
             this.Write("            ValidateInput(input, nameof(");
             
-            #line 295 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 294 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ServiceName));
             
             #line default
             #line hidden
             this.Write("));\r\n");
             
-            #line 296 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 295 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }
             
             #line default
             #line hidden
             
-            #line 297 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 296 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       if(routine.SelectType == SelectTypes.MultiSet){
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 298 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 297 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.OutputObjectName));
             
             #line default
             #line hidden
             this.Write(" output = new ");
             
-            #line 298 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 297 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.OutputObjectName));
             
             #line default
             #line hidden
             this.Write(" { ResultData = new ");
             
-            #line 298 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 297 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ResultObjectName));
             
             #line default
             #line hidden
             this.Write("() };\r\n");
             
-            #line 299 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 298 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }else{
             
             #line default
             #line hidden
             this.Write("            ");
             
-            #line 300 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 299 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.OutputObjectName));
             
             #line default
             #line hidden
             this.Write(" output = new ");
             
-            #line 300 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 299 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.OutputObjectName));
             
             #line default
             #line hidden
             this.Write("();\r\n");
             
-            #line 301 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 300 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }
             
             #line default
             #line hidden
             this.Write("\t\t\tif(sqlConnection != null)\r\n            {\r\n");
             
-            #line 304 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 303 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       if (routine.InputParameters.Count != 0){
             
             #line default
             #line hidden
             this.Write("                using (SqlCommand cmd = ");
             
-            #line 305 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 304 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.BuildCommandName));
             
             #line default
             #line hidden
             this.Write("(sqlConnection, input))\r\n");
             
-            #line 306 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 305 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }else{
             
             #line default
             #line hidden
             this.Write("                using (SqlCommand cmd = ");
             
-            #line 307 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 306 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.BuildCommandName));
             
             #line default
             #line hidden
             this.Write("(sqlConnection))\r\n");
             
-            #line 308 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 307 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }
             
             #line default
@@ -1411,7 +1410,7 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             this.Write("                {\r\n                    cmd.Transaction = sqlTransaction;\r\n       " +
                     "             ");
             
-            #line 311 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 310 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ServiceName));
             
             #line default
@@ -1431,42 +1430,42 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
                     using (SqlConnection cnn = new SqlConnection(connectionString))
 ");
             
-            #line 324 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 323 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       if (routine.InputParameters.Count != 0){
             
             #line default
             #line hidden
             this.Write("                    using (SqlCommand cmd = ");
             
-            #line 325 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 324 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.BuildCommandName));
             
             #line default
             #line hidden
             this.Write("(cnn, input))\r\n");
             
-            #line 326 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 325 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }else{
             
             #line default
             #line hidden
             this.Write("                    using (SqlCommand cmd = ");
             
-            #line 327 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 326 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.BuildCommandName));
             
             #line default
             #line hidden
             this.Write("(cnn))\r\n");
             
-            #line 328 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 327 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
       }
             
             #line default
             #line hidden
             this.Write("                    {\r\n                        cnn.Open();\r\n\t\t\t\t\t\t");
             
-            #line 331 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+            #line 330 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(routine.ServiceName));
             
             #line default
@@ -1493,7 +1492,7 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 349 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
+        #line 348 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceMethod.tt"
 
     private string OutParameterCast(Parameter p)
     {

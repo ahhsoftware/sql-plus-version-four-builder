@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
-using SQLPLUS.Builder.ConfigurationModels;
-using SQLPLUS.Builder.Render.Common;
-using System;
-using System.Collections.Generic;
-using System.IO;
-
-namespace SQLPLUS.Builder.BuildServices
+﻿namespace SQLPLUS.Builder.BuildServices
 {
+    using Newtonsoft.Json;
+    using SQLPLUS.Builder.ConfigurationModels;
+    using SQLPLUS.Builder.Render.Common;
+    using System;
+    using System.Collections.Generic;
+    using System.IO;
+
     public class ConfigurationService
     {
         private readonly ProjectInformation projectInformation;

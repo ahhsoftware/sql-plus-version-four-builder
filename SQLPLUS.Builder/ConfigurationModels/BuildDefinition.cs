@@ -73,33 +73,6 @@
         {
             return errors;
         }
-        public void NullOutZeroLengthCollections()
-        {
-            if (DBSchemas?.Count == 0)
-            {
-                DBSchemas = null;
-            }
-            if (DBRoutines?.Count == 0)
-            {
-                DBRoutines = null;
-            }
-            if (QuerySchemas?.Count == 0)
-            {
-                QuerySchemas = null;
-            }
-            if (QueryRoutines?.Count == 0)
-            {
-                QueryRoutines = null;
-            }
-            if (StaticQueries?.Count == 0)
-            {
-                StaticQueries = null;
-            }
-            if (EnumQueries?.Count == 0)
-            {
-                EnumQueries = null;
-            }
-        }
     }
 
     public class BuildSchema

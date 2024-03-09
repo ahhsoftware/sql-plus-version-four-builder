@@ -8,22 +8,14 @@ using System.Threading.Tasks;
 
 namespace SQLPLUS.Builder.ConsoleBuilder
 {
+    /// <summary>
+    /// This is to conveniently test the builder without the extension.
+    /// </summary>
     internal class Program
     {
-        public enum Test
-        {
-            /// <summary>
-            /// Comment
-            /// </summary>
-            Name = 1
-        }
-
         static async Task Main(string[] args)
         {
-            //var service = new procs.Service("initial catalog = v4tests; server=(local); integrated security=true;");
-            //var output = await Task.Run(() => service.AllTags(new procs.Models.AllTagsInput("comment", "5555555555554444", "default", "displa", "alan@alan.com", DayOfWeek.Friday, "For", null)));
-
-
+            //Point this at the project and file location
             ProjectInformation projectInformation = new ProjectInformation("SQLPLUS.Build.Test.Basic",
                 "C:\\Users\\Alan\\source\\repos\\sql-plus-version-four-builder\\SQLPLUS.Builder.ConsoleBuilder");
                 //"C:\\Users\\Alan\\source\\repos\\sql-plus-version-four-tests\\SQLPLUS.Build.Test.Basic");
@@ -229,37 +221,3 @@ namespace SQLPLUS.Builder.ConsoleBuilder
         }
     }
 }
-//for (int idx = 0; idx != 5; idx++)
-//{
-//    BuildDefinition build = GetBuildDefinition(idx);
-
-//    if(!build.IsValid())
-//    {
-//        WriteErrors(build);
-//        break;
-//    }
-//    DatabaseConnection database = GetDatabaseConnection();
-//    ProjectInformation project = GetProjectInformation(idx);
-//    IDataCollector dataCollector = new MSSQLDataCollector(build, database, project);
-//    IRenderProvider render = new Builder.Render.T4Net.NetRenderProvider(project, build);
-//    BuildService runner = new BuildService(build, project, dataCollector, render);
-//    AttachEvents(runner);
-//    try
-//    {
-//        runner.Run();
-//    }
-//    catch(Exception ex)
-//    {
-//        Console.WriteLine(ex.Message);
-//    }
-
-//    DetachEvents(runner);
-
-//    if(!Directory.Exists(project.SQLPLUSFolder))
-//    {
-//        Directory.CreateDirectory(project.SQLPLUSFolder);
-//    }
-
-//    //File.WriteAllText(project.SQLPLUSBuildDefinitionPath, JsonConvert.SerializeObject(build));
-//    //File.WriteAllText(project.SQLPLUSDatabaseConnectionPath, JsonConvert.SerializeObject(database));
-//}

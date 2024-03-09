@@ -4,6 +4,5 @@
     {
         public string DatabaseType { set; get; } = "MSSQLServer";
         public string ConnectionString { set; get; }
-
     }
 }

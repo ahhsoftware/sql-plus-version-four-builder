@@ -19,7 +19,6 @@
 //     Last Modified On: <#=routine.LastModified.ToString()#>
 //     Written By: <#=routine.Author#>
 //     Select Type: <#=routine.SelectType.ToString()#>
-//     Visit https://www.SQLPLUS.net for more information about the SQL Plus build time ORM.
 // </auto-generated>
 // --------------------------------------------------------------------------------------------------------
 namespace <#=routine.ModelNamespace#>

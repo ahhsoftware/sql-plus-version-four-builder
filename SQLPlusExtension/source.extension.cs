@@ -11,7 +11,7 @@ namespace SQLPlusExtension
         public const string Name = "SQL+ .NET Code Generation Utility Version 4";
         public const string Description = @"Companion Code Generation Utility for building data services utilizing the SQL+ semantic tagging system and generation of static lists of data and enumerations.";
         public const string Language = "en-US";
-        public const string Version = "4.2.0";
+        public const string Version = "4.2.5";
         public const string Author = "AHH Software";
         public const string Tags = "SQL, SQL+, ORM";
     }

@@ -7,18 +7,6 @@ namespace SQLPlusExtension.Models
         public const string WindowsAuthentication = "Windows Authentication";
         public const string SQLServerAuthentication = "SQL Server Authentication";
 
-        /*"ImplementINotifyPropertyChanged",
-    "ImplementIChangeTracking",
-    "ImplementIRevertibleChangeTracking",
-    "IncludeSynchronousMethods",
-    "IncludeAsynchronousMethods",
-    "IncludeModels",
-    "IncludeServices",
-    "IncludeDocumentation",
-    "CleanPreviousBuilds"
-        */
-
-
         public const string ImplementINotifyPropertyChanged = "Implement INotifyPropertyChanged";
         public const string ImplementIChangeTracking = "Implement IChangeTracking";
         public const string ImplementIRevertibleChangeTracking = "Implement IRevertibleChangeTracking";

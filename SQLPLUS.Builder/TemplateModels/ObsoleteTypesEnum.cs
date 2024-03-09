@@ -1,4 +1,0 @@
-﻿namespace SQLPLUS.Builder.TemplateModels
-{
-    
-}

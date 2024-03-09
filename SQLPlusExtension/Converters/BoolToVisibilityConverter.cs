@@ -4,15 +4,14 @@ using System.Windows.Data;
 
 namespace SQLPlusExtension.Converters
 {
+    /// <summary>
+    /// Converts true false values to visible values.
+    /// If the parameter is supplied, matching the parameter result in visible.
+    /// </summary>
     public class BoolToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            //True with parameter true = visible
-            //True with parameter false = collapsed
-
-            //False with parameter true = collapsed
-            //False with parameter false == visible
 
             bool boolValue = (bool)value;
 
