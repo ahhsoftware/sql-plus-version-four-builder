@@ -116,3 +116,72 @@ public void CustomerInsertTest()
     }
 }
 ```
+
+# Installation
+*Last updated: 3/6/2024*
+
+Let's get you set up and ready to start generating some code. There are a few requirements before using these tools; you will need Visual Studio and SQL Server Management Studio. If you don't have these, you can get the [SQL Developer Edition](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) and the [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/) for free from Microsoft.
+
+## SSMS Snippets
+You can utilize code snippets in SQL Server Management Studio to simplify adding the Semantic Tags when building database routines. To install the snippets download and extract the snippets. After extraction, it's helpful to move the "+" folder to a convenient location.
+
+### Code Snippets Download
+After downloading and extracting, in SQL Server Management Studio click on **Tools**, **Code Snippets Manager**.
+
+![Launch the SSMS Code Snippets Manager](images/ssms-code-snippets-manager-launch.png)
+
+On the Code Snippets Manager dialog, click **Add**.
+
+![Click Add in the SSMS Code Snippets Manager](images/ssms-code-snippets-manager-click-add.png)
+
+In the Code Snippets Directory dialog, navigate to the "+" folder you just extracted, and click **Select Folder**.
+
+![Select folder in the SSMS Code Snippets Directory dialog](images/ssms-code-snippets-directory.png)
+
+Click **OK** on the Code Snippets Manager Dialog to complete the installation.
+
+![Click Ok in the SSMS Code Snippets Manager](images/ssms-code-snippets-manager-click-ok.png)
+
+With the code snippets in place, you can right click, choose **Insert Snippet**, select the + folder, and add the desired tags.
+**Keyboard shortcut:** CTRL+K+X
+
+## Visual Studio Code Snippets
+You can utilize code snippets in Visual Studio to simplify adding the Semantic Tags when building ad-hoc queries. To install the snippets download and extract the snippets. After extraction, it's helpful to move the "+" folder to a convenient location.
+
+### Code Snippets Download
+After downloading and extracting, in Visual Studio click on **Tools**, **Code Snippets Manager**.
+
+![Launch the VS Code Snippets Manager](images/vs_code_snippets_manager.png)
+
+On the Code Snippets Manager dialog, set the language to Microsoft SQL Server Data Tools and click **Add**.
+
+![Click Add in the VS Code Snippets Manager](images/vs_add_snippet.png)
+
+In the Code Snippets Directory dialog, navigate to the "+" folder you just extracted, and click **Select Folder**.
+
+![Select folder in the VS Code Snippets Directory dialog](images/vs_select_folder.png)
+
+Click **OK** on the Code Snippets Manager Dialog to complete the installation.
+
+![Click Ok in the VS Code Snippets Manager](images/vs_install_complete.png)
+
+With the code snippets in place, you can right-click, choose **Insert Snippet**, select the "+" folder, and add the desired tags.
+**Keyboard shortcut:** CTRL+K+X
+
+## Code Generator
+Go to the Visual Studio Marketplace and click on the [Download](https://marketplace.visualstudio.com/items?itemName=SQLDevOps.sql-plus-code-generator) to get the SQL+ Code Generation Utility.
+
+![SQL+ Code Generation Utility Download](images/sqlplus_download.png)
+
+Navigate to the file you just downloaded and double click to launch the VSIX Installer, then click **Install**.
+
+![Click Install on the VSIX installer](images/vsix_installer.png)
+
+Let the installer do its thing. When finished click **Close**.
+
+**Extension installation complete**
+
+You are good to go!
+```
+
+Make sure to replace `"images/ssms_code_snippets_manager.png"`, `"images/ssms_add_snippet.png"`, `"images/ssms_select_folder.png"`, `"images/ssms_install_complete.png"`, `"images/vs_code_snippets_manager.png"`, `"images/vs_add_snippet.png"`, `"images/vs_select_folder.png"`, `"images/vs_install_complete.png"`, `"images/sqlplus_download.png"`, and `"images/vsix_installer.png"` with the actual relative URLs of your images. Additionally, replace `"https://marketplace.visualstudio.com/items?itemName=SQLDevOps.sql-plus-code-generator"` with the actual URL of the Visual Studio Marketplace page for the SQL+ Code Generation Utility.
