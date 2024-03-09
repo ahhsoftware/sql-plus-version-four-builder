@@ -34,6 +34,7 @@ BEGIN
 END;
 ```
 
+
 ## 2. Add Semantic Tags
 With SQL+ you can enforce parameter validation by simply adding a few tags. In this example we add required tags, max length tags, and an email tag. The SQL+ Code generation utility will use this information to escalate the validation into the generated services. If you change the underlying SQL, just rerun the builder, and your code is perfectly synchronized. Long story short, you have a single source of truth that you can trust throughout the enterprise.
 
@@ -453,9 +454,6 @@ With your SQL enhanced with the SQL+ Semantic Tags, it's time to put the SQL+ Co
 
 8. **Run The Builder**
    Once you are satisfied with all your build objects, and have made your build option choices, you can simply run the builder. In the Build Project area, click the Build Project button.
-
-
-
-
+![SQL+ Code Generation Utility Build](images/sql-plus-build-project-v4-tests.gif)
 
 
