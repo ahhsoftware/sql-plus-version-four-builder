@@ -167,7 +167,7 @@ Click **OK** on the Code Snippets Manager Dialog to complete the installation.
 ![Click Ok in the VS Code Snippets Manager](images/vs-code-snippets-manager-click-ok.png)
 
 With the code snippets in place, you can right-click, choose **Insert Snippet**, select the "+" folder, and add the desired tags.
-![Click Ok in the VS Code Snippets Manager](images/vs-code-snippet-example.gif)
+![Click Ok in the VS Code Snippets Manager](images/VS-code-snippet-example.gif)
 **Keyboard shortcut:** CTRL+K+X
 
 ## Code Generator
