@@ -82,7 +82,6 @@ SQL+ Code Generation Utility Build Options
 Just click build and let the tool do the work.
 ![alt text](/images/GettingStartedBuild.gif)
 
-SQL+ Code Generation Utility Execution
 
 ## 5. Enjoy
 You've now built a service that includes all the validation you need, and you did it by simply adding a few tags to your SQL. Best part of all, your code will run four times faster than Entity Framework and twice as fast as Dapper.
