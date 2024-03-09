@@ -85,7 +85,7 @@ With your Semantically Tagged SQL in place, you can choose build options that ma
 ## 4. Generate Code
 Just click build and let the tool do the work.
 
-![SQL+ Code Generation Utility Execution](/images/gettingstartedbuild.gif)
+![SQL+ Code Generation Utility Execution](/images/GettingStartedBuild.gif)
 
 ## 5. Enjoy
 You've now built a service that includes all the validation you need, and you did it by simply adding a few tags to your SQL. Best part of all, your code will run four times faster than Entity Framework and twice as fast as Dapper.
