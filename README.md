@@ -187,3 +187,62 @@ Let the installer do its thing. When finished click **Close**.
 
 You are good to go!
 ```
+
+
+
+
+
+
+
+
+
+
+# Routines or Queries
+*Last updated: 3/6/2024*
+
+SQL+ will work with any database routine or ad-hoc SQL that you apply Semantic Tags to.
+
+## Database Routines
+When using database routines, add the semantic tags to the routine body. When you run the SQL+ code generation utility, it will display these routines in the UI. By default, these routines will use the schema name as the namespace. You can assign a namespace at the schema level and it will apply to all routines in that schema. Alternatively, you can assign individual routines to a schema if you need a more granular structure. SQL+ will create a folder structure based on the namespace assignments.
+
+### Configuration Routines UI Illustration
+![Configuration Routines UI Illustration](images/configuration-routines-ui-illustration.png)
+
+The folder structure below reflects how those assignments are applied in the generated services.
+
+### Configuration Routines Folder Illustration
+![Configuration Routines Folder Illustration](images/configuration-built-project.png)
+
+## Ad-Hoc Queries
+In SQL+, ad-hoc queries are .sql files that have been semantically tagged. Unlike routines, when using ad-hoc queries, it is the folder structure that dictates namespace assignments, where each subdirectory of the Queries folder becomes a namespace, and the name of the file is utilized for the name of the generated service.
+
+### Ad-Hoc queries folder structure
+![Ad-Hoc queries folder structure](images/configuration-queries-folder-namespace-illustration.png)
+
+In the UI, you can choose which files you want to include in the build. In this case we chose all files in Default, and Public folders (namespaces).
+
+### Configuration Queries UI Illustration
+![Configuration Queries UI Illustration](images/configuration-queries-ui-illustration.png)
+
+The folder structure below reflects how the Queries folder structure is utilized in the generated services.
+
+### Configuration Routines Folder Illustration
+![Configuration Routines Folder Illustration](images/configuration-built-project.png)
+
+## Which is Better?
+The real question that needs to be asked is which is better for you?
+
+If performance is your thing, stored procedures are the way to go. If you like self-contained services that are easier to deploy, ad-hoc queries are a better choice.
+
+You should discuss this with your team, and come up with a strategy that suits the way you work.
+
+
+
+
+
+
+
+
+
+
+
