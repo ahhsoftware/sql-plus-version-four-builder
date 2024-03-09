@@ -152,22 +152,22 @@ You can utilize code snippets in Visual Studio to simplify adding the Semantic T
 ### Code Snippets Download
 After downloading and extracting, in Visual Studio click on **Tools**, **Code Snippets Manager**.
 
-![Launch the VS Code Snippets Manager](images/vs_code_snippets_manager.png)
+![Launch the VS Code Snippets Manager](images/vs-tools-code-snippets-manager-launch.png)
 
 On the Code Snippets Manager dialog, set the language to Microsoft SQL Server Data Tools and click **Add**.
 
-![Click Add in the VS Code Snippets Manager](images/vs_add_snippet.png)
+![Click Add in the VS Code Snippets Manager](images/vs-code-snippets-manager-click-add.png)
 
 In the Code Snippets Directory dialog, navigate to the "+" folder you just extracted, and click **Select Folder**.
 
-![Select folder in the VS Code Snippets Directory dialog](images/vs_select_folder.png)
+![Select folder in the VS Code Snippets Directory dialog](images/vs-code-snippets-directory.png)
 
 Click **OK** on the Code Snippets Manager Dialog to complete the installation.
 
-![Click Ok in the VS Code Snippets Manager](images/vs_install_complete.png)
+![Click Ok in the VS Code Snippets Manager](images/vs-code-snippets-manager-click-ok.png)
 
 With the code snippets in place, you can right-click, choose **Insert Snippet**, select the "+" folder, and add the desired tags.
-![Click Ok in the VS Code Snippets Manager](images/vs_install_complete.png)
+![Click Ok in the VS Code Snippets Manager](images/vs-code-snippet-example.gif)
 **Keyboard shortcut:** CTRL+K+X
 
 ## Code Generator
