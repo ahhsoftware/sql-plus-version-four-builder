@@ -376,5 +376,52 @@ When procedures or ad-hoc queries return multiple result sets, each query is wra
 
 
 
+# Static Data
+*Last updated: 3/6/2024*
+
+Quite often it’s the case where certain database tables contain data that rarely, if ever changes. A customer type table would be a good example. This type of data is a candidate for creating a static version.
+
+SQL+ offers two different approaches to building static data. You can generate lists of data, or enumerations.
+
+## Static Lists
+The table column structure of the query will be represented as properties in a class definition. Each row in the query creates an item in a list of static data, based on the same class definition.
+
+### Generate static lists sample data
+![Generate static lists sample data](images/static-lists-database-rows.png)
+
+### Generate static lists configuration
+![Generate static lists configuration](images/static-lists-configuration.png)
+
+The result would be the following. Comments have been removed for the purpose of this example.
+
+### Static list generation output
+![Static list generation output](images/static-lists-generated-code.png)
+
+## Enumerations
+Enumerations work much the same way as static lists, however, the queries for enumerations must adhere to a particular format as follows:
+
+- **Name:** Alias the column that represents the string constant value as `[Name]`.
+- **Value:** Alias the column that represents the numeric constant value as `[Value]`.
+- **Comment:** Alias the column that represents a comment as `[Comment]` (optional).
+
+Again with the following data in the CustomerType table:
+
+### Generate enumerations sample data
+![Generate enumerations sample data](images/enumerations-database-rows.png)
+
+### Generate enumerations lists configuration
+![Generate enumerations lists configuration](images/enumerations-configuration.png)
+
+The result would be the following:
+![Generated enumerations](images/enumerations-generated-code.png)
+
+
+
+
+
+
+
+
+
 
 
