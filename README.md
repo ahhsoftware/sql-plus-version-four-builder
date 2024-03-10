@@ -427,7 +427,7 @@ With your SQL enhanced with the SQL+ Semantic Tags, it's time to put the SQL+ Co
 4. **Configure Ad-Hoc Queries**
    If you have any ad-hoc queries in your project, they will be displayed here.
 
-   ![SQL+ Code Generation Utility configure ad-hoc queries with errors](images/configuration-routines-ui-illustration.png)
+   ![SQL+ Code Generation Utility configure ad-hoc queries with errors](images/configuration-queries-ui-illustration.png)
 
    Once you have cleared any errors, select the queries you wish to include in the build.
 
