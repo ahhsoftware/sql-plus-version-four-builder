@@ -441,14 +441,14 @@ With your SQL enhanced with the SQL+ Semantic Tags, it's time to put the SQL+ Co
 6. **Configure Enumerations**
    Enumeration definitions will be created for each query defined in the builder.
 
-   ![SQL+ Code Generation Utility configure enumerations with build errors](images/configure-queries-select.png)
+   ![SQL+ Code Generation Utility configure enumerations with build errors](images/configuration-enumeration-error.png)
 
    Once you have cleared any errors you are ready to move on to build options.
 
 7. **Configure Build Options**
    Choose any of the build options you want to utilize for your generated services.
 
-   ![SQL+ Code Generation Utility configure build options](images/configuration-static-queries-error.png)
+   ![SQL+ Code Generation Utility configure build options](images/configure-build-options.png)
 
    Once you are satisfied with your build options, you can proceed to the build area.
 
