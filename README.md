@@ -434,7 +434,7 @@ With your SQL enhanced with the SQL+ Semantic Tags, it's time to put the SQL+ Co
 5. **Configure Static Lists**
    Class definitions, as well as populated lists of static data will be created for each query defined in the builder.
 
-   ![SQL+ Code Generation Utility configure static lists with build errors](images/configure-queries-error.png)
+   ![SQL+ Code Generation Utility configure static lists with build errors](images/configuration-static-queries-error.png)
 
    Once you have cleared any errors you are ready to move onto the queries for enumerations.
 
