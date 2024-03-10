@@ -122,7 +122,7 @@ public void CustomerInsertTest()
 Let's get you set up and ready to start generating some code. There are a few requirements before using these tools; you will need Visual Studio and SQL Server Management Studio. If you don't have these, you can get the [SQL Developer Edition](https://www.microsoft.com/en-us/sql-server/sql-server-downloads) and the [Visual Studio Community Edition](https://visualstudio.microsoft.com/vs/community/) for free from Microsoft.
 
 ## SSMS Snippets
-You can utilize code snippets in SQL Server Management Studio to simplify adding the Semantic Tags when building database routines. To install the snippets ![Download](CodeSnippits.zip "download") download and extract the snippets. After extraction, it's helpful to move the "+" folder to a convenient location.
+You can utilize code snippets in SQL Server Management Studio to simplify adding the Semantic Tags when building database routines. To install the snippets <a id="snippets" href="CodeSnippits.zip">Download</a> and extract the snippets. After extraction, it's helpful to move the "+" folder to a convenient location.
 
 ### Code Snippets Download
 After downloading and extracting, in SQL Server Management Studio click on **Tools**, **Code Snippets Manager**.
