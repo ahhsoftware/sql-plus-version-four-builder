@@ -277,6 +277,96 @@ namespace <#=routine.ServiceNamespace#>
 
         #endregion Execute Command
 
+
+        #region Execute Command Async
+
+        private async Task <#=routine.Name#>_ExecuteAsync(SqlCommand cmd, <#=routine.Name#>Output output)
+        {
+<#if(routine.SelectType == SelectTypes.NonQuery){#>
+            await cmd.ExecuteNonQueryAsync();
+<#}#>
+<#if(routine.SelectType == SelectTypes.Json || routine.SelectType == SelectTypes.Xml){#>
+            using (SqlDataReader rdr = await cmd.ExecuteReaderAsync())
+            {
+                StringBuilder bldr = new StringBuilder();
+                while (rdr.Read())
+                {
+                    bldr.Append(rdr.GetString(0));
+                }
+                await rdr.CloseAsync();
+                output.Result<#=routine.SelectType.ToString()#> = bldr.ToString();
+            }
+<#}#>
+<#if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTypes.MultiRow){#>
+            using (SqlDataReader rdr = await cmd.ExecuteReaderAsync())
+            {
+<#  if(routine.SelectType == SelectTypes.SingleRow){#>
+                if(rdr.Read())
+                {
+                    output.ResultData = <#=routine.Name#>_ResultData(rdr);
+                }
+<#  }else{#>
+                output.ResultData = new List<<#=routine.Name#>Result>();
+                while(rdr.Read())
+                {
+                    output.ResultData.Add(<#=routine.Name#>_ResultData(rdr));
+                }
+<#  }#>
+                await rdr.CloseAsync();
+            }
+<#}#>
+<#      if(routine.SelectType == SelectTypes.MultiSet){#>
+            using (SqlDataReader rdr = await cmd.ExecuteReaderAsync())
+            {
+                do
+                {
+                    if (rdr.HasRows)
+                    {
+                        switch (<#=routine.Name#>_Resolve(rdr))
+                        {
+<#          foreach(ResultSet rs in routine.ResultSets){#>
+                            case "<#=rs.Name#>":
+<#              if(rs.SelectType == SelectTypes.Json || rs.SelectType == SelectTypes.Xml){#>
+
+                                StringBuilder <#=rs.Name#>StringBuilder = new StringBuilder();
+                                while (rdr.Read())
+                                {
+                                    <#=rs.Name#>StringBuilder.Append(rdr.GetString(0));
+                                }
+                                <#=OptNotNull("output.ResultData")#>.<#=rs.Name#><#=rs.SelectType.ToString()#> = <#=rs.Name#>StringBuilder.ToString();
+<#              }#>
+<#              if(rs.SelectType == SelectTypes.SingleRow){#>
+
+                                if(rdr.Read())
+                                {
+                                    <#=OptNotNull("output.ResultData")#>.<#=rs.Name#>Result = <#=routine.Name#>_<#=rs.Name#>(rdr);
+                                }
+<#              }#>
+<#              if(rs.SelectType == SelectTypes.MultiRow){#>
+
+                                <#=OptNotNull("output.ResultData")#>.<#=rs.Name#>Result = new List<<#=routine.Name#>Result.<#=rs.Name#>>();
+                                while(rdr.Read())
+                                {
+                                    <#=OptNotNull("output.ResultData")#>.<#=rs.Name#>Result.Add(<#=routine.Name#>_<#=rs.Name#>(rdr));
+                                }
+<#              }#>
+                                break;
+<#          }#>
+                        }
+                    }
+                } while (rdr.NextResult());
+
+                await rdr.CloseAsync();
+            }
+<#      }#>
+<#      if(routine.NonInputParameters.Count != 0){#>
+
+            <#=routine.SetParametersName#>(cmd, output);
+<#      }#>
+        }
+
+        #endregion Execute Command Async
+
         #region Public Service
 
         /// <summary>
@@ -340,7 +430,73 @@ namespace <#=routine.ServiceNamespace#>
             return output;
         }
 
-        #endregion
+        #endregion Public Service
+
+
+		#region Public Service Async
+
+        /// <summary>
+        /// <#=routine.Comment#><br/>
+        /// DB Routine: <#=routine.Schema#>.<#=routine.Name#><br/>
+        /// Author: <#=routine.Author#><br/>
+        /// </summary>
+<#      if(routine.InputParameters.Count != 0){#>
+        /// <param name="input"><#=routine.InputObjectName#> instance.</param>
+<#}#>
+        /// <returns>Instance of <#=routine.OutputObjectName#></returns>
+        public async Task<<#=routine.OutputObjectName#>> <#=routine.ServiceName#>Async(<#=routine.ServiceParameters#>)
+        {
+<#      if(routine.InputParameters.Count != 0){#>
+            ValidateInput(input, nameof(<#=routine.ServiceName#>));
+<#      }#>
+<#      if(routine.SelectType == SelectTypes.MultiSet){#>
+            <#=routine.OutputObjectName#> output = new <#=routine.OutputObjectName#> { ResultData = new <#=routine.ResultObjectName#>() };
+<#      }else{#>
+            <#=routine.OutputObjectName#> output = new <#=routine.OutputObjectName#>();
+<#      }#>
+			if(sqlConnection != null)
+            {
+<#      if (routine.InputParameters.Count != 0){#>
+                using (SqlCommand cmd = <#=routine.BuildCommandName#>(sqlConnection, input))
+<#      }else{#>
+                using (SqlCommand cmd = <#=routine.BuildCommandName#>(sqlConnection))
+<#      }#>
+                {
+                    cmd.Transaction = sqlTransaction;
+                    <#=routine.ServiceName#>_Execute(cmd, output);
+                }
+                return output;
+            }
+            for(int idx=0; idx <= retryOptions.RetryIntervals.Count; idx++)
+            {
+                if (idx > 0)
+                {
+                    Thread.Sleep(retryOptions.RetryIntervals[idx - 1]);
+                }
+                try
+                {
+                    using (SqlConnection cnn = new SqlConnection(connectionString))
+<#      if (routine.InputParameters.Count != 0){#>
+                    using (SqlCommand cmd = <#=routine.BuildCommandName#>(cnn, input))
+<#      }else{#>
+                    using (SqlCommand cmd = <#=routine.BuildCommandName#>(cnn))
+<#      }#>
+                    {
+                        await cnn.OpenAsync();
+						await <#=routine.ServiceName#>_ExecuteAsync(cmd, output);
+                        await cnn.CloseAsync();
+                    }
+					break;
+                }
+                catch(SqlException sqlException)
+                {
+                    AllowRetryOrThrowError(idx, sqlException);
+                }
+            }
+            return output;
+        }
+
+        #endregion Public Service Async
 
     }
 }

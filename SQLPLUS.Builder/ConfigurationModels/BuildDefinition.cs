@@ -59,7 +59,7 @@
         #endregion Ignored Properties
         
         public string SQLClient { set; get; } = "System.Data.SqlClient";
-        public string SQLClientNamespace { set; get; } = "System.Data.SqlClient";
+        //public string SQLClientNamespace { set; get; } = "System.Data.SqlClient";
         public string SQLExceptionNamespace { set; get; } = "System.Data";
         public string Template { set; get; } = "NET";
         public List<BuildRoutine> DBRoutines { set; get; }

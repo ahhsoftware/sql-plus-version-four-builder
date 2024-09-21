@@ -19,7 +19,7 @@ namespace SQLPLUS.Builder.Render.T4Net
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
+    #line 1 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class TransientErrors : TransientErrorsBase
     {
@@ -37,28 +37,28 @@ namespace SQLPLUS.Builder.Render.T4Net
 // --------------------------------------------------------------------------------------------------------
 namespace ");
             
-            #line 15 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
+            #line 15 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(project.SQLPLUSBaseNamespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    #region usings\r\n\r\n");
             
-            #line 19 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
+            #line 19 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
 foreach (string s in Usings(build)){
             
             #line default
             #line hidden
             this.Write("    using ");
             
-            #line 20 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
+            #line 20 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(s));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 21 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
+            #line 21 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
 }
             
             #line default
@@ -104,15 +104,15 @@ foreach (string s in Usings(build)){
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 112 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
+        #line 112 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
 
     private List<string> Usings(BuildDefinition build)
     {
         List<string> result = new List<string>();
         result.Add("System");
         result.Add("System.Collections.Generic");
-        result.Add(build.SQLClientNamespace);
-        if(build.SQLClientNamespace != build.SQLExceptionNamespace)
+        result.Add(build.SQLClient);
+        if(build.SQLClient != build.SQLExceptionNamespace)
         {
             result.Add(build.SQLExceptionNamespace);
         }
@@ -123,7 +123,7 @@ foreach (string s in Usings(build)){
         #line default
         #line hidden
         
-        #line 1 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
+        #line 1 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\TransientErrors.tt"
 
 private global::SQLPLUS.Builder.ConfigurationModels.BuildDefinition _buildField;
 

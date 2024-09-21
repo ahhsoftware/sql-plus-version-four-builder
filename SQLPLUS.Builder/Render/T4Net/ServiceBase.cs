@@ -21,7 +21,7 @@ namespace SQLPLUS.Builder.Render.T4Net
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
+    #line 1 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class ServiceBase : ServiceBaseBase
     {
@@ -39,28 +39,28 @@ namespace SQLPLUS.Builder.Render.T4Net
 // --------------------------------------------------------------------------------------------------------
 namespace ");
             
-            #line 18 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
+            #line 18 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(nameSpace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    #region usings\r\n\r\n");
             
-            #line 22 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
+            #line 22 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
 foreach(string s in Usings()){
             
             #line default
             #line hidden
             this.Write("    using ");
             
-            #line 23 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
+            #line 23 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(s));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 24 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
+            #line 24 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
 }
             
             #line default
@@ -144,7 +144,7 @@ foreach(string s in Usings()){
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 171 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
+        #line 171 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
 
     private List<string> Usings()
     {
@@ -152,7 +152,7 @@ foreach(string s in Usings()){
         result.Add("System");
         result.Add("System.Collections.Generic");
         result.Add(project.SQLPLUSBaseNamespace);
-        result.Add(build.SQLClientNamespace);
+        result.Add(build.SQLClient);
         result.Add(build.SQLExceptionNamespace);
         return result;
     }
@@ -161,7 +161,7 @@ foreach(string s in Usings()){
         #line default
         #line hidden
         
-        #line 1 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
+        #line 1 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\ServiceBase.tt"
 
 private global::SQLPLUS.Builder.ConfigurationModels.ProjectInformation _projectField;
 
