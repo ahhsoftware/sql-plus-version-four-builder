@@ -484,7 +484,7 @@ namespace <#=routine.ServiceNamespace#>
                     {
                         await cnn.OpenAsync();
 						await <#=routine.ServiceName#>_ExecuteAsync(cmd, output);
-                        cnn.Close();
+                        await cnn.CloseAsync();
                     }
 					break;
                 }

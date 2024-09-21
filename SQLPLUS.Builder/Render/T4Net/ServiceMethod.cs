@@ -2091,7 +2091,7 @@ if(routine.SelectType == SelectTypes.SingleRow || routine.SelectType == SelectTy
             #line default
             #line hidden
             this.Write(@"_ExecuteAsync(cmd, output);
-                        cnn.Close();
+                        await cnn.CloseAsync();
                     }
 					break;
                 }
