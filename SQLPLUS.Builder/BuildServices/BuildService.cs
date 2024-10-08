@@ -71,41 +71,53 @@
             //UpdateProgress("Nothing to build");
             //return
 
-            UpdateProgress("Starting write base objects.");
-            WriteBaseObjectsIfRequired(routines);
-            WriteServiceBase(routines);
-            WriteTransientErrors();
-            WriteTransientErrorsExample();
-            UpdateProgress("Write base objects complete.");
-
             UpdateProgress("Start create schema directories.");
             CreateSchemaDirectoriesIfRequired(routines);
             UpdateProgress("Complete create schema directories.");
 
-            UpdateProgress("Starting write Input objects.");
-            WriteInputObjectsIfRequired(routines);
-            UpdateProgress("Write Input objects complete.");
+            if (build.BuildOptions.IncludeModels)
+            {
+                UpdateProgress("Starting write base model objects.");
+                WriteBaseObjectsIfRequired(routines);
+                UpdateProgress("Write base model objects complete.");
 
-            UpdateProgress("Starting write Output objects.");
-            WriteOutputObjects(routines);
-            UpdateProgress("Write Output objects complete.");
+                UpdateProgress("Starting write Input objects.");
+                WriteInputObjectsIfRequired(routines);
+                UpdateProgress("Write Input objects complete.");
 
-            UpdateProgress("Starting write UserDefinedType objects.");
-            WriteUserDefinedTypes(routines);
-            UpdateProgress("Write UserDefinedTypes objects complete.");
+                UpdateProgress("Starting write Output objects.");
+                WriteOutputObjects(routines);
+                UpdateProgress("Write Output objects complete.");
 
-            UpdateProgress("Starting write Service objects.");
-            WriteServices(routines);
-            UpdateProgress("Write Service objects complete.");
+                UpdateProgress("Starting write UserDefinedType objects.");
+                WriteUserDefinedTypes(routines);
+                UpdateProgress("Write UserDefinedTypes objects complete.");
 
-            UpdateProgress("Starting write Enum objects.");
-            WriteEnums(enums);
-            UpdateProgress("Write Enum objects complete.");
+                UpdateProgress("Starting write Enum objects.");
+                WriteEnums(enums);
+                UpdateProgress("Write Enum objects complete.");
 
-            UpdateProgress("Starting write Static objects.");
-            WriteStatics(statics);
-            UpdateProgress("Write Static objects complete.");
+                UpdateProgress("Starting write Static objects.");
+                WriteStatics(statics);
+                UpdateProgress("Write Static objects complete.");
 
+            }
+
+            if(build.BuildOptions.IncludeServices)
+            {
+                UpdateProgress("Starting write base service objects.");
+
+                WriteServiceBase(routines);
+                WriteTransientErrors();
+                WriteTransientErrorsExample();
+
+                UpdateProgress("Write base service objects complete.");
+
+                UpdateProgress("Starting write Service objects.");
+                WriteServices(routines);
+                UpdateProgress("Write Service objects complete.");
+
+            }
         }
         private int Progress()
         {
@@ -336,7 +348,7 @@
                     if(parameter.TVColumns.Count != 0)
                     {
                         result.TryAddItem("System.Data");
-                        result.TryAddItem(project.UserDefinedTypeNamepace);
+                        result.TryAddItem(project.UserDefinedTypeNamespace);
                         result.TryAddItem(project.SQLPLUSBaseNamespace);
                         foreach(Column column in parameter.TVColumns)
                         {

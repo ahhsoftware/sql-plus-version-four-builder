@@ -59,7 +59,6 @@
         #endregion Ignored Properties
         
         public string SQLClient { set; get; } = "System.Data.SqlClient";
-        //public string SQLClientNamespace { set; get; } = "System.Data.SqlClient";
         public string SQLExceptionNamespace { set; get; } = "System.Data";
         public string Template { set; get; } = "NET";
         public List<BuildRoutine> DBRoutines { set; get; }
@@ -105,7 +104,7 @@
             {
                 if(string.IsNullOrEmpty(_Query))
                 {
-                    // TODO: This can be romoved when all customers have migrated to new version.
+                    // TODO: This can be removed when all customers have migrated to new version.
                     if(!string.IsNullOrEmpty(Table) && !string.IsNullOrEmpty(NameColumn) && !string.IsNullOrEmpty(ValueColumn))
                     {
                         string query = $"SELECT {NameColumn}, {ValueColumn} FROM {Table}";
@@ -136,6 +135,16 @@
         public bool ImplementIRevertibleChangeTracking { set; get; } = false;
         public bool ImplementINotifyPropertyChanged { set; get; } = false;
         public bool UseNullableReferenceTypes { set; get; } = false;
+        
+        public bool IncludeModels { set; get; } = true;
+        public bool IncludeServices { set; get; } = true;
+
+        public bool Asynchronous { set; get; } = true;
+        public bool AsynchronousConnection { set; get; } = true;
+        public bool AsynchronousCommand { set; get; } = true;
+        public bool AsynchronousReader { set; get; } = true;
+
+        public bool Synchronous { set; get; } = true;
 
     }
 }

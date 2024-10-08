@@ -188,6 +188,7 @@ namespace <#=routine.ServiceNamespace#>
         #endregion MultSet Resolver
 <#}#>
 
+<#if(build.BuildOptions.Synchronous || (build.BuildOptions.Asynchronous && !build.BuildOptions.AsynchronousCommand)){#>
         #region Execute Command
 
         private void <#=routine.Name#>_Execute(SqlCommand cmd, <#=routine.Name#>Output output)
@@ -276,8 +277,9 @@ namespace <#=routine.ServiceNamespace#>
         }
 
         #endregion Execute Command
+<#}#>
 
-
+<#if(build.BuildOptions.AsynchronousCommand){#>
         #region Execute Command Async
 
         private async Task <#=routine.Name#>_ExecuteAsync(SqlCommand cmd, <#=routine.Name#>Output output)
@@ -289,7 +291,7 @@ namespace <#=routine.ServiceNamespace#>
             using (SqlDataReader rdr = await cmd.ExecuteReaderAsync())
             {
                 StringBuilder bldr = new StringBuilder();
-                while (rdr.Read())
+                while (<#=AsyncRead()#>)
                 {
                     bldr.Append(rdr.GetString(0));
                 }
@@ -301,13 +303,13 @@ namespace <#=routine.ServiceNamespace#>
             using (SqlDataReader rdr = await cmd.ExecuteReaderAsync())
             {
 <#  if(routine.SelectType == SelectTypes.SingleRow){#>
-                if(rdr.Read())
+                if (<#=AsyncRead()#>)
                 {
                     output.ResultData = <#=routine.Name#>_ResultData(rdr);
                 }
 <#  }else{#>
                 output.ResultData = new List<<#=routine.Name#>Result>();
-                while(rdr.Read())
+                while (<#=AsyncRead()#>)
                 {
                     output.ResultData.Add(<#=routine.Name#>_ResultData(rdr));
                 }
@@ -329,7 +331,7 @@ namespace <#=routine.ServiceNamespace#>
 <#              if(rs.SelectType == SelectTypes.Json || rs.SelectType == SelectTypes.Xml){#>
 
                                 StringBuilder <#=rs.Name#>StringBuilder = new StringBuilder();
-                                while (rdr.Read())
+                                while (<#=AsyncRead()#>)
                                 {
                                     <#=rs.Name#>StringBuilder.Append(rdr.GetString(0));
                                 }
@@ -337,7 +339,7 @@ namespace <#=routine.ServiceNamespace#>
 <#              }#>
 <#              if(rs.SelectType == SelectTypes.SingleRow){#>
 
-                                if(rdr.Read())
+                                if (<#=AsyncRead()#>)
                                 {
                                     <#=OptNotNull("output.ResultData")#>.<#=rs.Name#>Result = <#=routine.Name#>_<#=rs.Name#>(rdr);
                                 }
@@ -345,7 +347,7 @@ namespace <#=routine.ServiceNamespace#>
 <#              if(rs.SelectType == SelectTypes.MultiRow){#>
 
                                 <#=OptNotNull("output.ResultData")#>.<#=rs.Name#>Result = new List<<#=routine.Name#>Result.<#=rs.Name#>>();
-                                while(rdr.Read())
+                                while (<#=AsyncRead()#>)
                                 {
                                     <#=OptNotNull("output.ResultData")#>.<#=rs.Name#>Result.Add(<#=routine.Name#>_<#=rs.Name#>(rdr));
                                 }
@@ -354,7 +356,7 @@ namespace <#=routine.ServiceNamespace#>
 <#          }#>
                         }
                     }
-                } while (rdr.NextResult());
+                } while (await rdr.NextResultAsync());
 
                 await rdr.CloseAsync();
             }
@@ -366,7 +368,8 @@ namespace <#=routine.ServiceNamespace#>
         }
 
         #endregion Execute Command Async
-
+<#}#>
+<#if(build.BuildOptions.Synchronous){#>
         #region Public Service
 
         /// <summary>
@@ -431,8 +434,8 @@ namespace <#=routine.ServiceNamespace#>
         }
 
         #endregion Public Service
-
-
+<#}#>
+<#if(build.BuildOptions.Asynchronous){#>
 		#region Public Service Async
 
         /// <summary>
@@ -447,7 +450,7 @@ namespace <#=routine.ServiceNamespace#>
         public async Task<<#=routine.OutputObjectName#>> <#=routine.ServiceName#>Async(<#=routine.ServiceParameters#>)
         {
 <#      if(routine.InputParameters.Count != 0){#>
-            ValidateInput(input, nameof(<#=routine.ServiceName#>));
+            ValidateInput(input, nameof(<#=routine.ServiceName#>Async));
 <#      }#>
 <#      if(routine.SelectType == SelectTypes.MultiSet){#>
             <#=routine.OutputObjectName#> output = new <#=routine.OutputObjectName#> { ResultData = new <#=routine.ResultObjectName#>() };
@@ -463,7 +466,11 @@ namespace <#=routine.ServiceNamespace#>
 <#      }#>
                 {
                     cmd.Transaction = sqlTransaction;
-                    <#=routine.ServiceName#>_Execute(cmd, output);
+<#      if (build.BuildOptions.AsynchronousCommand){#>
+						await <#=routine.ServiceName#>_ExecuteAsync(cmd, output);
+<#      }else{#>
+                        <#=routine.ServiceName#>_Execute(cmd, output);
+<#      }#>
                 }
                 return output;
             }
@@ -471,7 +478,7 @@ namespace <#=routine.ServiceNamespace#>
             {
                 if (idx > 0)
                 {
-                    Thread.Sleep(retryOptions.RetryIntervals[idx - 1]);
+                    await Task.Delay(retryOptions.RetryIntervals[idx - 1]);
                 }
                 try
                 {
@@ -482,9 +489,13 @@ namespace <#=routine.ServiceNamespace#>
                     using (SqlCommand cmd = <#=routine.BuildCommandName#>(cnn))
 <#      }#>
                     {
-                        await cnn.OpenAsync();
+                        <#=AsyncOpenCnn()#>
+<#      if (build.BuildOptions.AsynchronousCommand){#>
 						await <#=routine.ServiceName#>_ExecuteAsync(cmd, output);
-                        await cnn.CloseAsync();
+<#      }else{#>
+                        <#=routine.ServiceName#>_Execute(cmd, output);
+<#      }#>
+                        <#=AsyncCloseCnn()#>
                     }
 					break;
                 }
@@ -497,7 +508,7 @@ namespace <#=routine.ServiceNamespace#>
         }
 
         #endregion Public Service Async
-
+<#}#>
     }
 }
 
@@ -542,4 +553,47 @@ namespace <#=routine.ServiceNamespace#>
         }
         return value;
     }
+
+	private string AsyncOpenCnn()
+	{
+		if(build.BuildOptions.AsynchronousConnection)
+		{
+			return "await cnn.OpenAsync();";
+		}
+		return "cnn.Open();";
+	}
+
+	private string AsyncCloseCnn()
+	{
+		if(build.BuildOptions.AsynchronousConnection)
+		{
+			return "await cnn.CloseAsync();";
+		}
+		return "cnn.Close();";
+	}
+
+	private string AsyncExecute()
+	{
+		if(build.BuildOptions.AsynchronousCommand)
+		{
+			return "_ExecuteAsync";
+		}
+		else
+		{
+			return "_Execute";
+		}
+	}
+
+	private string AsyncRead()
+	{
+		if(build.BuildOptions.AsynchronousReader)
+		{
+			return "await rdr.ReadAsync()";
+		}
+		else
+		{
+			return "rdr.Read()";
+		}
+	}
+
 #>
