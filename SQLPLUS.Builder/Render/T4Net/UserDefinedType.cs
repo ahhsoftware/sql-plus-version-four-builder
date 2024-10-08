@@ -21,7 +21,7 @@ namespace SQLPLUS.Builder.Render.T4Net
     /// Class to produce the template output
     /// </summary>
     
-    #line 1 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+    #line 1 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.TextTemplating", "17.0.0.0")]
     public partial class UserDefinedType : UserDefinedTypeBase
     {
@@ -37,14 +37,14 @@ namespace SQLPLUS.Builder.Render.T4Net
 //     Changes to this file may cause incorrect behavior and will be lost if the code is regenerated.
 //     Underlying Type: [");
             
-            #line 16 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 16 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(parameter.UserDefinedTypeSchema));
             
             #line default
             #line hidden
             this.Write("].[");
             
-            #line 16 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 16 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(parameter.UserDefinedTypeName));
             
             #line default
@@ -52,28 +52,28 @@ namespace SQLPLUS.Builder.Render.T4Net
             this.Write("]\r\n// </auto-generated>\r\n// -----------------------------------------------------" +
                     "---------------------------------------------------\r\nnamespace ");
             
-            #line 19 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
-            this.Write(this.ToStringHelper.ToStringWithCulture(project.UserDefinedTypeNamepace));
+            #line 19 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            this.Write(this.ToStringHelper.ToStringWithCulture(project.UserDefinedTypeNamespace));
             
             #line default
             #line hidden
             this.Write("\r\n{\r\n    #region usings\r\n\r\n");
             
-            #line 23 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 23 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
 foreach(string @using in parameter.TVColumnsUsings){
             
             #line default
             #line hidden
             this.Write("    using ");
             
-            #line 24 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 24 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(@using));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 25 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 25 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
 }
             
             #line default
@@ -81,14 +81,14 @@ foreach(string @using in parameter.TVColumnsUsings){
             this.Write("\r\n    #endregion usings\r\n\r\n\t/// <summary>\r\n    /// Input object table value param" +
                     "eter ");
             
-            #line 30 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 30 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(parameter.UserDefinedTypeName));
             
             #line default
             #line hidden
             this.Write(".\r\n    /// </summary>\r\n    public partial class ");
             
-            #line 32 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 32 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(parameter.UserDefinedTypeName));
             
             #line default
@@ -96,147 +96,147 @@ foreach(string @using in parameter.TVColumnsUsings){
             this.Write(" : ValidInput\r\n    {\r\n        #region Constructors\r\n\r\n        /// <summary>\r\n    " +
                     "    /// Empty constructor for ");
             
-            #line 37 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 37 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(parameter.UserDefinedTypeName));
             
             #line default
             #line hidden
             this.Write(".\r\n        /// </summary>\r\n        public ");
             
-            #line 39 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 39 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(parameter.UserDefinedTypeName));
             
             #line default
             #line hidden
             this.Write("() { }\r\n\r\n        /// <summary>\r\n        /// Parameterized constructor for ");
             
-            #line 42 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 42 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(parameter.UserDefinedTypeName));
             
             #line default
             #line hidden
             this.Write(".\r\n        /// </summary>\r\n");
             
-            #line 44 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 44 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
 foreach(Column c in parameter.TVColumns){
             
             #line default
             #line hidden
             this.Write("        /// <param name=\"");
             
-            #line 45 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 45 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write("\">Maps to column ");
             
-            #line 45 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 45 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.Name));
             
             #line default
             #line hidden
             this.Write(".</param>\r\n");
             
-            #line 46 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 46 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
 }
             
             #line default
             #line hidden
             this.Write("        public ");
             
-            #line 47 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 47 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(parameter.UserDefinedTypeName));
             
             #line default
             #line hidden
             this.Write("(");
             
-            #line 47 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 47 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(parameter.TVColumnsConcat));
             
             #line default
             #line hidden
             this.Write(")\r\n        {\r\n");
             
-            #line 49 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 49 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
 foreach(Column c in parameter.TVColumns){
             
             #line default
             #line hidden
             this.Write("            this.");
             
-            #line 50 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 50 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(" = ");
             
-            #line 50 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 50 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(";\r\n");
             
-            #line 51 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 51 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
 }
             
             #line default
             #line hidden
             this.Write("        }\r\n\r\n        #endregion Constructors\r\n\r\n        #region Fields\r\n\r\n");
             
-            #line 58 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 58 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
 foreach(Column c in parameter.TVColumns){
             
             #line default
             #line hidden
             this.Write("        /// <summary>\r\n        /// ");
             
-            #line 60 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 60 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.Comment));
             
             #line default
             #line hidden
             this.Write("\r\n        /// </summary>\r\n");
             
-            #line 62 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 62 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
   foreach(string annotation in c.Annotations){
             
             #line default
             #line hidden
             this.Write("        ");
             
-            #line 63 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 63 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(annotation));
             
             #line default
             #line hidden
             this.Write("\r\n");
             
-            #line 64 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 64 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
   }
             
             #line default
             #line hidden
             this.Write("        public ");
             
-            #line 65 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 65 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyType));
             
             #line default
             #line hidden
             this.Write(" ");
             
-            #line 65 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 65 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
             this.Write(this.ToStringHelper.ToStringWithCulture(c.PropertyName));
             
             #line default
             #line hidden
             this.Write(" { set; get; }\r\n\r\n");
             
-            #line 67 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+            #line 67 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
 }
             
             #line default
@@ -245,7 +245,7 @@ foreach(Column c in parameter.TVColumns){
             return this.GenerationEnvironment.ToString();
         }
         
-        #line 1 "C:\Users\Alan\source\repos\sql-plus-version-four-builder\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
+        #line 1 "C:\SQL+\SQLPLUS.Builder\Render\T4Net\UserDefinedType.tt"
 
 private global::SQLPLUS.Builder.TemplateModels.Parameter _parameterField;
 

@@ -133,6 +133,8 @@ namespace SQLPlusExtension.Models
             }
         }
 
+        #region Settings
+
         private string _SQLClientNamespace;
         public string SQLClientNamespace
         {
@@ -225,15 +227,182 @@ namespace SQLPlusExtension.Models
                 return _UseNullableReferenceTypes;
             }
         }
+
+        private bool _IncludeModels;
+        public bool IncludeModels
+        {
+            set
+            {
+                if (_IncludeModels != value)
+                {
+                    _IncludeModels = value;
+                    RaisePropertyChanged(nameof(IncludeModels));
+                }
+            }
+            get
+            {
+                return _IncludeModels;
+            }
+        }
+
+        private bool _IncludeServices;
+        public bool IncludeServices
+        {
+            set
+            {
+                if (_IncludeServices != value)
+                {
+                    _IncludeServices = value;
+                    _Synchronous = value;
+                    _Asynchronous = value;
+                    _AsynchronousConnection = value;
+                    _AsynchronousCommand = value;
+                    _AsynchronousReader = value;
+                    RaisePropertyChanged(nameof(IncludeServices));
+                    RaisePropertyChanged(nameof(Synchronous));
+                    RaisePropertyChanged(nameof(Asynchronous));
+                    RaisePropertyChanged(nameof(AsynchronousConnection));
+                    RaisePropertyChanged(nameof(AsynchronousCommand));
+                    RaisePropertyChanged(nameof(AsynchronousReader));
+                }
+            }
+            get
+            {
+                return _IncludeServices;
+            } 
+        }
+
+        private bool _Asynchronous;
+        public bool Asynchronous
+        {
+            set
+            {
+                if (_Asynchronous != value)
+                {
+                    _Asynchronous = value;
+                    _AsynchronousConnection = value;
+                    _AsynchronousCommand = value;
+                    _AsynchronousReader = value;
+                    _IncludeServices = _Asynchronous || _Synchronous;
+                    
+                    RaisePropertyChanged(nameof(Asynchronous));
+                    RaisePropertyChanged(nameof(AsynchronousConnection));
+                    RaisePropertyChanged(nameof(AsynchronousCommand));
+                    RaisePropertyChanged(nameof(AsynchronousReader));
+                    RaisePropertyChanged(nameof(IncludeServices));
+                }
+            }
+            get
+            {
+                return _Asynchronous;
+            }
+        }
+
+        private bool _Synchronous;
+        public bool Synchronous
+        {
+            set
+            {
+                if (_Synchronous != value)
+                {
+                    _Synchronous = value;
+                    _IncludeServices = _Asynchronous || _Synchronous;
+
+                    RaisePropertyChanged(nameof(Synchronous));
+                    RaisePropertyChanged(nameof(IncludeServices));
+                }
+            }
+            get
+            {
+                return _Synchronous;
+            }
+        }
+
+        private bool _AsynchronousConnection;
+        public bool AsynchronousConnection
+        {
+            set
+            {
+                if (_AsynchronousConnection != value)
+                {
+                    _AsynchronousConnection = value;
+                    _Asynchronous = _AsynchronousConnection || _AsynchronousCommand || _AsynchronousReader;
+                    _IncludeServices = _Asynchronous || _Synchronous;
+
+                    RaisePropertyChanged(nameof(Asynchronous));
+                    RaisePropertyChanged(nameof(AsynchronousConnection));
+                    RaisePropertyChanged(nameof(IncludeServices));
+                }
+            }
+            get
+            {
+                return _AsynchronousConnection;
+            }
+        }
+
+        private bool _AsynchronousCommand;
+        public bool AsynchronousCommand
+        {
+            set
+            {
+                if (_AsynchronousCommand != value)
+                {
+                    _AsynchronousCommand = value;
+                    _Asynchronous = _AsynchronousConnection || _AsynchronousCommand || _AsynchronousReader;
+                    _IncludeServices = _Asynchronous || _Synchronous;
+
+                    RaisePropertyChanged(nameof(Asynchronous));
+                    RaisePropertyChanged(nameof(AsynchronousCommand));
+                    RaisePropertyChanged(nameof(IncludeServices));
+                }
+
+            }
+            get
+            {
+                return _AsynchronousCommand;
+            }
+        }
+
+
+        private bool _AsynchronousReader;
+        public bool AsynchronousReader
+        {
+            set
+            {
+                if (_AsynchronousReader != value)
+                {
+                    _AsynchronousReader = value;
+                    if(value)
+                    {
+                        _AsynchronousCommand = true;
+                    }
+
+                    _Asynchronous = _AsynchronousConnection || _AsynchronousCommand || _AsynchronousReader;
+                    _IncludeServices = _Asynchronous || _Synchronous;
+
+                    RaisePropertyChanged(nameof(Asynchronous));
+                    RaisePropertyChanged(nameof(AsynchronousCommand));
+                    RaisePropertyChanged(nameof(AsynchronousReader));
+                    RaisePropertyChanged(nameof(IncludeServices));
+                }
+            }
+            get
+            {
+                return _AsynchronousReader;
+            }
+        }
+
+        #endregion
+
         private void SetBuildDefinitionFromUi_All()
         {
             BuildDefinition buildDefinition = new BuildDefinition();
 
             SetBuildDefinitionFromUi_DBRoutines(buildDefinition);
-            SetBuildDefintionFromUi_QueryRoutines(buildDefinition);
-            SetBuildDefintionFromUi_EnumQueries(buildDefinition);
-            SetBuildDefintionFromUi_StaticQueries(buildDefinition);
-            SetBuildDefintionFromUi_BuildOptions(buildDefinition);
+            SetBuildDefinitionFromUi_QueryRoutines(buildDefinition);
+            SetBuildDefinitionFromUi_EnumQueries(buildDefinition);
+            SetBuildDefinitionFromUi_StaticQueries(buildDefinition);
+            SetBuildDefinitionFromUi_BuildOptions(buildDefinition);
 
             _BuildDefinition = buildDefinition;
         }
@@ -283,7 +452,7 @@ namespace SQLPlusExtension.Models
 
             IsBusy = false;
         }
-        private void SetBuildDefintionFromUi_QueryRoutines(BuildDefinition buildDefinition)
+        private void SetBuildDefinitionFromUi_QueryRoutines(BuildDefinition buildDefinition)
         {
             buildDefinition.QuerySchemas = new List<BuildSchema>();
             buildDefinition.QueryRoutines = new List<BuildRoutine>();
@@ -328,7 +497,7 @@ namespace SQLPlusExtension.Models
                 buildDefinition.QueryRoutines = null;
             }
         }
-        private void SetBuildDefintionFromUi_EnumQueries(BuildDefinition buildDefinition)
+        private void SetBuildDefinitionFromUi_EnumQueries(BuildDefinition buildDefinition)
         {
             buildDefinition.EnumQueries = new List<BuildQuery>();
 
@@ -349,7 +518,7 @@ namespace SQLPlusExtension.Models
                 buildDefinition.EnumQueries = null;
             }
         }
-        private void SetBuildDefintionFromUi_StaticQueries(BuildDefinition buildDefinition)
+        private void SetBuildDefinitionFromUi_StaticQueries(BuildDefinition buildDefinition)
         {
             buildDefinition.StaticQueries = new List<BuildQuery>();
 
@@ -370,7 +539,7 @@ namespace SQLPlusExtension.Models
                 buildDefinition.StaticQueries = null;
             }
         }
-        private void SetBuildDefintionFromUi_BuildOptions(BuildDefinition buildDefinition)
+        private void SetBuildDefinitionFromUi_BuildOptions(BuildDefinition buildDefinition)
         {
             buildDefinition.SQLClient = SQLClientNamespace;
 
@@ -379,7 +548,14 @@ namespace SQLPlusExtension.Models
                 ImplementIChangeTracking = _ImplementIChangeTracking,
                 ImplementINotifyPropertyChanged = ImplementINotifyPropertyChanged,
                 ImplementIRevertibleChangeTracking = ImplementIRevertibleChangeTracking,
-                UseNullableReferenceTypes = UseNullableReferenceTypes
+                UseNullableReferenceTypes = UseNullableReferenceTypes,
+                IncludeModels = IncludeModels,
+                IncludeServices = IncludeServices,
+                Asynchronous = Asynchronous,
+                AsynchronousCommand = AsynchronousCommand,
+                AsynchronousConnection = AsynchronousConnection,
+                AsynchronousReader = AsynchronousReader,
+                Synchronous = Synchronous
             };
         }
         private void ValidateEnumQueries()
@@ -392,7 +568,7 @@ namespace SQLPlusExtension.Models
             }
 
             BuildDefinition buildDefinition = new BuildDefinition();
-            SetBuildDefintionFromUi_EnumQueries(buildDefinition);
+            SetBuildDefinitionFromUi_EnumQueries(buildDefinition);
             var collector = GetDataCollector(DataCollectorModes.Configuration, buildDefinition);
             var results = collector.CollectEnumCollections();
 
@@ -421,7 +597,7 @@ namespace SQLPlusExtension.Models
             }
 
             BuildDefinition buildDefinition = new BuildDefinition();
-            SetBuildDefintionFromUi_StaticQueries(buildDefinition);
+            SetBuildDefinitionFromUi_StaticQueries(buildDefinition);
             var collector = GetDataCollector(DataCollectorModes.Configuration, buildDefinition);
             var results = collector.CollectStaticCollections();
 
@@ -513,6 +689,13 @@ namespace SQLPlusExtension.Models
             ImplementIChangeTracking = _BuildDefinition.BuildOptions.ImplementIChangeTracking;
             ImplementIRevertibleChangeTracking = _BuildDefinition.BuildOptions.ImplementIRevertibleChangeTracking;
             UseNullableReferenceTypes = _BuildDefinition.BuildOptions.UseNullableReferenceTypes;
+            IncludeModels = _BuildDefinition.BuildOptions.IncludeModels;
+            IncludeServices = _BuildDefinition.BuildOptions.IncludeServices;
+            Asynchronous = _BuildDefinition.BuildOptions.Asynchronous;
+            AsynchronousConnection = _BuildDefinition.BuildOptions.AsynchronousConnection;
+            AsynchronousCommand = _BuildDefinition.BuildOptions.AsynchronousCommand;
+            AsynchronousReader = _BuildDefinition.BuildOptions.AsynchronousReader;
+            Synchronous = _BuildDefinition.BuildOptions.Synchronous;
         }
         private List<Schema> BuildRoutinesToSchema(List<SQLPLUS.Builder.TemplateModels.Routine> routines, List<BuildSchema> buildSchemas, List<BuildRoutine> buildRoutines, bool isQuery)
         {
@@ -892,20 +1075,20 @@ namespace SQLPlusExtension.Models
                     break;
                 case Panes.QueriesActive:
                     QueryTooltip = "Configure Query Routines";
-                    SetBuildDefintionFromUi_QueryRoutines(_BuildDefinition);
+                    SetBuildDefinitionFromUi_QueryRoutines(_BuildDefinition);
                     break;
                 case Panes.StaticsActive:
                     StaticsTooltip = "Configure Static List Queries";
-                    SetBuildDefintionFromUi_StaticQueries(_BuildDefinition);
+                    SetBuildDefinitionFromUi_StaticQueries(_BuildDefinition);
                     ValidateStaticQueries();
                     break;
                 case Panes.EnumsActive:
                     EnumsTooltip = "Configure Enumeration Queries";
-                    SetBuildDefintionFromUi_EnumQueries(_BuildDefinition);
+                    SetBuildDefinitionFromUi_EnumQueries(_BuildDefinition);
                     ValidateEnumQueries();
                     break;
                 case Panes.SettingsActive:
-                    SetBuildDefintionFromUi_BuildOptions(_BuildDefinition);
+                    SetBuildDefinitionFromUi_BuildOptions(_BuildDefinition);
                     break;
                 case Panes.BuildActive:
                     BuildOutput.Clear();

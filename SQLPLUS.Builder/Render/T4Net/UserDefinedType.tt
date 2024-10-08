@@ -16,7 +16,7 @@
 //     Underlying Type: [<#=parameter.UserDefinedTypeSchema#>].[<#=parameter.UserDefinedTypeName#>]
 // </auto-generated>
 // --------------------------------------------------------------------------------------------------------
-namespace <#=project.UserDefinedTypeNamepace#>
+namespace <#=project.UserDefinedTypeNamespace#>
 {
     #region usings
 

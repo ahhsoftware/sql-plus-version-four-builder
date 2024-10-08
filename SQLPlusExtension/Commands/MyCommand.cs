@@ -34,6 +34,11 @@ namespace SQLPlusExtension
             var databaseConnection = configurationService.GetDatabaseConnection();
             var buildDefinition = configurationService.GetBuildDefinition();
 
+            if(buildDefinition.BuildOptions.IncludeModels == false || buildDefinition.BuildOptions.IncludeServices == false)
+            {
+                projectInformation.SetUpForIndividualProjects();
+            }
+
             SQLPlusConfigurationWindowViewModel dataContext = new SQLPlusConfigurationWindowViewModel(
                 configurationService,
                 projectInformation,

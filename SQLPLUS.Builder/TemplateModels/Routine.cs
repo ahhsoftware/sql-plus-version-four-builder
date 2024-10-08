@@ -60,7 +60,28 @@
 
         private ProjectInformation project;
         public string ServiceNamespace => Namespace == "+" ? project.RootNamespace : $"{project.RootNamespace}.{Namespace}";
-        public string ModelNamespace => Namespace == "+" ? $"{project.RootNamespace}.Models" : $"{project.RootNamespace}.{Namespace}.Models";
+       
+        public string ModelNamespace
+        {
+            get
+            {
+                
+                if(build.BuildOptions.IncludeModels == false)
+                {
+                    string rootNamespace = project.RootNamespace.Replace(".Services", ".Models");
+                    return Namespace == "+" ? rootNamespace : $"{rootNamespace}.{Namespace}";
+                }
+                else if(build.BuildOptions.IncludeServices == false)
+                {
+                    
+                    return Namespace == "+" ? project.RootNamespace : $"{project.RootNamespace}.{Namespace}";
+                }
+                else
+                {
+                    return Namespace == "+" ? $"{project.RootNamespace}.Models" : $"{project.RootNamespace}.{Namespace}.Models";
+                }
+            }
+        }
         public string ServiceDirectory => Namespace == "+" ? Path.Combine(project.RootDirectory, "Services") : Path.Combine(project.RootDirectory, Namespace, "Services");
         public string ModelDirectory => Namespace == "+" ? Path.Combine(project.RootDirectory, "Models") : Path.Combine(project.RootDirectory, Namespace, "Models");
 
@@ -190,7 +211,7 @@
         }
         
         /// <summary>
-        /// This provides the method signature for the parameterized contructor in the input object.
+        /// This provides the method signature for the parameterized constructor in the input object.
         /// </summary>
         public string InputParametersConcat
         {
@@ -252,7 +273,7 @@
         }
 
         /// <summary>
-        /// Used for mutli set queries.
+        /// Used for multi set queries.
         /// </summary>
         public List<QueryStart> Queries { set; get; } = new List<QueryStart>();
 
@@ -263,7 +284,7 @@
         public List<ResultSet> ResultSets { set; get; } = new List<ResultSet>();
         
         /// <summary>
-        /// The enumerations assigend to return values.
+        /// The enumerations assigned to return values.
         /// </summary>
         public List<EnumDefinition> ReturnValueEnums { set; get; } = new List<EnumDefinition>();
 
@@ -341,7 +362,7 @@
 
                     inputUsings.TryAddItem(project.SQLPLUSBaseNamespace);
                    
-                    //System Component Model for the intergaces
+                    //System Component Model for the interfaces
                     if (build.BuildOptions.ImplementIChangeTracking || build.BuildOptions.ImplementIRevertibleChangeTracking || build.BuildOptions.ImplementINotifyPropertyChanged)
                     {
                         inputUsings.TryAddItem("System.ComponentModel");
@@ -353,12 +374,12 @@
                         inputUsings.TryAddItem("System.Collections.Generic");
                     }
 
-                    // Get usings for the properties. (paramters)
+                    // Get usings for the properties. (parameters)
                     foreach (Parameter parameter in InputParameters)
                     {
                         if (parameter.IsTableValueParameter)
                         {
-                            inputUsings.TryAddItem(project.UserDefinedTypeNamepace);
+                            inputUsings.TryAddItem(project.UserDefinedTypeNamespace);
                             inputUsings.TryAddItem("System.Collections.Generic");
                         }
                         else

@@ -11,7 +11,7 @@
                         WindowStyle="SingleBorderWindow"
                         Height="600"
                         Width="800"
-                        Title="SQL+ Code Generation Utility Version 4.2.5"
+                        Title="SQL+ Code Generation Utility Version 4.5"
                         Background="White"
                         xmlns:converters="clr-namespace:SQLPlusExtension.Converters"
                         >
@@ -521,27 +521,28 @@
                 </Grid>
             </Grid>
 
-            <Grid Name="SettingsGrid"  d:Visibility="Collapsed" ShowGridLines="False" Visibility="{Binding SettingsActive, Converter={StaticResource BoolToVisibilityConverter}}">
+            <Grid Name="SettingsGrid"  d:Visibility="Visible" ShowGridLines="False" Visibility="{Binding SettingsActive, Converter={StaticResource BoolToVisibilityConverter}}">
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="150"/>
+
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="60"/>
                     <ColumnDefinition Width="24"/>
                     <ColumnDefinition Width="*"/>
-
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Text="SQL Client:" Style="{StaticResource LabelStyleSmall}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Bottom" Text="SQL Client (Must match the SQLClient nuget package):" Style="{StaticResource LabelStyleSmall}"/>
                 <TextBox Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalAlignment="Top" Width="300" HorizontalAlignment="Left" Style="{StaticResource ValidatedTextBoxSmall}" Text="{Binding SQLClientNamespace, Mode=TwoWay}" />
 
                 <CheckBox Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ImplementINotifyPropertyChanged}"/>
@@ -555,6 +556,55 @@
 
                 <CheckBox Grid.Row="6" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding UseNullableReferenceTypes}"/>
                 <TextBlock Grid.Row="6" Grid.Column="2" VerticalAlignment="Center" Text="Use Nullable Reference Types"/>
+
+                <CheckBox Grid.Row="7" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IncludeModels}"/>
+                <TextBlock Grid.Row="7" Grid.Column="2" VerticalAlignment="Center" Text="Include Models"/>
+
+                <CheckBox Grid.Row="8" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IncludeServices}"/>
+                <TextBlock Grid.Row="8" Grid.Column="2" VerticalAlignment="Center" Text="Include Services"/>
+                <Grid Grid.Row="9" Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
+
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="24"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    
+                    <CheckBox Grid.Row="0"  VerticalAlignment="Center" IsChecked="{Binding Synchronous}"/>
+                    <TextBlock Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Text="Synchronous"/>
+
+                    <CheckBox Grid.Row="1"  VerticalAlignment="Center" IsChecked="{Binding Asynchronous}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Text="Asynchronous"/>
+
+                    <Grid Grid.Row="2" Grid.Column="2" VerticalAlignment="Center">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="24"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <CheckBox Grid.Row="0"  VerticalAlignment="Center" IsChecked="{Binding AsynchronousConnection}"/>
+                        <TextBlock Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" Text="Open Connections Async"/>
+
+                        <CheckBox Grid.Row="1"  VerticalAlignment="Center" IsChecked="{Binding AsynchronousCommand}"/>
+                        <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" Text="Execute Commands/Readers Async"/>
+
+                        <CheckBox Grid.Row="2"  VerticalAlignment="Center" IsChecked="{Binding AsynchronousReader}"/>
+                        <TextBlock Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Text="Read From Readers Async"/>
+
+                    </Grid>
+                    
+                </Grid> 
 
             </Grid>
 

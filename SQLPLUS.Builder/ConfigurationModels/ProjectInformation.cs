@@ -23,7 +23,7 @@
             SQLPLUSDatabaseConnectionPath = Path.Combine(SQLPLUSFolder, "DatabaseConnection.json");
             SQLPLUSBuildDefinitionPath = Path.Combine(SQLPLUSFolder, "BuildDefinition.json");
             UserDefinedTypeDirectory = Path.Combine(rootDirectory, "UserDefinedTypes");
-            UserDefinedTypeNamepace = $"{rootNamespace}.UserDefinedTypes";
+            UserDefinedTypeNamespace = $"{rootNamespace}.UserDefinedTypes";
             SQLPLUSBuildErrorPath = Path.Combine(SQLPLUSFolder, "Errors.txt");
         }
 
@@ -41,11 +41,17 @@
         public string SQLPLUSQueriesFolder { get; }
         public string SQLPLUSSampleQueriesFolder { get; }
         public string SQLPLUSSampleQueryPath { get; }
-        public string UserDefinedTypeNamepace { get; }
+        public string UserDefinedTypeNamespace { get; }
         public string UserDefinedTypeDirectory { get; }
         public string SQLPLUSFolder { get; }
         public string SQLPLUSBuildDefinitionPath { get; }
         public string SQLPLUSDatabaseConnectionPath { get; }
         public string SQLPLUSBuildErrorPath { get; }
+        
+        public void SetUpForIndividualProjects()
+        {
+            RootNamespace.Replace(".Services", string.Empty);
+            RootNamespace.Replace(".Models", string.Empty);
+        }
     }
 }

@@ -25,7 +25,6 @@ namespace <#=routine.ModelNamespace#>
 {
 <#if (routine.UseNullableReferenceTypes){#>
     #nullable enable
-
 <#}#>
 <#if(routine.OutputUsings.Count != 0){#>
 
@@ -44,7 +43,6 @@ namespace <#=routine.ModelNamespace#>
     public partial class <#=routine.OutputObjectName#>
     {
 <#if(routine.ReturnValueEnums.Count != 0){#>
-
         #region Return Value Enumerations
 
         /// <summary>
@@ -61,9 +59,9 @@ namespace <#=routine.ModelNamespace#>
         }
 
         #endregion Return Value Enumerations
+
 <#}#>
 <#if (routine.OutputParameters.Count != 0){#>
-
         #region Output Parameters
 
 <#  foreach(Parameter p in routine.OutputParameters){#>
@@ -74,9 +72,9 @@ namespace <#=routine.ModelNamespace#>
 <#  }#>
 
 	    #endregion Output Parameters
+
 <#}#>
 <#if (routine.ReturnValueParameter != null){#>
-
         #region Return Value
 
 <#  if (routine.ReturnValueEnums.Count != 0){#>
@@ -92,9 +90,9 @@ namespace <#=routine.ModelNamespace#>
 <#  }#>
 
         #endregion Return Value
+
 <#}#>
 <#if(routine.SelectType != SelectTypes.NonQuery){#>
-
         #region Result Data
 <#}#>
 <#if(routine.SelectType == SelectTypes.Json){#>
@@ -135,12 +133,11 @@ namespace <#=routine.ModelNamespace#>
 <#if(routine.SelectType != SelectTypes.NonQuery){#>
 
         #endregion Result Data
+
 <#}#>
     }
 
-
 <#if(routine.SelectType != SelectTypes.NonQuery){#>
-
     #region Result Set Objects
 
     /// <summary>
@@ -151,10 +148,7 @@ namespace <#=routine.ModelNamespace#>
 <#  }#>
     /// </summary>
 <#}#>
-
-
 <#if (routine.SelectType == SelectTypes.MultiSet){#>
-
     public partial class <#=routine.Name#>Result
 	{
 <#  foreach(ResultSet rs in routine.ResultSets){#>
@@ -218,7 +212,6 @@ namespace <#=routine.ModelNamespace#>
 <#    }#>
 
         #endregion <#=routine.Name#>.<#=rs.Name#>
-    
 <#  }#>
     }
 <#}#>
@@ -251,7 +244,6 @@ namespace <#=routine.ModelNamespace#>
 <#  }#>
     }
 <#}#>
-
 
 <#if (routine.SelectType != SelectTypes.NonQuery){#>
     #endregion Result Set Objects
